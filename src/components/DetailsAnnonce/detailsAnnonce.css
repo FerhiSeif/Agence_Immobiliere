@@ -1,0 +1,16 @@
+.details-annonce-container .options-list {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.details-annonce-container .options-list li {
+  font-size: 17px;
+  margin: 17px;
+}
+
+.details-annonce-container .annonce-situation {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: brown;
+}

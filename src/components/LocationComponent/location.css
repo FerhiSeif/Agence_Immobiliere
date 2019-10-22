@@ -1,0 +1,46 @@
+.location-main {
+}
+
+.location-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.location-main .list-container {
+  width: 80%;
+  margin: auto;
+  min-height: 50vh;
+}
+.location-main .recherche {
+  display: none;
+}
+
+.location-main #recherche-display {
+  margin-bottom: 17px;
+  cursor: pointer;
+  transition: 0.5s ease;
+}
+
+.location-main #recherche-display:hover {
+  color: #265ad4;
+}
+
+.location-main #search-display {
+  margin: 0 0 0 0 !important;
+  max-height: 800px;
+  margin: 0 0 0 0 !important;
+  transition: max-height 1000ms;
+}
+.location-main #search-desabled {
+  margin: 0 0 0 0 !important;
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 1000ms;
+}
+
+.location-main .list-container .empty-search-div {
+  font-size: 24px;
+  text-align: center;
+  height: 100%;
+  margin: 70px 0 0 0;
+}
