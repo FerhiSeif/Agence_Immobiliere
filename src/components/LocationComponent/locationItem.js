@@ -90,7 +90,7 @@ class LocationItem extends Component {
             <div className="favroute clearfix">
               <p title="Valable à Partir De">
                 <i className="icon-calendar2" />
-                &nbsp;{item.ValableAPartirDe.slice(0, 10)}
+                &nbsp;{item.ValableAPartirDe ? item.ValableAPartirDe.slice(0, 10):""}
               </p>
               <ul className="pull-right">
                 <li>

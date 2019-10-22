@@ -11,6 +11,7 @@ import checkboxes from "./checkboxes";
 import Checkbox from "./checkbox";
 import { villes, categories, numbers } from "./static";
 import { addAnnoncementAction } from "../../Redux/annoncesActions";
+//import uploadImage from './uploadImage'
 
 import "./creerAnnonce.css";
 
@@ -71,13 +72,18 @@ class CreerAnnonce extends Component {
   };
 
   onAddAnnoncementClick = () => {
-    this.props
+    if(this.state.statut=="A Vendre" || this.state.statut=="A louer"){
+      this.props
       .addAnnoncementAction({
         ...this.state
       })
       .then(res => {
         res === 200 && this.props.history.push("/mesProprietes");
       });
+    }else{
+      alert("add status")
+    }
+    
   };
 
   handleChange(e) {
@@ -251,6 +257,9 @@ class CreerAnnonce extends Component {
                           onChange={this.onChange}
                           name="statut"
                         >
+                           <option className="active">
+                            Choisir un statut
+                          </option>
                           <option className="active" value="A louer">
                             A louer
                           </option>
