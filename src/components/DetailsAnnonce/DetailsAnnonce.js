@@ -7,6 +7,7 @@ import { getSelectedAnnoncementAction } from "../../Redux/annoncesActions";
 
 class DetailsAnnonce extends Component {
   componentDidMount() {
+  
     this.props.getSelectedAnnoncementAction(this.props.id);
   }
 
@@ -16,7 +17,11 @@ class DetailsAnnonce extends Component {
     let validOptions = optionsKeys.filter(el => options[el] === true);
     return validOptions;
   };
-
+  accessControl = () => {
+    console.log("test")
+    let autorization = localStorage.getItem("Authorization");
+    if (!autorization) this.props.history.push("/login");
+  };
   render() {
     let { selectedAnnoncement } = this.props;
     return (
@@ -292,22 +297,23 @@ class DetailsAnnonce extends Component {
                   <div class="social-networks">
                     <div class="social-icons-2">
                       <span class="share-it">Share this Property</span>
+
+                      <span accessControl={this.accessControl}>
+                        <Link to ="#">
+                        <i class="fa fa-key" aria-hidden="true"></i>{" "}
+                          Louer
+                          </Link>
+                      </span>
                       <span>
                         <a href="#">
-                          <i class="fa fa-facebook" aria-hidden="true"></i>{" "}
-                          Facebook
+                        <i class="fa fa-home" aria-hidden="true"></i>{" "}
+                          Demander Une Visite
                         </a>
                       </span>
                       <span>
                         <a href="#">
-                          <i class="fa fa-twitter" aria-hidden="true"></i>{" "}
-                          Twitter
-                        </a>
-                      </span>
-                      <span>
-                        <a href="#">
-                          <i class="fa fa-google-plus" aria-hidden="true"></i>{" "}
-                          Google +
+                        <i class="fa fa-home" aria-hidden="true"></i>{" "}
+                          Négocier Prix
                         </a>
                       </span>
                     </div>
@@ -435,30 +441,7 @@ class DetailsAnnonce extends Component {
                     </form>
                   </div>
                 </div>
-                <div className="row">
-                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh tempor cum soluta nobis consectetuer adipiscing eleifend option congue nihil imperdiet doming…</p>
-                <div className="col-sm-4 bottom40">
-                <input
-                        type="submit"
-                        className="btn-blue uppercase border_radius"
-                        defaultValue="Envoyer Message"
-                      />
-                      </div>
-                      <div className="col-sm-4 bottom40">
-                      <input
-                              type="submit"
-                              className="btn-blue uppercase border_radius"
-                              defaultValue="Envoyer Message"
-                            />
-                            </div>
-                            <div className="col-sm-4 bottom40">
-                            <input
-                                    type="submit"
-                                    className="btn-blue uppercase border_radius"
-                                    defaultValue="Envoyer Message"
-                                  />
-                                  </div>
-                </div>
+                
               </div>
             </div>
           </div>

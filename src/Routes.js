@@ -23,7 +23,6 @@ import EditAnnoncement from "./components/EditAnnoncement";
 import DashboardComponent from "./components/chatFirbase/dashboard/dashboard"
 
 
-
 class Routes extends React.Component {
   render() {
     return (
@@ -37,7 +36,7 @@ class Routes extends React.Component {
         <Route path="/déposer-une-annonce" component={CreeAnnonce} />
         <Route path="/favoris" component={Favoris} />
         <Route path="/mesProprietes" component={MesProprietes} />
-
+        <Route path="/detailsAchat" component={DetailsAchat} />
         <Route
           path="/detail-annonce/:id"
           render={props => <DetailsAnnonce id={props.match.params.id} />}

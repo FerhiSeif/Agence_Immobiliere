@@ -10,16 +10,16 @@ import { MDBInput } from "mdbreact";
 import checkboxes from "./checkboxes";
 import Checkbox from "./checkbox";
 import { villes, categories, numbers } from "./static";
-import { addAnnoncementAction } from "../../Redux/annoncesActions";
-//import uploadImage from './uploadImage'
+import { addAnnoncementAction } from "../../Redux/annoncesActions"; 
+import Preview from './uploadImage'
 
 import "./creerAnnonce.css";
 
 const BASE_URL = "http://localhost:8080/";
 
 class CreerAnnonce extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       titre: "",
       region: "",
@@ -47,15 +47,25 @@ class CreerAnnonce extends Component {
         balcon: false,
         climatisation: false
       },
-      images: [],
-      imageUrls: [],
+      imagesUrl: [],
+      files : [],
+      imagesUrl: [],
       message: "",
       nombreGarage: "",
       nombreSalon: "",
       situation : false
     };
+    this.remplir = this.remplir.bind(this);
   }
 
+  remplir(elementFile)
+  {
+    console.log("remplir", elementFile);
+
+    this.setState({
+      files :elementFile
+    });
+  }
   componentDidMount() {
     this.accessControl();
   }
@@ -70,7 +80,7 @@ class CreerAnnonce extends Component {
       [e.target.name]: e.target.value
     });
   };
-
+ 
   onAddAnnoncementClick = () => {
     if(this.state.statut=="A Vendre" || this.state.statut=="A louer"){
       this.props
@@ -78,7 +88,9 @@ class CreerAnnonce extends Component {
         ...this.state
       })
       .then(res => {
-        res === 200 && this.props.history.push("/mesProprietes");
+        // res === 200 && this.props.history.push("/mesProprietes");
+        res === 200 
+
       });
     }else{
       alert("add status")
@@ -276,7 +288,7 @@ class CreerAnnonce extends Component {
                   <div
                     className="col-sm-12"
                     style={{
-                      marginTop: "-19px;",
+                      marginTop: "-19px",
                       marginBottom: "23px"
                     }}
                   >
@@ -483,6 +495,7 @@ class CreerAnnonce extends Component {
                         />
                       </div>
                     </div>
+                    <Preview remplirGenereic={this.remplir} />
 
                     <div className="row">
                       <div className="col-sm-12">
@@ -503,7 +516,7 @@ class CreerAnnonce extends Component {
                         className="dropzone"
                    
                       > */}
-                          <div className="col-sm-12">
+                        { /* <div className="col-sm-12">
                             <div className="col-sm-4">
                               <input
                                 className="form-control "
@@ -551,7 +564,7 @@ class CreerAnnonce extends Component {
                             </span>
                           </div>
                           {/* </form> */}
-                        </div>
+                            </div>*/}
                       </div>
                     </div>
 

@@ -11,7 +11,7 @@ export const getAnnouncementsList = queries => async dispatch => {
   query = query.slice(0, query.length - 1);
   console.log(query);
   try {
-    let response = await axios({
+    let response = await axios({ 
       method: "GET",
       url: `/bienImmobiliers/all${query}`
     });
@@ -28,12 +28,38 @@ export const getAnnouncementsList = queries => async dispatch => {
 };
 
 export const addAnnoncementAction = newAnnoncement => async dispatch => {
+  console.log('newAnnoncement ;;;;;; ');
+  console.log (newAnnoncement);
+  var formData = new FormData();
+  // const file = newAnnoncement.files[0]
+  //  const file1 = newAnnoncement.files[1]
+  // formData.append("files", file);
+  // formData.append("files", file1);
+  newAnnoncement.files.map((file, index) => {
+    formData.append(`file${index}`, file);
+  });
+
+  formData.append("prix", newAnnoncement.prix);
+  formData.append("titre", newAnnoncement.titre);
+  formData.append("region", newAnnoncement.region);
+  formData.append("surface", newAnnoncement.surface);
+  formData.append("adresse", newAnnoncement.adresse);
+  formData.append("categorie", newAnnoncement.categorie);
+  formData.append("nombreEtage", newAnnoncement.nombreEtage);
+  formData.append("nombrePiece", newAnnoncement.nombrePiece);
+  formData.append("nombreFacade", newAnnoncement.nombreFacade);
+  formData.append("nombreSalleDeBain", newAnnoncement.nombreSalleDeBain);
+  
+  formData.append("options", newAnnoncement.options);
+  formData.append("description", newAnnoncement.description);
+  formData.append("statut", newAnnoncement.statut);
   try {
     let response = await axios({
       method: "POST",
       url: `/bienImmobiliers/add`,
-      data: newAnnoncement,
-      headers: { Authorization: localStorage.getItem("Authorization") }
+      data: formData,
+      config: { headers: {'Content-Type': 'multipart/form-data' }},
+      headers: { Authorization: localStorage.getItem("Authorization")}
     });
     alert("your annoncement was added successfuly");
     let statut = 200;

@@ -49,10 +49,7 @@ class NavBarItem extends Component {
             ) : (
               <Link
                 className={currentPage === "creerAnnonce" ? "active" : ""}
-                to="/déposer-une-annonce"
-              style={{width: "190px",height: "46px",
-              marginTop: "-5px",
-              paddingTop: "15px"}}>
+                to="/déposer-une-annonce">
               🖊️  Soumettre la propriété
               </Link>
             )}

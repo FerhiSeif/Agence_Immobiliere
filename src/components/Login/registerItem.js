@@ -86,7 +86,7 @@ closeModal(e) {
       }
       })
    
-      .catch(err => console.log(err));
+      .catch(err => alert("email already exist"));
       
     }
     else {

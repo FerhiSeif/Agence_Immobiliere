@@ -28,7 +28,7 @@ class MesProprietesItem extends Component {
                 src="images/listing1.jpg"
                 alt="latest property"
                 className="img-responsive"
-              />
+              />{item.imageUrl}
             </Link>
             <span className="tag_l">
               {item.situation ? "Publié" : "En cours de validation"}

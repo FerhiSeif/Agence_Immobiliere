@@ -11,12 +11,13 @@ class Header extends Component {
       .logOutAction()
       .then(res => res === 200 && this.props.history.push("/"));
   };
-
+ 
   render() {
     return (
       <div className="Header">
         <header className="layout_default">
           <div className="topbar grey">
+
             <div className="container">
               <div className="row">
                 <div className="col-md-5">
@@ -31,7 +32,7 @@ class Header extends Component {
                           Favoris
                         </Link>
                       )}
-                    </li>
+                    </li> 
                     <li>
                       <Link to="/déposer-une-annonce">
                       {  /*<i className="icon-icons215" />*/}
@@ -64,7 +65,7 @@ class Header extends Component {
                         </Link>
                       </li>
                     )}
-                    <li style={{ marginRight: "-87px"}}>
+                    <li>
                       {this.props.user.nom ? (
                         <Link onClick={this.onLogOutClick}>
                           <i className="icon-icons179" />
@@ -168,7 +169,7 @@ class Header extends Component {
                     >
                       <i className="fa fa-bars" />
                     </button>
-                    <Link className="navbar-brand sticky_logo" to="index2.html">
+                    <Link className="navbar-brand sticky_logo" to="/">
                       <img src="images/logo-white.png" className="logo" />
                     </Link>
                   </div>
