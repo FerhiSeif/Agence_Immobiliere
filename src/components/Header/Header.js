@@ -11,7 +11,7 @@ class Header extends Component {
       .logOutAction()
       .then(res => res === 200 && this.props.history.push("/"));
   };
- 
+  
   render() {
     return (
       <div className="Header">

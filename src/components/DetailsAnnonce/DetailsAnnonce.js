@@ -1,11 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-
+import { Link,withRouter } from "react-router-dom";
 import "./detailsAnnonce.css";
 import { getSelectedAnnoncementAction } from "../../Redux/annoncesActions";
-
+import { compose } from "redux";
 class DetailsAnnonce extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      statut: ""
+    };
+    this.accessControl = this.accessControl.bind(this);
+  }
+
+
   componentDidMount() {
   
     this.props.getSelectedAnnoncementAction(this.props.id);
@@ -17,11 +26,17 @@ class DetailsAnnonce extends Component {
     let validOptions = optionsKeys.filter(el => options[el] === true);
     return validOptions;
   };
-  accessControl = () => {
-    console.log("test")
+
+  accessControl (){
+
+    console.log("accesComtrol DetailAnnoce ;;;;;;;");
     let autorization = localStorage.getItem("Authorization");
-    if (!autorization) this.props.history.push("/login");
+    console.log("autorization ;;;;;;;");
+    console.log(autorization);
+
+    if ((!autorization)||(autorization == null)) this.props.history.push("/login");
   };
+
   render() {
     let { selectedAnnoncement } = this.props;
     return (
@@ -294,18 +309,31 @@ class DetailsAnnonce extends Component {
                       />
                     </div>
                   </div>
-                  <div class="social-networks">
-                    <div class="social-icons-2">
-                      <span class="share-it">Share this Property</span>
+                  <div className="social-networks">
+                    <div className="social-icons-2">
 
-                      <span accessControl={this.accessControl}>
+                      {
+                        selectedAnnoncement.statut != "A louer"
+                        ?
+                        <span onClick={this.accessControl}>
                         <Link to ="#">
                         <i class="fa fa-key" aria-hidden="true"></i>{" "}
-                          Louer
+                          Acheter
                           </Link>
-                      </span>
+                        </span>
+                        :
+                        <span onClick={this.accessControl}>
+                          <Link to ="#">
+                          <i class="fa fa-key" aria-hidden="true"></i>{" "}
+                            Louer
+                            </Link>
+                        </span>
+
+                      }
+
+
                       <span>
-                        <a href="#">
+                        <a href="#"  >
                         <i class="fa fa-home" aria-hidden="true"></i>{" "}
                           Demander Une Visite
                         </a>
@@ -458,7 +486,12 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { getSelectedAnnoncementAction }
+export default
+
+compose(
+  connect(
+    mapStateToProps,
+    { getSelectedAnnoncementAction }
+  ),
+  withRouter
 )(DetailsAnnonce);

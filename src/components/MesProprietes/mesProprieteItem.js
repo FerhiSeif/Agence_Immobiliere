@@ -1,13 +1,21 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-
 import { deleteAnnoncementAction } from "../../Redux/annoncesActions";
+
+import ImageSlider from 'ac-react-simple-image-slider';
+
+
+ var ExampleSlider  = (props) => (
+  <ImageSlider height='640px' width='480px' data={props.imageData} />
+);
 
 class MesProprietesItem extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      images:[]
+    };
   }
 
   onDeleteAnnoncementClicked = () => {
@@ -17,21 +25,30 @@ class MesProprietesItem extends Component {
     );
   };
 
+  
+
+ 
   render() {
     const { item } = this.props;
+    const {images} = this.state
+
+    var oldimages = []
+    item.files.forEach(element => {
+        oldimages.push({src:`http://localhost:8080/uploads/${element.filename}`,title:''});
+    });
+
+    console.log('oldimages :::::');
+    console.log(oldimages);
+
     return (
       <div className="col-sm-4 mes-proprietes-item">
         <div className="property_item heading_space">
           <div className="image">
-            <Link to={`/detail-annonce/${item._id}`}>
-              <img
-                src="images/listing1.jpg"
-                alt="latest property"
-                className="img-responsive"
-              />{item.imageUrl}
-            </Link>
+              <ExampleSlider  imageData={oldimages}/>
             <span className="tag_l">
-              {item.situation ? "Publié" : "En cours de validation"}
+            <Link to={`/detail-annonce/${item._id}`}>
+                {item.situation ? "Publié" : "En cours de validation"}
+            </Link>
             </span>
             <span className="tag_t">{item.statut}</span>
           </div>

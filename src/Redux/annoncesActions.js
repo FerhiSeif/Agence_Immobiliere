@@ -30,6 +30,10 @@ export const getAnnouncementsList = queries => async dispatch => {
 export const addAnnoncementAction = newAnnoncement => async dispatch => {
   console.log('newAnnoncement ;;;;;; ');
   console.log (newAnnoncement);
+
+  console.log('newAnnoncement options ;;;;;; ');
+  console.log (newAnnoncement.options);
+  
   var formData = new FormData();
   // const file = newAnnoncement.files[0]
   //  const file1 = newAnnoncement.files[1]
@@ -50,9 +54,16 @@ export const addAnnoncementAction = newAnnoncement => async dispatch => {
   formData.append("nombreFacade", newAnnoncement.nombreFacade);
   formData.append("nombreSalleDeBain", newAnnoncement.nombreSalleDeBain);
   
-  formData.append("options", newAnnoncement.options);
+  formData.append("options", JSON.stringify(newAnnoncement.options));
   formData.append("description", newAnnoncement.description);
   formData.append("statut", newAnnoncement.statut);
+  formData.append("situation", newAnnoncement.situation);
+  formData.append("video", newAnnoncement.video);
+  formData.append("nombreSalon", newAnnoncement.nombreSalon);
+  formData.append("ValableAPartirDe", newAnnoncement.ValableAPartirDe);
+  formData.append("ALaUne", newAnnoncement.ALaUne);
+  formData.append("nombreGarage", newAnnoncement.nombreGarage);
+  
   try {
     let response = await axios({
       method: "POST",
