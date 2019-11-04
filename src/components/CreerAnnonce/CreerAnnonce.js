@@ -161,7 +161,7 @@ class CreerAnnonce extends Component {
                           onChange={this.onChange}
                         />
                       </div>
-                    </div>
+                    </div> 
 
                     <div className="col-sm-6">
                       <div className="single-query form-group bottom20">
@@ -451,7 +451,7 @@ class CreerAnnonce extends Component {
                         value={this.state.ValableAPartirDe}
                         name="ValableAPartirDe"
                         style={{    marginTop: "7px",
-                          width: "484px"}}
+                          width: "397px"}}
                       />
                     </div>
                   </div>

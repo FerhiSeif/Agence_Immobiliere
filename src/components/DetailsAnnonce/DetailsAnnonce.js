@@ -4,14 +4,43 @@ import { Link,withRouter } from "react-router-dom";
 import "./detailsAnnonce.css";
 import { getSelectedAnnoncementAction } from "../../Redux/annoncesActions";
 import { compose } from "redux";
+import Modal from 'react-awesome-modal';
+import { Input,FormFeedback } from 'reactstrap';
+import SimpleReactValidator from 'simple-react-validator';
+import axios from "axios";
+import Alert from 'react-bootstrap/Alert'
 class DetailsAnnonce extends Component {
 
   constructor(props) {
     super(props);
+    this.validator = new SimpleReactValidator({
+      messages: {
+        alpha                : '⚠ Le champ :attribute ne peut contenir que des lettres.',
+        email                : '⚠ Le champ :attribute doit êre une adresse email valide.',
+        required             : '⚠ Le champ :attribute est requis.',
+        size                 : '⚠ Le champ :attribute doit être :size:type.',
+        max                  : 'Le champ :attribute ne doit pas dépasser :max:type.',
+        min                  : 'Le champ :attribute doit au moins être :min:type.',
+        numeric              : '⚠ Le champ :attribute doit être un numero.',
+        phone                :'⚠ Le champ :attribute doit être un format de numéro de téléphone valide. Ex. 20-555-123 '
+
+      },
+      autoForceUpdate: this
+    });
     this.state = {
-      statut: ""
+      statut: "",
+      visible:false,
+      nom: "",
+      tel: "",
+      email: "",
+      prixPropose:"",
     };
+    this.onChange = this.onChange.bind(this);
     this.accessControl = this.accessControl.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.open = this.open.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
 
@@ -26,7 +55,7 @@ class DetailsAnnonce extends Component {
     let validOptions = optionsKeys.filter(el => options[el] === true);
     return validOptions;
   };
-
+  
   accessControl (){
 
     console.log("accesComtrol DetailAnnoce ;;;;;;;");
@@ -35,8 +64,62 @@ class DetailsAnnonce extends Component {
     console.log(autorization);
 
     if ((!autorization)||(autorization == null)) this.props.history.push("/login");
+    else{
+      
+    }
   };
 
+  openModal() {
+    this.setState({
+        visible : true
+    });
+}
+onChange(e) {
+  this.setState({ [e.target.name]: e.target.value });
+}
+closeModal(e) {
+    this.setState({
+        visible : false,  
+    });
+    window.location.reload();
+}
+  open(e) {
+     e.preventDefault()
+     console.log("modal test1")
+     this.openModal()
+     
+}
+onSubmit(e) {
+   e.preventDefault();
+  if (this.validator.allValid()) {
+    console.log("modal test2")
+  const negocier = {
+    nom: this.state.nom,
+    tel: this.state.tel,
+    nomAgent: this.state.nomAgent,
+    email: this.state.email,
+    prixPropose: this.state.prixPropose
+  };
+
+
+axios
+.post("http://localhost:8080/negocierPrix/add", negocier)
+.then(res => console.log(res.data))
+.catch(err => console.log(err.response.data));
+alert("félicitations 🎉 votre demande a été envoyée avec succès ")
+this.closeModal()
+
+}
+   else {
+    console.log("modal test3")
+    e.preventDefault();
+    console.log("modal test4")
+    this.validator.showMessages();
+    // rerender to show messages for the first time
+    this.forceUpdate();
+  
+}
+}
   render() {
     let { selectedAnnoncement } = this.props;
     return (
@@ -76,7 +159,8 @@ class DetailsAnnonce extends Component {
                 </p>
 
                 <div id="property-d-1" className="owl-carousel single">
-                  <div className="item">
+                  {/*<div className="item">
+                  
                     <img
                       src="images/property-details/property-d-1-1.jpg"
                       alt="surface"
@@ -161,7 +245,7 @@ class DetailsAnnonce extends Component {
                       src="images/property-details/property-d-s-1-2.jpg"
                       alt="image"
                     />
-                  </div>
+                </div>*/}
                 </div>
                 <div className="property_meta bg-black bottom40">
                   <span>
@@ -290,9 +374,10 @@ class DetailsAnnonce extends Component {
                   <div className="col-md-12 padding-b-20">
                     <div className="pro-video">
                       <figure className="wpf-demo-gallery">
+                     
                         <video className="video" controls>
-                          <source src="video/video.mp4" type="video/mp4" />
-                          <source src="video/video.html" type="video/ogg" />
+                       
+                      {selectedAnnoncement.video}
                         </video>
                       </figure>
                     </div>
@@ -317,14 +402,14 @@ class DetailsAnnonce extends Component {
                         ?
                         <span onClick={this.accessControl}>
                         <Link to ="#">
-                        <i class="fa fa-key" aria-hidden="true"></i>{" "}
+                        <i className="fa fa-key" aria-hidden="true"></i>{" "}
                           Acheter
                           </Link>
                         </span>
                         :
                         <span onClick={this.accessControl}>
                           <Link to ="#">
-                          <i class="fa fa-key" aria-hidden="true"></i>{" "}
+                          <i className="fa fa-key" aria-hidden="true"></i>{" "}
                             Louer
                             </Link>
                         </span>
@@ -334,16 +419,102 @@ class DetailsAnnonce extends Component {
 
                       <span>
                         <a href="#"  >
-                        <i class="fa fa-home" aria-hidden="true"></i>{" "}
+                        <i className="fa fa-home" aria-hidden="true"></i>{" "}
                           Demander Une Visite
                         </a>
                       </span>
-                      <span>
+                  <span onClick={this.open}>
                         <a href="#">
-                        <i class="fa fa-home" aria-hidden="true"></i>{" "}
+                        <i className="fa fa-home" aria-hidden="true"></i>{" "}
                           Négocier Prix
-                        </a>
-                      </span>
+                    </a>
+                     
+                        <Modal visible={this.state.visible} width="600" height="489" effect="fadeInDown" onClickAway={() => this.closeModal()}>
+                       
+                       
+                        <form className="callus" onClick={this.onSubmit}>
+                        <div style={{marginTop: "20px"}}>
+            <h4  style={{marginLeft: "17px"}}>Nom & prénom :</h4>         
+            <input 
+            valid={this.validator.fieldValid('Nom & prénom')} 
+            invalid={!this.validator.fieldValid('Nom & prénom ')}   
+            type="text" className="form-control" placeholder="Nom & prénom " value={this.state.nom}
+            onChange={this.onChange}
+            name="nom" style={{marginLeft: "17px",
+            marginTop: "20px",
+              
+              width: '566px'}}/>
+              <FormFeedback  style={{color:"red",marginLeft: "17px"}}  invalid={!this.validator.fieldValid('  Nom & prénom ')}>
+            {this.validator.message(' Nom & prénom  ', this.state.nom, 'required|min:6|max:22')}</FormFeedback>
+         
+          <h4   style={{marginLeft: "17px"}}>Adresse Email :</h4>
+          
+          
+          <input
+          valid={this.validator.fieldValid('Email')} 
+          invalid={!this.validator.fieldValid('Email ')}     
+          type="text"
+          className="form-control"
+          placeholder="Adresse Email"
+         
+          value={this.state.email}
+          onChange={this.onChange}
+          name="email"
+          style={{marginLeft: "17px",
+              
+          width: '566px'}}
+      
+        />  
+        <FormFeedback  style={{color:"red", marginLeft: "17px"}}  invalid={!this.validator.fieldValid('  email ')}>{this.validator.message('email', this.state.email, 'required|email')}</FormFeedback>
+   
+        <h4   style={{marginLeft: "17px"}}>Téléphone :</h4>          
+          <input
+          valid={this.validator.fieldValid('Téléphone')} 
+          invalid={!this.validator.fieldValid('Téléphone ')}     
+          type="text"
+          className="form-control"
+          placeholder="Téléphone  "
+         
+          value={this.state.tel}
+          onChange={this.onChange}
+          name="tel"
+          style={{marginLeft: "17px",
+              
+          width: '566px'}}
+      
+        /> 
+        <FormFeedback  style={{color:"red", marginLeft: "17px"}}  invalid={!this.validator.fieldValid('  tel ')}>{this.validator.message('tel', this.state.tel, 'required|phone')}</FormFeedback>
+
+
+        <h4   style={{marginLeft: "17px"}}>Prix Proposé :</h4>          
+        <input
+        valid={this.validator.fieldValid('Prix Proposé')} 
+        invalid={!this.validator.fieldValid('Prix Proposé ')}      
+        type="text"
+        className="form-control"
+        placeholder="Téléphone  "
+       
+        value={this.state.prixPropose}
+        onChange={this.onChange}
+        name="prixPropose"
+        style={{marginLeft: "17px",
+              
+        width: '566px'}}
+    
+      />               
+      <FormFeedback  style={{color:"red", marginLeft: "17px"}}  invalid={!this.validator.fieldValid('  prixPropose ')}>{this.validator.message('prixPropose', this.state.prixPropose, 'required|numeric')}</FormFeedback>
+
+                           
+                            <button type="submit" className="btn btn-primary" 
+                            style={{    width: "200px",
+                              marginTop: "25px",
+                              marginLeft: "200px",
+                              height: "44px"}}
+                              onSubmit={this.onSubmit}>Envoyer</button>
+                        </div>
+                        </form>
+                    </Modal>
+                 </span>
                     </div>
                   </div>
                 </div>

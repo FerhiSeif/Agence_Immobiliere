@@ -4,8 +4,20 @@ import { connect } from "react-redux";
 
 import "./ItemBien.css";
 import { addFavoriteAnnoncement } from "../../Redux/userActions";
+import ImageSlider from 'ac-react-simple-image-slider';
+
+
+ var ExampleSlider  = (props) => (
+  <ImageSlider height='260px' width='550px' data={props.imageData} />
+);
 
 class Itembien extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      images:[]
+    };
+  }
   onAddToFavoriteClick = () => {
     if (!this.props.user._id)
       return alert(
@@ -40,20 +52,26 @@ class Itembien extends Component {
 
   render() {
     const { item } = this.props;
+    const {images} = this.state
+
+    var oldimages = []
+    item.files.forEach(element => {
+        oldimages.push({src:`http://localhost:8080/uploads/${element.filename}`,title:''});
+    });
+
+    console.log('oldimages :::::');
+    console.log(oldimages);
     return (
       <div className="item-bien-container col-sm-4">
         <div className="property_item heading_space">
           <div className="image">
-            <Link to={`/detail-annonce/${item._id}`}>
-              <img
-                src="images/latest1.jpg"
-                alt="latest property"
-                className="img-responsive"
-              />
+            
+            <ExampleSlider  imageData={oldimages}/>
+            <Link to={`/detail-annonce/${item._id}`}> 
             </Link>
           </div>
           <div className="price default_clr clearfix bottom20">
-            <span className="tag pull-left">{item.statut}</span>
+            <span className="tag pull-left"><Link to={`/detail-annonce/${item._id}`}>{item.statut}</Link></span>
             <h4 className="pull-right">
               {item.prix} - <small>Categorie: {item.categorie}</small>
             </h4>
@@ -61,7 +79,7 @@ class Itembien extends Component {
           <div className="proerty_content">
             <div className="proerty_text">
               <h3 className="bottom15">
-                <a href="property_detail1.html">{item.titre}</a>
+              <Link to={`/detail-annonce/${item._id}`}> {item.titre} </Link>
               </h3>
               <p>{item.parag}</p>
             </div>

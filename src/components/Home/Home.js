@@ -325,12 +325,7 @@ class Home extends Component {
             <div className="row">
               <RechercheAvancee />
             </div>
-            <div className="group-button-search">
-              <a href="plus.html" className="more-filter">
-                <i className="fa fa-plus" />
-                Afficher plus d'options de recherche
-              </a>
-            </div>
+           
             <div className="search-propertie-filters collapse">
               <div className="container-2">
                 <div className="row">

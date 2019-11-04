@@ -34,6 +34,7 @@
     "rc-datepicker": "^5.0.14",
     "react": "^16.9.0",
     "react-awesome-modal": "^2.0.5",
+    "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "^16.8.6",
     "react-draft-wysiwyg": "^1.13.2",
     "react-dropdown-select": "^3.3.4",

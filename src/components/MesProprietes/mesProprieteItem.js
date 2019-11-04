@@ -7,7 +7,7 @@ import ImageSlider from 'ac-react-simple-image-slider';
 
 
  var ExampleSlider  = (props) => (
-  <ImageSlider height='640px' width='480px' data={props.imageData} />
+  <ImageSlider height='260px' width='550px' data={props.imageData} />
 );
 
 class MesProprietesItem extends Component {
@@ -43,7 +43,7 @@ class MesProprietesItem extends Component {
     return (
       <div className="col-sm-4 mes-proprietes-item">
         <div className="property_item heading_space">
-          <div className="image">
+          <div className="image" >
               <ExampleSlider  imageData={oldimages}/>
             <span className="tag_l">
             <Link to={`/detail-annonce/${item._id}`}>
@@ -53,8 +53,10 @@ class MesProprietesItem extends Component {
             <span className="tag_t">{item.statut}</span>
           </div>
           <div className="proerty_content">
-            <div className="proerty_text">
-              <h3 className="captlize">
+            <div className="proerty_text" style={{width:"358px", height:"97.6px", marginBottom: "-28px",
+            marginTop:"-22px",    paddingLeft: "10px",
+            paddingRight: "89px"}}>
+              <h3 className="captlize" style={{textAlign: "center"}}>
                 <Link to={`/detail-annonce/${item._id}`}>{item.titre}</Link>
               </h3>
             </div>

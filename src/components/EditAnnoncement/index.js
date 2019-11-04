@@ -13,7 +13,7 @@ import {
 } from "../../Redux/annoncesActions";
 
 import "./editAnnoncement.css";
-
+import Preview from '../CreerAnnonce/uploadImage'
 const BASE_URL = "http://localhost:8080/";
 
 class EditAnnoncement extends Component {
@@ -92,37 +92,9 @@ class EditAnnoncement extends Component {
       }
     });
   }
-  selectImages = event => {
-    let images = [];
-    for (var i = 0; i < event.target.files.length; i++) {
-      images[i] = event.target.files.item(i);
-    }
-    images = images.filter(image => image.name.match(/\.(jpg|jpeg|png|gif)$/));
-    let message = `${images.length} valid image(s) selected`;
-    this.setState({ images, message });
-  };
+ 
 
-  uploadImages = () => {
-    const uploaders = this.state.images.map(image => {
-      const data = new FormData();
-      data.append("image", image, image.name);
 
-      // Make an AJAX upload request using Axios
-      return axios.post(BASE_URL + "upload", data).then(response => {
-        this.setState({
-          imageUrls: [response.data.imageUrl, ...this.state.imageUrls]
-        });
-      });
-    });
-
-    // Once all the files are uploaded
-    axios
-      .all(uploaders)
-      .then(() => {
-        console.log("done");
-      })
-      .catch(err => alert(err.message));
-  };
 
   render() {
     return (
@@ -448,6 +420,24 @@ class EditAnnoncement extends Component {
                         </select>
                       </div>
                     </div>
+                    <div className="col-sm-4">
+                    <div className="form-group has-danger">
+                     <label>
+                        Valables A Partir De
+                      </label>
+                      <br />
+                      <input
+                        type="date"
+                        className="form-control"
+                        placeholder="dd/mm/yyyy"
+                        onChange={this.onChange}
+                        value={this.state.ValableAPartirDe}
+                        name="ValableAPartirDe"
+                        style={{    marginTop: "7px",
+                          width: "397px"}}
+                      />
+                    </div>
+                  </div>
                     <div className="col-sm-12">
                       <h3 className="bottom15 margin40"> Description</h3>
                       <br />
@@ -458,26 +448,10 @@ class EditAnnoncement extends Component {
                         value={this.state.description}
                         onChange={this.onChange}
                       ></textarea>
-                      {/* <MyUploader /> */}
-                      {/* <textarea id="txtEditor" defaultValue={""} />*/}
+                      
                     </div>
 
-                    <div className="col-sm-6">
-                      <div className="form-group has-danger">
-                        <h3 className="bottom15 margin40">
-                          Valables A Partir De
-                        </h3>
-                        <br />
-                        <input
-                          type="date"
-                          className="form-control"
-                          placeholder="dd/mm/yyyy"
-                          onChange={this.onChange}
-                          value={this.state.ValableAPartirDe}
-                          name="ValableAPartirDe"
-                        />
-                      </div>
-                    </div>
+                    
 
                     <div className="row">
                       <div className="col-sm-12">
@@ -491,62 +465,10 @@ class EditAnnoncement extends Component {
                           />
                         </h3>
                         <div className="file_uploader bottom20">
-                          {/* <form onSubmit={this.onSubmit}
-                        id="upload-widget"
-                        method="post"
-                        action="http://wahabali.com/upload"
-                        className="dropzone"
-                   
-                      > */}
-                          <div className="col-sm-12">
-                            <div className="col-sm-4">
-                              <input
-                                className="form-control "
-                                type="file"
-                                onChange={this.selectImages}
-                                multiple
-                                style={{
-                                  height: "188px",
-                                  width: "683px"
-                                }}
-                              />
-                            </div>
-                            <p className="text-info">{this.state.message}</p>
-                            <br />
-                            <br />
-                            <br />
-                            <div className="col-sm-4">
-                              <button
-                                className="btn btn-primary"
-                                value="Submit"
-                                onClick={this.uploadImages}
-                              >
-                                Submit
-                              </button>
-                            </div>
+                        
+                        <Preview remplirGenereic={this.remplir} />
                           </div>
-
-                          <div className="row col-lg-12">
-                            {this.state.imageUrls.map((url, i) => (
-                              <div className="col-lg-2" key={i}>
-                                <img
-                                  src={BASE_URL + url}
-                                  className="img-rounded img-responsive"
-                                  alt="not available"
-                                />
-                                <br />
-                              </div>
-                            ))}
-                          </div>
-                          <div className="dz-default dz-message">
-                            <span>
-                              <i className="fa fa-plus-circle" />
-                              Cliquez ici pour déposer des fichiers à
-                              télécharger
-                            </span>
-                          </div>
-                          {/* </form> */}
-                        </div>
+                          
                       </div>
                     </div>
 
