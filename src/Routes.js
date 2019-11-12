@@ -21,7 +21,7 @@ import ProfilAgent from "./components/ProfilAgent/ProfilAgent";
 import ReactBot from "./components/reactBot/reactBot";
 import EditAnnoncement from "./components/EditAnnoncement";
 import DashboardComponent from "./components/chatFirbase/dashboard/dashboard"
-
+import Estimation from "./components/EstimationDePrix/estimation"
 
 class Routes extends React.Component {
   render() {
@@ -53,7 +53,10 @@ class Routes extends React.Component {
         <Route path="/agents" component={Agents} />
         <Route path="/profilAgent" component={ProfilAgent} />
         <Route path="/reactBot" component={ReactBot} />
-        <Route path='/messages' component={DashboardComponent} /> 
+        <Route path='/messages' component={DashboardComponent} />
+        <Route path='/estimations' component={Estimation} /> 
+ 
+        
       </div>
     );
   }

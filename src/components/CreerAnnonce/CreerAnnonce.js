@@ -204,7 +204,7 @@ class CreerAnnonce extends Component {
 
                     <div className="col-sm-6">
                       <div className="single-query form-group bottom20">
-                        <label className="control-label">Adresse</label>
+                        <label className="control-label">surface</label>
                         <input
                           type="text"
                           className="form-control"

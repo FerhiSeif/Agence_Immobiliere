@@ -202,7 +202,7 @@ class Header extends Component {
                           to="#."
                           className="dropdown-toggle"
                           data-toggle="dropdown"
-                        >
+                        > 
                           Services{" "}
                         </Link>
                         <ul className="dropdown-menu">
@@ -221,6 +221,11 @@ class Header extends Component {
                       <li>
                         <Link to="/reclamation">Réclamation</Link>
                       </li>
+                       {this.props.user.nom && (
+                      <li>
+                      <Link to="/estimations">Estimations</Link>
+                    </li>
+                       )}
                       <li>
                         <Link to="/agents">Nos Agents</Link>
                       </li>

@@ -84,13 +84,16 @@ closeModal(e) {
     window.location.reload();
 }
   open(e) {
+    this.accessControl();
      e.preventDefault()
      console.log("modal test1")
      this.openModal()
      
 }
 onSubmit(e) {
+  
    e.preventDefault();
+   
   if (this.validator.allValid()) {
     console.log("modal test2")
   const negocier = {
@@ -417,7 +420,7 @@ this.closeModal()
                       }
 
 
-                      <span>
+                      <span span onClick={this.open}>
                         <a href="#"  >
                         <i className="fa fa-home" aria-hidden="true"></i>{" "}
                           Demander Une Visite
