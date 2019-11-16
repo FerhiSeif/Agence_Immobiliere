@@ -10,7 +10,7 @@ import ListeClientsSatisfaits from "./../listeClientsSatisfait/listeClientsSatis
 import RechercheAvancee from "./../rechercheAvancee/rechercheAvancee";
 import Chat from "./../chatbot/chatbot";
 import { getAnnouncementsList } from "../../Redux/annoncesActions";
-
+import PaginationSimple from "./../pagination/pagination"
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -401,17 +401,7 @@ class Home extends Component {
             <ItemList liste={this.props.announcementsList} />
             <div className="row">
               <div className="col-md-12 text-center top15">
-                <ul className="pager">
-                  <li>
-                    <a href="#.">1</a>
-                  </li>
-                  <li className="active">
-                    <a href="#.">2</a>
-                  </li>
-                  <li>
-                    <a href="#.">3</a>
-                  </li>
-                </ul>
+                <PaginationSimple/>
               </div>
             </div>
           </div>

@@ -63,17 +63,17 @@ class AchatComponent extends Component {
     return (
       <div className="achat-component">
         {/*  {/*Maps*/}
-        {/*<section id="banner-map">
+       <section id="banner-map">
           <div className="container-fluid">
           <h3 className="hidden">hiden</h3>
           <div className="row property-list-area property-list-map-area">
-          <div className="property-list-map">/*}
-          {/* <div id="property-listing-map" className="multiple-location-map" style={{width: '100%', height: '545px'}} /> */}
-        {/*    <MapContainer />
+          <div className="property-list-map">
+           <div id="property-listing-map" className="multiple-location-map" style={{width: '100%', height: '545px'}} />
+           <MapContainer />
               </div>
               </div>
               </div>
-            </section>*/}
+            </section>
         {/* Map Ends */}
         {/* Search */}
 

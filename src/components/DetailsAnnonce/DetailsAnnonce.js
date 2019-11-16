@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link,withRouter } from "react-router-dom";
 import "./detailsAnnonce.css";
+import "react-image-gallery/styles/css/image-gallery.css";
+
 import { getSelectedAnnoncementAction } from "../../Redux/annoncesActions";
 import { compose } from "redux";
 import Modal from 'react-awesome-modal';
@@ -9,6 +11,23 @@ import { Input,FormFeedback } from 'reactstrap';
 import SimpleReactValidator from 'simple-react-validator';
 import axios from "axios";
 import Alert from 'react-bootstrap/Alert'
+import ImageGallery from 'react-image-gallery';
+
+const images = [
+  {
+    original: 'https://picsum.photos/id/1018/1000/600/',
+    thumbnail: 'https://picsum.photos/id/1018/250/150/',
+  },
+  {
+    original: 'https://picsum.photos/id/1015/1000/600/',
+    thumbnail: 'https://picsum.photos/id/1015/250/150/',
+  },
+  {
+    original: 'https://picsum.photos/id/1019/1000/600/',
+    thumbnail: 'https://picsum.photos/id/1019/250/150/',
+  },
+];
+
 class DetailsAnnonce extends Component {
 
   constructor(props) {
@@ -34,11 +53,12 @@ class DetailsAnnonce extends Component {
       tel: "",
       email: "",
       prixPropose:"",
+      date:"",
+      modalEtat1:false
     };
     this.onChange = this.onChange.bind(this);
     this.accessControl = this.accessControl.bind(this);
     this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
     this.open = this.open.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -77,21 +97,31 @@ class DetailsAnnonce extends Component {
 onChange(e) {
   this.setState({ [e.target.name]: e.target.value });
 }
-closeModal(e) {
-    this.setState({
-        visible : false,  
-    });
-    window.location.reload();
+closeModal() {
+        this.setState({
+             statut: "",
+      visible:false,
+      nom: "",
+      tel: "",
+      email: "",
+      prixPropose:"",
+      date:"",
+      modalEtat1:false
+        });
 }
-  open(e) {
+  open(data) {
+    if(data == 'date')
+      this.setState({modalEtat1 :true})
+    else
+          this.setState({modalEtat1 :false})
+
     this.accessControl();
-     e.preventDefault()
      console.log("modal test1")
      this.openModal()
-     
-}
-onSubmit(e) {
+  }
   
+onSubmit(e) {
+  const {modalEtat1} = this.state
    e.preventDefault();
    
   if (this.validator.allValid()) {
@@ -104,13 +134,33 @@ onSubmit(e) {
     prixPropose: this.state.prixPropose
   };
 
+    const Visite = {
+    nom: this.state.nom,
+    tel: this.state.tel,
+    nomAgent: this.state.nomAgent,
+    email: this.state.email,
+    date: this.state.date
+  };
 
-axios
-.post("http://localhost:8080/negocierPrix/add", negocier)
-.then(res => console.log(res.data))
-.catch(err => console.log(err.response.data));
-alert("félicitations 🎉 votre demande a été envoyée avec succès ")
-this.closeModal()
+  var getWay = "";
+  var dataPassrelle 
+
+  if(modalEtat1 == true)
+  {
+    getWay = "http://localhost:8080/negocierPrix/add"
+    dataPassrelle = negocier
+  }
+  else
+  {
+    getWay = "http://localhost:8080/demandeVisites/add"
+    dataPassrelle = Visite
+  }
+
+
+  axios
+  .post(getWay, dataPassrelle)
+  .then(res => console.log(res.data))
+  .catch(err => console.log(err.response.data));
 
 }
    else {
@@ -125,6 +175,8 @@ this.closeModal()
 }
   render() {
     let { selectedAnnoncement } = this.props;
+    const {visible,modalEtat1} = this.state
+
     return (
       <div className="details-annonce-container">
         {/* Page Banner Start*/}
@@ -161,94 +213,17 @@ this.closeModal()
                   {selectedAnnoncement.adresse}, {selectedAnnoncement.region}
                 </p>
 
+                    <ImageGallery items={images} />
+
                 <div id="property-d-1" className="owl-carousel single">
-                  {/*<div className="item">
+                 
                   
-                    <img
-                      src="images/property-details/property-d-1-1.jpg"
-                      alt="surface"
-                    />
-                  </div>
-                  <div className="item">
-                    <img
-                      src="images/property-details/property-d-1-1.jpg"
-                      alt="image"
-                    />
-                  </div>
-                  <div className="item">
-                    <img
-                      src="images/property-details/property-d-1-1.jpg"
-                      alt="image"
-                    />
-                  </div>
-                  <div className="item">
-                    <img
-                      src="images/property-details/property-d-1-1.jpg"
-                      alt="image"
-                    />
-                  </div>
-                  <div className="item">
-                    <img
-                      src="images/property-details/property-d-1-1.jpg"
-                      alt="image"
-                    />
-                  </div>
-                  <div className="item">
-                    <img
-                      src="images/property-details/property-d-1-1.jpg"
-                      alt="image"
-                    />
-                  </div>
-                  <div className="item">
-                    <img
-                      src="images/property-details/property-d-1-1.jpg"
-                      alt="image"
-                    />
-                  </div>
                 </div>
                 <div id="property-d-1-2" className="owl-carousel single">
-                  <div className="item">
-                    <img
-                      src="images/property-details/property-d-s-1-1.jpg"
-                      alt="image"
-                    />
+                  <div >
+
                   </div>
-                  <div className="item">
-                    <img
-                      src="images/property-details/property-d-s-1-2.jpg"
-                      alt="image"
-                    />
-                  </div>
-                  <div className="item">
-                    <img
-                      src="images/property-details/property-d-s-1-3.jpg"
-                      alt="image"
-                    />
-                  </div>
-                  <div className="item">
-                    <img
-                      src="images/property-details/property-d-s-1-4.jpg"
-                      alt="image"
-                    />
-                  </div>
-                  <div className="item">
-                    <img
-                      src="images/property-details/property-d-s-1-5.jpg"
-                      alt="image"
-                    />
-                  </div>
-                  <div className="item">
-                    <img
-                      src="images/property-details/property-d-s-1-1.jpg"
-                      alt="image"
-                    />
-                  </div>
-                  <div className="item">
-                    <img
-                      src="images/property-details/property-d-s-1-2.jpg"
-                      alt="image"
-                    />
-                </div>*/}
+
                 </div>
                 <div className="property_meta bg-black bottom40">
                   <span>
@@ -420,22 +395,23 @@ this.closeModal()
                       }
 
 
-                      <span span onClick={this.open}>
+                      <span  onClick={()=>{this.open('date')}}>
                         <a href="#"  >
                         <i className="fa fa-home" aria-hidden="true"></i>{" "}
                           Demander Une Visite
                         </a>
                       </span>
-                  <span onClick={this.open}>
+                      <span  onClick={()=>{this.open('prix')}}>
                         <a href="#">
                         <i className="fa fa-home" aria-hidden="true"></i>{" "}
                           Négocier Prix
                     </a>
-                     
-                        <Modal visible={this.state.visible} width="600" height="489" effect="fadeInDown" onClickAway={() => this.closeModal()}>
+                                           </span>
+                      <span>
+                        <Modal visible={visible} width="600" height="489" effect="fadeInDown" onClickAway={() => this.closeModal()}>
                        
                        
-                        <form className="callus" onClick={this.onSubmit}>
+                        <form className="callus">
                         <div style={{marginTop: "20px"}}>
             <h4  style={{marginLeft: "17px"}}>Nom & prénom :</h4>         
             <input 
@@ -487,33 +463,55 @@ this.closeModal()
       
         /> 
         <FormFeedback  style={{color:"red", marginLeft: "17px"}}  invalid={!this.validator.fieldValid('  tel ')}>{this.validator.message('tel', this.state.tel, 'required|phone')}</FormFeedback>
-
-
-        <h4   style={{marginLeft: "17px"}}>Prix Proposé :</h4>          
-        <input
-        valid={this.validator.fieldValid('Prix Proposé')} 
-        invalid={!this.validator.fieldValid('Prix Proposé ')}      
-        type="text"
-        className="form-control"
-        placeholder="Téléphone  "
-       
-        value={this.state.prixPropose}
-        onChange={this.onChange}
-        name="prixPropose"
-        style={{marginLeft: "17px",
-              
-        width: '566px'}}
-    
-      />               
+        {
+          modalEtat1 == false
+          ?
+                  <div>
+            <h4   style={{marginLeft: "17px"}}>Prix Proposé :</h4>          
+            <input
+                valid={this.validator.fieldValid('Prix Proposé')} 
+                invalid={!this.validator.fieldValid('Prix Proposé ')}      
+                type="text"
+                className="form-control"
+                placeholder="Téléphone  "
+                value={this.state.prixPropose}
+                onChange={this.onChange}
+                name="prixPropose"
+                style={{marginLeft: "17px",      
+                width: '566px'}}
+          />    
+        </div>
+          :
+                  <div>
+            <h4   style={{marginLeft: "17px"}}>Date :</h4>   
+             <input
+              valid={this.validator.fieldValid('Date')} 
+                invalid={!this.validator.fieldValid('Date')} 
+                        type="date"
+                        className="form-control"
+                        placeholder="dd/mm/yyyy"
+                        onChange={this.onChange}
+                        value={this.state.date}
+                        name="date"
+                        style={{marginLeft: "17px",      
+                width: '566px'}}
+                      />       
+             
+        </div>
+        }
+           
       <FormFeedback  style={{color:"red", marginLeft: "17px"}}  invalid={!this.validator.fieldValid('  prixPropose ')}>{this.validator.message('prixPropose', this.state.prixPropose, 'required|numeric')}</FormFeedback>
 
-                           
                             <button type="submit" className="btn btn-primary" 
                             style={{    width: "200px",
                               marginTop: "25px",
-                              marginLeft: "200px",
                               height: "44px"}}
-                              onSubmit={this.onSubmit}>Envoyer</button>
+                              onClick={(e)=> 
+                              {
+                                this.onSubmit(e)
+                                this.setState({visible : false});  
+                              }}>
+                             Envoyer</button>
                         </div>
                         </form>
                     </Modal>

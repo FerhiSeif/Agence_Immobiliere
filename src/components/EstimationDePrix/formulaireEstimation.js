@@ -3,6 +3,7 @@ import { villes, categories, numbers } from "./../CreerAnnonce/static";
 import Preview from './../CreerAnnonce/uploadImage'
 import axios from "axios"
 
+
 class FormulaireEstimation extends Component {
     constructor(props) {
         super(props);
@@ -19,7 +20,8 @@ class FormulaireEstimation extends Component {
     }
     onChange(e) {
         this.setState({
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
+            
         });
     }
     remplir(elementFile) {
@@ -28,30 +30,33 @@ class FormulaireEstimation extends Component {
         this.setState({
             files: elementFile
         });
-         var formData = new FormData();
-  const files=files.map((file, index) => {
-            formData.append(`file${index}`, file);
-        });
+
     }
+
+
     onSubmit(e) {
         e.preventDefault();
-       
+    
+ const formData = new FormData() 
+const file = this.state.files[0]
+
+
         const etudeProjet = {
             region: this.state.region,
             categorie: this.state.categorie,
             surfaces: this.state.surfaces,
             files: this.state.files,
-            situation: this.state.situation
+            situation: this.state.situation,
+
         }
 
 
-
-
+ const config = { headers: { 'Content-Type': 'multipart/form-data' } };
         axios
-            .post("http://localhost:8080/estimations/add", etudeProjet)
+            .post("http://localhost:8080/estimations/add", etudeProjet, formData, config )
             .then(res => console.log(res.data))
             .catch(err => console.log(err.response.data));
-        this.openModal();
+       
 
     }
 

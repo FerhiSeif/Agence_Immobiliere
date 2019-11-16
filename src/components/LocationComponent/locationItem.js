@@ -3,8 +3,20 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { addFavoriteAnnoncement } from "../../Redux/userActions";
+import ImageSlider from 'ac-react-simple-image-slider';
+
+
+ var ExampleSlider  = (props) => (
+  <ImageSlider height='260px' width='550px' data={props.imageData} />
+);
 
 class LocationItem extends Component {
+   constructor(props) {
+    super(props);
+    this.state = {
+      images:[]
+    };
+  }
   onAddToFavoriteClick = () => {
     if (!this.props.user._id)
       return alert(
@@ -39,6 +51,14 @@ class LocationItem extends Component {
 
   render() {
     const { item } = this.props;
+    const {images} = this.state
+    var oldimages = []
+    item.files.forEach(element => {
+        oldimages.push({src:`http://localhost:8080/uploads/${element.filename}`,title:''});
+    });
+
+    console.log('oldimages :::::');
+    console.log(oldimages);
     return (
       <div
         className="cbp-item sale col-sm-4"
@@ -46,12 +66,9 @@ class LocationItem extends Component {
       >
         <div className="property_item">
           <div className="image">
+           <ExampleSlider  imageData={oldimages}/>
             <Link to={`/detail-annonce/${item._id}`}>
-              <img
-                src="images/listing1.jpg"
-                alt="latest property"
-                className="img-responsive"
-              />
+              
             </Link>
 
             <span className="tag_t">{item.prix} / Mois</span>
