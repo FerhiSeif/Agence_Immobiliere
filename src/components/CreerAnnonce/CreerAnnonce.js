@@ -528,6 +528,7 @@ class CreerAnnonce extends Component {
                       </h3>
                       <div className="single-query form-group bottom15">
                         <label>URL Vidéos ou Youtube </label>
+
                         <input
                           type="text"
                           className="keyword-input"
@@ -536,6 +537,7 @@ class CreerAnnonce extends Component {
                           value={this.state.video}
                           name="video"
                         />
+                
                       </div>
                     </div>
                     {/*  <TextEditor / > */}

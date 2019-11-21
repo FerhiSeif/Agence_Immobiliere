@@ -12,21 +12,9 @@ import SimpleReactValidator from 'simple-react-validator';
 import axios from "axios";
 import Alert from 'react-bootstrap/Alert'
 import ImageGallery from 'react-image-gallery';
+import YouTube from 'react-youtube';
 
-const images = [
-  {
-    original: 'https://picsum.photos/id/1018/1000/600/',
-    thumbnail: 'https://picsum.photos/id/1018/250/150/',
-  },
-  {
-    original: 'https://picsum.photos/id/1015/1000/600/',
-    thumbnail: 'https://picsum.photos/id/1015/250/150/',
-  },
-  {
-    original: 'https://picsum.photos/id/1019/1000/600/',
-    thumbnail: 'https://picsum.photos/id/1019/250/150/',
-  },
-];
+
 
 class DetailsAnnonce extends Component {
 
@@ -54,19 +42,22 @@ class DetailsAnnonce extends Component {
       email: "",
       prixPropose:"",
       date:"",
-      modalEtat1:false
-    };
+      modalEtat1:false,
+      video:""
+        };
     this.onChange = this.onChange.bind(this);
     this.accessControl = this.accessControl.bind(this);
     this.openModal = this.openModal.bind(this);
     this.open = this.open.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this._handleSubmit = this._handleSubmit.bind(this);
   }
 
 
   componentDidMount() {
-  
+ 
     this.props.getSelectedAnnoncementAction(this.props.id);
+
   }
 
   displayAnnoncementOptions = () => {
@@ -77,15 +68,11 @@ class DetailsAnnonce extends Component {
   };
   
   accessControl (){
-
-    console.log("accesComtrol DetailAnnoce ;;;;;;;");
     let autorization = localStorage.getItem("Authorization");
-    console.log("autorization ;;;;;;;");
-    console.log(autorization);
-
     if ((!autorization)||(autorization == null)) this.props.history.push("/login");
     else{
       
+    
     }
   };
 
@@ -106,7 +93,8 @@ closeModal() {
       email: "",
       prixPropose:"",
       date:"",
-      modalEtat1:false
+      modalEtat1:false,
+      region:""
         });
 }
   open(data) {
@@ -116,7 +104,6 @@ closeModal() {
           this.setState({modalEtat1 :false})
 
     this.accessControl();
-     console.log("modal test1")
      this.openModal()
   }
   
@@ -125,7 +112,6 @@ onSubmit(e) {
    e.preventDefault();
    
   if (this.validator.allValid()) {
-    console.log("modal test2")
   const negocier = {
     nom: this.state.nom,
     tel: this.state.tel,
@@ -164,18 +150,102 @@ onSubmit(e) {
 
 }
    else {
-    console.log("modal test3")
     e.preventDefault();
-    console.log("modal test4")
     this.validator.showMessages();
     // rerender to show messages for the first time
     this.forceUpdate();
   
 }
 }
+  _handleSubmit(){
+   this.accessControl()
+
+   let { selectedAnnoncement } = this.props;
+    console.log(selectedAnnoncement)
+    const demandeAchat= {
+      userId : selectedAnnoncement.userId,
+      idImmobilier: '5dbb47f4b8dbd11c7c1eff3b',
+      region:selectedAnnoncement.region,
+      surface:selectedAnnoncement.surface,
+      prix:selectedAnnoncement.prix,
+      categorie:selectedAnnoncement.categorie
+    
+    };
+    
+  
+  if(selectedAnnoncement.statut=="A louer")
+        {  
+          axios({
+            method: "POST",
+            url: `/demandeLocations/add`,
+            headers: { Authorization: localStorage.getItem("Authorization") },
+            body:JSON.stringify({
+      userId : selectedAnnoncement.userId,
+      idImmobilier: '5dbb47f4b8dbd11c7c1eff3b',
+      region:selectedAnnoncement.titre,
+      surface:selectedAnnoncement.surface,
+      prix:selectedAnnoncement.prix,
+      categorie:selectedAnnoncement.categorie
+    })
+        });
+        alert("demande envoyee");
+        let statut = 200;
+        return statut;}
+  
+    else 
+         if( selectedAnnoncement.statut  != "A louer"){
+             axios({
+            method: "POST",
+            url: `/demandeAchats/add`,
+            headers: { Authorization: localStorage.getItem("Authorization") ,
+            demandeAchat}
+        });
+          }
+
+    
+    
+      
+
+ }
+
+
+
   render() {
     let { selectedAnnoncement } = this.props;
     const {visible,modalEtat1} = this.state
+    var videourl
+
+    if(selectedAnnoncement.video != undefined)
+    {
+        var tab1= selectedAnnoncement.video.split("v=");
+        var tab2= tab1[1].split("=");
+        var tab3= tab2[0].split("&");
+
+        videourl=tab3[0];
+        console.log("tab3::::::");
+        console.log(tab3);
+    }
+
+    var oldimages = []
+    if( selectedAnnoncement.files != undefined )
+    {
+      selectedAnnoncement.files.forEach(element => {
+        if(element != null)
+        {
+            oldimages.push({
+                original: `http://localhost:8080/uploads/${element.filename}`,
+                thumbnail: `http://localhost:8080/uploads/${element.filename}`,
+                });
+        }
+      });
+    }
+const opts = {
+      height: '390',
+      width: '640',
+      playerVars: { // https://developers.google.com/youtube/player_parameters
+        autoplay: 1
+      }
+    };
 
     return (
       <div className="details-annonce-container">
@@ -212,8 +282,9 @@ onSubmit(e) {
                 <p className="bottom30">
                   {selectedAnnoncement.adresse}, {selectedAnnoncement.region}
                 </p>
-
-                    <ImageGallery items={images} />
+                    
+                    <ImageGallery items={oldimages} useBrowserFullscreen={false} 
+                                  showFullscreenButton={false}  />
 
                 <div id="property-d-1" className="owl-carousel single">
                  
@@ -359,7 +430,13 @@ onSubmit(e) {
                         </video>
                       </figure>
                     </div>
+        
                   </div>
+                              <YouTube
+          videoId= {videourl}
+          opts={opts}
+            onReady={this._onReady}
+           />
                 </div>
                 <h2 className="text-uppercase bottom20">localisation</h2>
                 <div className="row bottom40">
@@ -378,14 +455,15 @@ onSubmit(e) {
                       {
                         selectedAnnoncement.statut != "A louer"
                         ?
-                        <span onClick={this.accessControl}>
-                        <Link to ="#">
+                        <span  onClick={()=>{this._handleSubmit()}}
+                       >
+                        <Link to ="#" >
                         <i className="fa fa-key" aria-hidden="true"></i>{" "}
                           Acheter
                           </Link>
                         </span>
                         :
-                        <span onClick={this.accessControl}>
+                        <span onClick={this.accessControl} onClick={()=>{this._handleSubmit()}}>
                           <Link to ="#">
                           <i className="fa fa-key" aria-hidden="true"></i>{" "}
                             Louer

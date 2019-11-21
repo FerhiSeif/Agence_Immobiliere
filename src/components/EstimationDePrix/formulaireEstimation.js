@@ -117,15 +117,13 @@ const file = this.state.files[0]
                 villes.map((el, i) => ( <
                     option key = { i }
                     value = { el } > { el } <
-                    /option>
+                    /option>                                            
                 ))
-            } <
-            /select> < /
-            div > <
-            /div> <
-            div className = "col-sm-4" >
-            <
-            div className = "single-query" >
+            } </select>
+             </div >
+              </div> 
+              <div className = "col-sm-4" >
+            < div className = "single-query" >
             <
             label > Surface: < /label> < /
             div > <

@@ -4,7 +4,13 @@ import MotDePassItem from "./motDePasseItem";
 import ReseauItem from "./reseauItem";
 import NavBarItem from "../NavBarItem";
 import "./Profile.css"
+
 class Profile extends Component {
+apply = (file) => {
+    // handle the blob file you want
+    // such as get the image src
+    var src = window.URL.createObjectURL(file);
+}
   render() {
     return (
       <div className="Profile">
@@ -36,7 +42,7 @@ class Profile extends Component {
               <div className="col-md-4 col-sm-6 col-xs-12">
                 <h2 className="text-uppercase bottom30">mon profil</h2>
                 <div className="agent-p-img">
-                  <img
+                 {/* <img
                     src="images/profile.jpg"
                     className="img-responsive"
                     alt="image"
@@ -46,8 +52,9 @@ class Profile extends Component {
                   </a>
                   <p className="text-center">
                     Minimum 215px x 215px<span>*</span>
-                  </p>
+                  </p>*/}
                 </div>
+                
               </div>
               <div className="col-md-8">
                 <div className="profile-form">
