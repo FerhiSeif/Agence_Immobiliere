@@ -43,7 +43,8 @@ class DetailsAnnonce extends Component {
       prixPropose:"",
       date:"",
       modalEtat1:false,
-      video:""
+      video:"",
+      region:""
         };
     this.onChange = this.onChange.bind(this);
     this.accessControl = this.accessControl.bind(this);
@@ -94,7 +95,7 @@ closeModal() {
       prixPropose:"",
       date:"",
       modalEtat1:false,
-      region:""
+     
         });
 }
   open(data) {
@@ -161,33 +162,27 @@ onSubmit(e) {
    this.accessControl()
 
    let { selectedAnnoncement } = this.props;
-    console.log(selectedAnnoncement)
-    const demandeAchat= {
-      userId : selectedAnnoncement.userId,
-      idImmobilier: '5dbb47f4b8dbd11c7c1eff3b',
-      region:selectedAnnoncement.region,
-      surface:selectedAnnoncement.surface,
-      prix:selectedAnnoncement.prix,
-      categorie:selectedAnnoncement.categorie
+   
     
-    };
-    
-  
+   console.log(selectedAnnoncement.region,selectedAnnoncement.categorie)
   if(selectedAnnoncement.statut=="A louer")
         {  
           axios({
             method: "POST",
             url: `/demandeLocations/add`,
             headers: { Authorization: localStorage.getItem("Authorization") },
-            body:JSON.stringify({
+            data:{
       userId : selectedAnnoncement.userId,
-      idImmobilier: '5dbb47f4b8dbd11c7c1eff3b',
-      region:selectedAnnoncement.titre,
+      idImmobilier: selectedAnnoncement._id,
+      region:selectedAnnoncement.region,
       surface:selectedAnnoncement.surface,
       prix:selectedAnnoncement.prix,
-      categorie:selectedAnnoncement.categorie
-    })
+      categorie:selectedAnnoncement.categorie,
+      
+    }
+    
         });
+        
         alert("demande envoyee");
         let statut = 200;
         return statut;}
@@ -197,16 +192,30 @@ onSubmit(e) {
              axios({
             method: "POST",
             url: `/demandeAchats/add`,
-            headers: { Authorization: localStorage.getItem("Authorization") ,
-            demandeAchat}
+            headers: { Authorization: localStorage.getItem("Authorization") },
+       
+ headers: { Authorization: localStorage.getItem("Authorization") },
+            data:{
+      userId : selectedAnnoncement.userId,
+      idImmobilier: selectedAnnoncement._id,
+      region:selectedAnnoncement.region,
+      surface:selectedAnnoncement.surface,
+      prix:selectedAnnoncement.prix,
+      categorie:selectedAnnoncement.categorie,
+      
+    }
+    
         });
-          }
-
+        
+        alert("demande envoyee");
+        let statut = 200;
+        return statut;}
+  
     
-    
+             }
       
 
- }
+ 
 
 
 
