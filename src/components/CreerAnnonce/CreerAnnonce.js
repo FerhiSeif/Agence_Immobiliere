@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import axios from "axios";
 import NavBarItem from "../NavBarItem";
 import TextEditor from "./textEditor";
-import GoogleApiWrapper from "../google-map/googleMap";
+import MapContainer from "./../google-map/googleMap";
 import { MDBInput } from "mdbreact";
 import checkboxes from "./checkboxes";
 import Checkbox from "./checkbox";
@@ -54,7 +54,9 @@ class CreerAnnonce extends Component {
       nombreGarage: "",
       nombreSalon: "",
       situation : false,
-      video:""
+      video:"",
+      lat:"",
+      lng:""
     };
     this.remplir = this.remplir.bind(this);
   }
@@ -544,14 +546,22 @@ class CreerAnnonce extends Component {
                     <div className="col-sm-12">
                       <h3 className="bottom15 margin40">Placez sur la carte</h3>
                       <div className="single-query form-group bottom15">
-                        <label> Addresse de la propriété</label>
+                        <label> Lattitude de la propriété</label>
                         <input
                           type="text"
                           className="keyword-input"
                           placeholder="Enter La Localisation"
                         />
+                        <label> Langitude de la propriété</label>
+                        <input
+                        type="text"
+                        className="keyword-input"
+                        placeholder="Enter La Localisation"
+                      />
                       </div>
-                      <div id="single_map">{/* <GoogleApiWrapper /> */}</div>
+                      <div id="single_map">
+                      <MapContainer />
+                      </div>
                     </div>
                   </div>
                 </form>

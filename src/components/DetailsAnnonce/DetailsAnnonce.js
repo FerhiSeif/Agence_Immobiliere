@@ -13,6 +13,7 @@ import axios from "axios";
 import Alert from 'react-bootstrap/Alert'
 import ImageGallery from 'react-image-gallery';
 import YouTube from 'react-youtube';
+import MapContainer from "./../google-map/googleMap";
 
 
 
@@ -244,7 +245,8 @@ onSubmit(e) {
       
 envoyerEmail(e){
   e.preventDefault()
-
+     let { selectedAnnoncement } = this.props;
+   
   console.log('this.validator.allValid() ::::::::');
   console.log(this.validator.allValid());
 
@@ -257,8 +259,35 @@ envoyerEmail(e){
       message: this.state.message
     };
  
+
+    
   
- axios
+  if(selectedAnnoncement.statut=="A louer"){
+     axios
+    .post("http://localhost:8080/demandeLocations/sendEmail", demande)
+    .then(res => {
+              console.log(res.data)
+              alert("email envoye");
+              let statut = 200;
+              this.setState({
+    
+                      nom2: "",
+                      tel2: "",
+                      email2: "",
+                    message:"",
+     
+             });
+
+              return statut;
+    })
+    .catch(err => console.log(err.response.data));
+
+  }
+  
+  
+  else if(selectedAnnoncement.statut=="A vendre")
+  { 
+    axios
     .post("http://localhost:8080/demandeAchats/sendEmail", demande)
     .then(res => {
               console.log(res.data)
@@ -277,6 +306,7 @@ envoyerEmail(e){
     })
     .catch(err => console.log(err.response.data));
 
+  }
   }
  else {
    console.log("testtttttt")
@@ -526,6 +556,7 @@ const opts = {
                         className="multiple-location-map"
                         style={{ width: "100%", height: "430px" }}
                       />
+                           <MapContainer lat ={selectedAnnoncement.lat}  lng={selectedAnnoncement.lng} />
                     </div>
                   </div>
                   <div className="social-networks">
