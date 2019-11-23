@@ -34,6 +34,23 @@ class DetailsAnnonce extends Component {
       },
       autoForceUpdate: this
     });
+
+        this.validator2 = new SimpleReactValidator({
+      messages: {
+        alpha                : '⚠ Le champ :attribute ne peut contenir que des lettres.',
+        email                : '⚠ Le champ :attribute doit êre une adresse email valide.',
+        required             : '⚠ Le champ :attribute est requis.',
+        size                 : '⚠ Le champ :attribute doit être :size:type.',
+        max                  : 'Le champ :attribute ne doit pas dépasser :max:type.',
+        min                  : 'Le champ :attribute doit au moins être :min:type.',
+        numeric              : '⚠ Le champ :attribute doit être un numero.',
+        phone                :'⚠ Le champ :attribute doit être un format de numéro de téléphone valide. Ex. 20-555-123 '
+
+      },
+      autoForceUpdate: this
+    });
+
+
     this.state = {
       statut: "",
       visible:false,
@@ -44,7 +61,11 @@ class DetailsAnnonce extends Component {
       date:"",
       modalEtat1:false,
       video:"",
-      region:""
+      region:"",
+      message:"",
+       nom2: "",
+      tel2: "",
+      email2: ""
         };
     this.onChange = this.onChange.bind(this);
     this.accessControl = this.accessControl.bind(this);
@@ -52,6 +73,7 @@ class DetailsAnnonce extends Component {
     this.open = this.open.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this._handleSubmit = this._handleSubmit.bind(this);
+    this.envoyerEmail = this.envoyerEmail.bind(this);
   }
 
 
@@ -87,7 +109,7 @@ onChange(e) {
 }
 closeModal() {
         this.setState({
-             statut: "",
+      statut: "",
       visible:false,
       nom: "",
       tel: "",
@@ -109,62 +131,68 @@ closeModal() {
   }
   
 onSubmit(e) {
+
+  e.preventDefault();
+  console.log("submit negocierPrix")
   const {modalEtat1} = this.state
-   e.preventDefault();
-   
-  if (this.validator.allValid()) {
-  const negocier = {
-    nom: this.state.nom,
-    tel: this.state.tel,
-    nomAgent: this.state.nomAgent,
-    email: this.state.email,
-    prixPropose: this.state.prixPropose
-  };
+    
+    if (this.validator2.allValid()) {
+    const negocier = {
+      nom: this.state.nom,
+      tel: this.state.tel,
+      nomAgent: this.state.nomAgent,
+      email: this.state.email,
+      prixPropose: this.state.prixPropose
+    };
 
-    const Visite = {
-    nom: this.state.nom,
-    tel: this.state.tel,
-    nomAgent: this.state.nomAgent,
-    email: this.state.email,
-    date: this.state.date
-  };
+      const Visite = {
+      nom: this.state.nom,
+      tel: this.state.tel,
+      nomAgent: this.state.nomAgent,
+      email: this.state.email,
+      date: this.state.date
+    };
 
-  var getWay = "";
-  var dataPassrelle 
+    var getWay = "";
+    var dataPassrelle 
 
-  if(modalEtat1 == true)
-  {
-    getWay = "http://localhost:8080/negocierPrix/add"
-    dataPassrelle = negocier
+    if(modalEtat1 == false)
+    {
+      getWay = "http://localhost:8080/negocierPrix/add"
+      dataPassrelle = negocier
+    }
+    else
+    {
+      getWay = "http://localhost:8080/demandeVisites/add"
+      dataPassrelle = Visite
+    }
+
+
+    axios
+    .post(getWay, dataPassrelle)
+    .then(res => console.log(res.data))
+    .catch(err => console.log(err.response.data));
+    this.closeModal()
+      alert("demande envoyee");
+        let statut = 200;
+        return statut;
+
   }
-  else
-  {
-    getWay = "http://localhost:8080/demandeVisites/add"
-    dataPassrelle = Visite
+    else {
+      this.validator.showMessages();
+      // rerender to show messages for the first time
+      this.forceUpdate(); 
   }
+}
 
 
-  axios
-  .post(getWay, dataPassrelle)
-  .then(res => console.log(res.data))
-  .catch(err => console.log(err.response.data));
-
-}
-   else {
-    e.preventDefault();
-    this.validator.showMessages();
-    // rerender to show messages for the first time
-    this.forceUpdate();
-  
-}
-}
   _handleSubmit(){
    this.accessControl()
 
    let { selectedAnnoncement } = this.props;
    
     
-   console.log(selectedAnnoncement.region,selectedAnnoncement.categorie)
+  
   if(selectedAnnoncement.statut=="A louer")
         {  
           axios({
@@ -214,7 +242,51 @@ onSubmit(e) {
     
              }
       
+envoyerEmail(e){
+  e.preventDefault()
 
+  console.log('this.validator.allValid() ::::::::');
+  console.log(this.validator.allValid());
+
+  if (this.validator2.allValid()) {
+      console.log("validation test")
+  const demande = {
+      nom: this.state.nom2,
+      tel: this.state.tel2,
+      email: this.state.email2,
+      message: this.state.message
+    };
+ 
+  
+ axios
+    .post("http://localhost:8080/demandeAchats/sendEmail", demande)
+    .then(res => {
+              console.log(res.data)
+              alert("email envoye");
+              let statut = 200;
+              this.setState({
+    
+                      nom2: "",
+                      tel2: "",
+                      email2: "",
+                    message:"",
+     
+             });
+
+              return statut;
+    })
+    .catch(err => console.log(err.response.data));
+
+  }
+ else {
+   console.log("testtttttt")
+      this.validator.showMessages();
+      // rerender to show messages for the first time
+      this.forceUpdate(); 
+  }
+
+
+}
  
 
 
@@ -231,8 +303,7 @@ onSubmit(e) {
         var tab3= tab2[0].split("&");
 
         videourl=tab3[0];
-        console.log("tab3::::::");
-        console.log(tab3);
+      
     }
 
     var oldimages = []
@@ -249,8 +320,9 @@ onSubmit(e) {
       });
     }
 const opts = {
-      height: '390',
-      width: '640',
+      height: '500',
+      width: '100%',
+     
       playerVars: { // https://developers.google.com/youtube/player_parameters
         autoplay: 1
       }
@@ -432,20 +504,18 @@ const opts = {
                   <div className="col-md-12 padding-b-20">
                     <div className="pro-video">
                       <figure className="wpf-demo-gallery">
-                     
-                        <video className="video" controls>
-                       
-                      {selectedAnnoncement.video}
-                        </video>
+                    
+                        {/*<YouTube
+                          videoId= {videourl}
+                          opts={opts}
+                          onReady={this._onReady}
+                         />*/}
                       </figure>
+
                     </div>
         
                   </div>
-                              <YouTube
-          videoId= {videourl}
-          opts={opts}
-            onReady={this._onReady}
-           />
+                            
                 </div>
                 <h2 className="text-uppercase bottom20">localisation</h2>
                 <div className="row bottom40">
@@ -540,12 +610,10 @@ const opts = {
           type="text"
           className="form-control"
           placeholder="Téléphone  "
-         
           value={this.state.tel}
           onChange={this.onChange}
           name="tel"
           style={{marginLeft: "17px",
-              
           width: '566px'}}
       
         /> 
@@ -553,21 +621,24 @@ const opts = {
         {
           modalEtat1 == false
           ?
-                  <div>
-            <h4   style={{marginLeft: "17px"}}>Prix Proposé :</h4>          
-            <input
-                valid={this.validator.fieldValid('Prix Proposé')} 
-                invalid={!this.validator.fieldValid('Prix Proposé ')}      
-                type="text"
-                className="form-control"
-                placeholder="Téléphone  "
-                value={this.state.prixPropose}
-                onChange={this.onChange}
-                name="prixPropose"
-                style={{marginLeft: "17px",      
-                width: '566px'}}
-          />    
-        </div>
+          <div>
+                <h4 style={{marginLeft: "17px"}}>Prix Proposé :</h4>          
+                <input
+                    valid={this.validator.fieldValid('Prix Proposé')} 
+                    invalid={!this.validator.fieldValid('Prix Proposé')}      
+                    type="text"
+                    className="form-control"
+                    placeholder="Prix Proposé"
+                    value={this.state.prixPropose}
+                    onChange={this.onChange}
+                    name="prixPropose"
+                    style={{marginLeft: "17px",width: '566px'}}
+                />   
+                    <FormFeedback  style={{color:"red", marginLeft: "17px"}}
+                            invalid={!this.validator.fieldValid('prixPropose')}>
+                            {this.validator.message('prixPropose', this.state.prixPropose, 'required|numeric')}
+                    </FormFeedback>
+            </div>
           :
                   <div>
             <h4   style={{marginLeft: "17px"}}>Date :</h4>   
@@ -582,12 +653,13 @@ const opts = {
                         name="date"
                         style={{marginLeft: "17px",      
                 width: '566px'}}
-                      />       
+                      />    
+                            <FormFeedback  style={{color:"red", marginLeft: "17px"}}  invalid={!this.validator.fieldValid('  date ')}>{this.validator.message('date', this.state.date, 'required')}</FormFeedback>
+   
              
         </div>
         }
            
-      <FormFeedback  style={{color:"red", marginLeft: "17px"}}  invalid={!this.validator.fieldValid('  prixPropose ')}>{this.validator.message('prixPropose', this.state.prixPropose, 'required|numeric')}</FormFeedback>
 
                             <button type="submit" className="btn btn-primary" 
                             style={{    width: "200px",
@@ -596,7 +668,6 @@ const opts = {
                               onClick={(e)=> 
                               {
                                 this.onSubmit(e)
-                                this.setState({visible : false});  
                               }}>
                              Envoyer</button>
                         </div>
@@ -685,14 +756,23 @@ const opts = {
                   </div>
                   <div className="col-sm-4 bottom40">
                     <form className="callus">
-                      <div className="form-group">
+                      <div className="form-group" 
+                             >
                         <label> Nom </label>
 
                         <input
+                          valid={this.validator2.fieldValid('Nom & prénom')} 
+                          invalid={!this.validator2.fieldValid('Nom & prénom ')}  
                           type="text"
                           className="form-control"
                           placeholder="Nom"
+                          value={this.state.nom2}
+                          onChange={this.onChange}
+                          name="nom2"
                         />
+                        <FormFeedback  style={{color:"red", marginLeft: "17px"}} 
+                        invalid={!this.validator2.fieldValid('  nom2 ')}>{this.validator2.message('nom2', this.state.nom2, 'required')}</FormFeedback>
+
                       </div>
                       <div className="form-group">
                         <label> Teléphone </label>
@@ -700,16 +780,27 @@ const opts = {
                           type="tel"
                           className="form-control"
                           placeholder="Téléphone"
+                           value={this.state.tel2}
+                          onChange={this.onChange}
+                          name="tel2"
                         />
                       </div>
                       <div className="form-group">
                         <label> Email </label>
 
                         <input
+                          valid={this.validator2.fieldValid('Email')} 
+                          invalid={!this.validator2.fieldValid('Email ')} 
                           type="email"
                           className="form-control"
                           placeholder="Email"
+                           value={this.state.email2}
+                          onChange={this.onChange}
+                          name="email2"
                         />
+                       <FormFeedback  style={{color:"red", marginLeft: "17px"}}
+                         invalid={!this.validator2.fieldValid('  email2 ')}>{this.validator2.message('email2', this.state.email2, 'required|email')}</FormFeedback>
+
                       </div>
                       <div className="form-group">
                         <label> Message </label>
@@ -718,12 +809,18 @@ const opts = {
                           className="form-control"
                           placeholder="Message"
                           defaultValue={""}
+                          value={this.state.message}
+                          onChange={this.onChange}
+                          name="message"
                         />
                       </div>
                       <input
                         type="submit"
                         className="btn-blue uppercase border_radius"
                         defaultValue="Envoyer Message"
+                        onClick={(e)=> 
+                              {
+                                this.envoyerEmail(e) }}
                       />
                     </form>
                   </div>
