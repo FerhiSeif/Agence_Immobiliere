@@ -30,7 +30,7 @@ export const getAnnouncementsList = queries => async dispatch => {
 export const addAnnoncementAction = newAnnoncement => async dispatch => {
     console.log('newAnnoncement ;;;;;; ');
     console.log(newAnnoncement);
-
+ 
     console.log('newAnnoncement options ;;;;;; ');
     console.log(newAnnoncement.options);
 
@@ -63,7 +63,8 @@ export const addAnnoncementAction = newAnnoncement => async dispatch => {
     formData.append("ValableAPartirDe", newAnnoncement.ValableAPartirDe);
     formData.append("ALaUne", newAnnoncement.ALaUne);
     formData.append("nombreGarage", newAnnoncement.nombreGarage);
-
+    formData.append("lat", newAnnoncement.lat);
+    formData.append("lng", newAnnoncement.lng);
     try {
         let response = await axios({
             method: "POST",

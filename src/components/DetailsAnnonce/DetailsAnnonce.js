@@ -323,10 +323,11 @@ envoyerEmail(e){
 
   render() {
     let { selectedAnnoncement } = this.props;
+    console.log(selectedAnnoncement)
     const {visible,modalEtat1} = this.state
     var videourl
 
-    if(selectedAnnoncement.video != undefined)
+    if(selectedAnnoncement.video && selectedAnnoncement.video!=="")
     {
         var tab1= selectedAnnoncement.video.split("v=");
         var tab2= tab1[1].split("=");
@@ -506,7 +507,7 @@ const opts = {
                             <b>valable a partir de</b>
                           </td>
                           <td className="text-right">
-                            {selectedAnnoncement.ValableAPartirDe.slice(0, 10)}
+                            {selectedAnnoncement.ValableAPartirDe?selectedAnnoncement.ValableAPartirDe.slice(0, 10):false}
                           </td>
                         </tr>
                       </tbody>
@@ -535,11 +536,11 @@ const opts = {
                     <div className="pro-video">
                       <figure className="wpf-demo-gallery">
                     
-                        {/*<YouTube
+                        <YouTube
                           videoId= {videourl}
                           opts={opts}
                           onReady={this._onReady}
-                         />*/}
+                         />
                       </figure>
 
                     </div>

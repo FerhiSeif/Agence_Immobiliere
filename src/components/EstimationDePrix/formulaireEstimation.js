@@ -10,13 +10,13 @@ class FormulaireEstimation extends Component {
         this.state = {
             region: "",
             categorie: "",
-            surfaces: "",
+            surface: "",
             files: [],
             situation: false
         };
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-
+        this.remplir = this.remplir.bind(this);
     }
     onChange(e) {
         this.setState({
@@ -32,31 +32,40 @@ class FormulaireEstimation extends Component {
         });
 
     }
-
+ 
 
     onSubmit(e) {
         e.preventDefault();
     
- const formData = new FormData() 
-const file = this.state.files[0]
+        const formData = new FormData() 
+        let file = this.state.files
+        console.log("this.state.files")
+        console.log(this.state.files[0])
+
+            formData.append("region", this.state.region);
+            formData.append("surface", this.state.surface);
+            formData.append("categorie", this.state.categorie);
+            formData.append("situation", this.state.situation);
 
 
-        const etudeProjet = {
-            region: this.state.region,
-            categorie: this.state.categorie,
-            surfaces: this.state.surfaces,
-            files: this.state.files,
-            situation: this.state.situation,
+        formData.append("files",this.state.files[0])
 
-        }
+        console.log("formData ::::::::")
+        console.log(formData)
 
 
- const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-        axios
-            .post("http://localhost:8080/estimations/add", etudeProjet, formData, config )
-            .then(res => console.log(res.data))
-            .catch(err => console.log(err.response.data));
-       
+        const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+        axios({  
+            method: "POST",
+            url: `/estimations/add`,
+            data: formData,
+            config: { headers: { 'Content-Type': 'multipart/form-data' } },
+            headers: { Authorization: localStorage.getItem("Authorization") }
+        });
+        alert("your annoncement was added successfuly");
+        let statut = 200;
+        return statut;
+
 
     }
 
@@ -149,15 +158,12 @@ const file = this.state.files[0]
             <
             label > Photos de la Propriété: < /label> < /
             div > <
-            /div> <
-            div className = "col-sm-8" >
-            <
-            div className = "single-query form-group" >
-            <
-            Preview remplirGenereic = { this.remplir }
-            /> < /
-            div > <
-            /div>
+            /div> 
+            <div className = "col-sm-8" >
+                <div className = "single-query form-group" >
+                <Preview remplirGenereic = { this.remplir }/> 
+                </div > 
+            </div>
 
             <
             div className = "col-md-12 col-sm-12 col-xs-12 text-right" >
