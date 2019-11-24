@@ -85,10 +85,10 @@ class DetailsAnnonce extends Component {
   }
 
   displayAnnoncementOptions = () => {
-    let { options } = this.props.selectedAnnoncement;
-    let optionsKeys = Object.keys(options);
-    let validOptions = optionsKeys.filter(el => options[el] === true);
-    return validOptions;
+    // let { myoptions } = this.props.selectedAnnoncement.myoptions;
+    // let validOptions = optionsKeys.filter(el => options[el] === true);
+    // console.log("optionsKeys :",validOptions)
+    // return validOptions;
   };
   
   accessControl (){
@@ -134,7 +134,7 @@ closeModal() {
 onSubmit(e) {
 
   e.preventDefault();
-  console.log("submit negocierPrix")
+
   const {modalEtat1} = this.state
     
     if (this.validator2.allValid()) {
@@ -247,11 +247,11 @@ envoyerEmail(e){
   e.preventDefault()
      let { selectedAnnoncement } = this.props;
    
-  console.log('this.validator.allValid() ::::::::');
-  console.log(this.validator.allValid());
+  // console.log('this.validator.allValid() ::::::::');
+  // console.log(this.validator.allValid());
 
   if (this.validator2.allValid()) {
-      console.log("validation test")
+    //  console.log("validation test")
   const demande = {
       nom: this.state.nom2,
       tel: this.state.tel2,
@@ -266,7 +266,7 @@ envoyerEmail(e){
      axios
     .post("http://localhost:8080/demandeLocations/sendEmail", demande)
     .then(res => {
-              console.log(res.data)
+              // console.log(res.data)
               alert("email envoye");
               let statut = 200;
               this.setState({
@@ -290,7 +290,7 @@ envoyerEmail(e){
     axios
     .post("http://localhost:8080/demandeAchats/sendEmail", demande)
     .then(res => {
-              console.log(res.data)
+              //console.log(res.data)
               alert("email envoye");
               let statut = 200;
               this.setState({
@@ -309,7 +309,7 @@ envoyerEmail(e){
   }
   }
  else {
-   console.log("testtttttt")
+   //console.log("testtttttt")
       this.validator.showMessages();
       // rerender to show messages for the first time
       this.forceUpdate(); 
@@ -323,7 +323,7 @@ envoyerEmail(e){
 
   render() {
     let { selectedAnnoncement } = this.props;
-    console.log(selectedAnnoncement)
+   console.log("selectedAnnoncement",selectedAnnoncement)
     const {visible,modalEtat1} = this.state
     var videourl
 
@@ -518,13 +518,14 @@ const opts = {
                 <div className="row bottom40">
                   <div className="col-md-12 col-sm-12 col-xs-12">
                     <ul className="pro-list options-list">
-                      {this.displayAnnoncementOptions().map((el, i) => {
-                        return (
-                          <li key={i} style={{ textTransform: "capitalize" }}>
-                            {el}
-                          </li>
-                        );
-                      })}
+                      {//this.displayAnnoncementOptions().map((el, i) => {
+                      //   return (
+                      //     <li key={i} style={{ textTransform: "capitalize" }}>
+                      //       {el}
+                      //     </li>
+                      //   );
+                      // })
+                    }
                     </ul>
                   </div>
                 </div>
@@ -541,6 +542,7 @@ const opts = {
                           opts={opts}
                           onReady={this._onReady}
                          />
+                         
                       </figure>
 
                     </div>

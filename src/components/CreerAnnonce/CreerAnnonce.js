@@ -34,7 +34,7 @@ class CreerAnnonce extends Component {
       description: "",
       ALaUne: false,
       ValableAPartirDe: "",
-      etat: "",
+      etat: "non confirme",
       categorie: "",
       options: {
         piscine: false,
@@ -47,6 +47,7 @@ class CreerAnnonce extends Component {
         balcon: false,
         climatisation: false
       },
+      myoptions:[],
       imagesUrl: [],
       files : [],
       imagesUrl: [],
@@ -56,7 +57,7 @@ class CreerAnnonce extends Component {
       situation : false,
       video:"",
       lat:"",
-      lng:""
+      lng:"",
     };
     this.remplir = this.remplir.bind(this);
   }
@@ -85,6 +86,8 @@ class CreerAnnonce extends Component {
   };
  
   onAddAnnoncementClick = () => {
+    //console.log(this.state)
+
     if(this.state.statut=="A Vendre" || this.state.statut=="A louer"){
       this.props
       .addAnnoncementAction({
@@ -107,6 +110,13 @@ class CreerAnnonce extends Component {
         ...this.state.options,
         [e.target.name]: !this.state.options[e.target.name]
       }
+    },()=>{
+      let { options } = this.state
+     let optionsKeys = Object.keys(options);
+    let validOptions = optionsKeys.filter(el => options[el] === true);
+     this.setState({
+      myoptions:validOptions
+     })
     });
   }
  

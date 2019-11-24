@@ -53,7 +53,7 @@ export const addAnnoncementAction = newAnnoncement => async dispatch => {
     formData.append("nombrePiece", newAnnoncement.nombrePiece);
     formData.append("nombreFacade", newAnnoncement.nombreFacade);
     formData.append("nombreSalleDeBain", newAnnoncement.nombreSalleDeBain);
-
+    formData.append("etat", newAnnoncement.etat);
     formData.append("options", JSON.stringify(newAnnoncement.options));
     formData.append("description", newAnnoncement.description);
     formData.append("statut", newAnnoncement.statut);
@@ -65,6 +65,7 @@ export const addAnnoncementAction = newAnnoncement => async dispatch => {
     formData.append("nombreGarage", newAnnoncement.nombreGarage);
     formData.append("lat", newAnnoncement.lat);
     formData.append("lng", newAnnoncement.lng);
+    formData.append("myoptions",newAnnoncement.myoptions)
     try {
         let response = await axios({
             method: "POST",

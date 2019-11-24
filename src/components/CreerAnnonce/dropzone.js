@@ -10,7 +10,7 @@ images: [],
 imageUrls: [],
 message: ''
 }
-}
+
 selectImages = (event) => {
 let images = []
 for (var i = 0; i < event.target.files.length; i++) {
