@@ -5,7 +5,7 @@ import "../../css/reality-icon.css";
 import "../../css/font-awesome.min.css";
 import ItemList from "../itemList/itemList";
 import ListMeilleurBien from "../listMeilleurBien/listMeilleurBien";
-import ListeBienRecomande from "./../listeBienRecomande/listeBienRecomande";
+import ListeBienRecomande from "../listeBienRecomande/listeBienRecomande";
 import ListeClientsSatisfaits from "./../listeClientsSatisfait/listeClientsSatisfait";
 import RechercheAvancee from "./../rechercheAvancee/rechercheAvancee";
 import Chat from "./../chatbot/chatbot";
@@ -22,6 +22,11 @@ class Home extends Component {
   }
 
   render() {
+    console.log('announcementsList :',this.props.announcementsList)
+
+    console.log('this.props.announcementsList : => this.props.myListe from Home ;;;;;;;');
+    console.log(this.props.announcementsList);
+
     return (
       <div className="Home">
         <div className="rev_slider_wrapper">
@@ -51,10 +56,10 @@ class Home extends Component {
                   data-mask_in="x:0px;y:0px;s:inherit;e:inherit;"
                 >
                   <h4 className="bg_blue default_clr">
-                    $8,600 Per Month - Apartment
+                    600 Dinar par Mois - Apartment
                   </h4>
                   <div className="bg_white text-left">
-                    <h2>Family House in Tunisie</h2>
+                    <h2>Maison familiale à Tunis</h2>
                     <p>
                       Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
                       sed diam <br />
@@ -64,7 +69,7 @@ class Home extends Component {
                       <i>
                         <img src="images/arrowl.png" alt="arrow" />
                       </i>
-                      <span>More Details</span>
+                      <span>plus de détails</span>
                       <i>
                         <img src="images/arrowr.png" alt="arrow" />
                       </i>
@@ -73,14 +78,14 @@ class Home extends Component {
                   <div className="property_meta">
                     <span>
                       <i className="icon-select-an-objecto-tool" />
-                      4800 sq ft
+                      480 m2
                     </span>
                     <span>
-                      <i className="icon-bed" />3 Bedrooms
+                      <i className="icon-bed" />3 chambres
                     </span>
                     <span>
                       <i className="icon-old-television" />
-                      TV Lounge
+                      salons
                     </span>
                     <span>
                       <i className="icon-garage" />1 Garage
@@ -398,7 +403,7 @@ class Home extends Component {
               </div>
             </div>
 
-            <ItemList liste={this.props.announcementsList} />
+            <ItemList liste={this.props.announcementsList.filter(elm=>elm.aLaUne===true)} />
             <div className="row">
               <div className="col-md-12 text-center top15">
                 <PaginationSimple/>
@@ -408,11 +413,13 @@ class Home extends Component {
         </section>
         {/*Latest Property Ends*/}
         {/*Best Deal Properties*/}
-        <section id="deals" className="padding bg_light">
+
+
+        {/*<section id="deals" className="padding bg_light">
           <div className="container">
             <div className="row">
               <div className="col-sm-10">
-                <h2 className="uppercase">MEILLEURS PROPRIÉTÉS</h2>
+                <h2 className="uppercase">ListMeilleurBieniste PROPRIÉTÉS</h2>
                 <p className="heading_space">
                   Nous sommes fiers de vous présenter certaines des meilleures
                   maisons, appartements, bureaux, avec des prix abordables.
@@ -422,25 +429,21 @@ class Home extends Component {
             <div className="row">
               <ListMeilleurBien />
             </div>
-          </div>
-        </section>
+          </div>''
+        </section>*/}
+
+
         {/*Best Deal Properties Ends*/}
         {/*Featured Property*/}
         <section id="featured_property" className="padding">
           <div className="container">
             <div className="row">
               <div className="col-sm-10">
-                <h2 className="uppercase">PROPRIÉTÉS RECOMMANDÉES</h2>
-                <p className="heading_space">
-                  {" "}
-                  Nous sommes fiers de vous présenter certaines des meilleures
-                  maisons, appartements, bureaux , avec les meilleurs prix.
-                  prices.
-                </p>
+                <h2 className="uppercase">LISTE DES PROPRIÉTÉS </h2>
               </div>
-            </div>
+            </div> 
             <div className="row">
-              <ListeBienRecomande />
+              <ListeBienRecomande myListe={this.props.announcementsList}  />
             </div>
           </div>
         </section>

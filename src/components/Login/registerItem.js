@@ -33,7 +33,7 @@ class Register extends Component {
       motDePasse2: "",
       errors: {},
       visible:false,
-      role:[],
+      role:"client",
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -69,6 +69,7 @@ closeModal(e) {
       email: this.state.email,
       motDePasse: this.state.motDePasse,
       motDePasse2: this.state.motDePasse2,
+      role: this.state.role
       
     };
     if(this.state.motDePasse !== this.state.motDePasse2){

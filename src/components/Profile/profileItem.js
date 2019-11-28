@@ -14,7 +14,8 @@ class ProfilItem extends Component {
       adress: "",
       tel: "",
       email: "",
-      isEditable: false
+      isEditable: false,
+      files:[]
     };
   }
 

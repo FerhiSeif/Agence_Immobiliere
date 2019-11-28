@@ -51,7 +51,9 @@ class DetailsAnnonce extends Component {
       autoForceUpdate: this
     });
 
+       
 
+console.log("localStorage",localStorage.getItem("user"))
     this.state = {
       statut: "",
       visible:false,
@@ -66,7 +68,8 @@ class DetailsAnnonce extends Component {
       message:"",
        nom2: "",
       tel2: "",
-      email2: ""
+      email2: "",
+      userId:localStorage.getItem("user")!= null?JSON.parse(localStorage.getItem("user")):{user:{_id:'00'}}
         };
     this.onChange = this.onChange.bind(this);
     this.accessControl = this.accessControl.bind(this);
@@ -85,10 +88,11 @@ class DetailsAnnonce extends Component {
   }
 
   displayAnnoncementOptions = () => {
-    // let { myoptions } = this.props.selectedAnnoncement.myoptions;
-    // let validOptions = optionsKeys.filter(el => options[el] === true);
-    // console.log("optionsKeys :",validOptions)
-    // return validOptions;
+    
+     let { myoptions } = this.props.selectedAnnoncement.myoptions;
+     let validOptions = myoptions.filter(el => myoptions[el] === true);
+     console.log("optionsKeys :",validOptions)
+    return validOptions;
   };
   
   accessControl (){
@@ -137,7 +141,7 @@ onSubmit(e) {
 
   const {modalEtat1} = this.state
     
-    if (this.validator2.allValid()) {
+    if (this.validator.allValid()) {
     const negocier = {
       nom: this.state.nom,
       tel: this.state.tel,
@@ -247,11 +251,11 @@ envoyerEmail(e){
   e.preventDefault()
      let { selectedAnnoncement } = this.props;
    
-  // console.log('this.validator.allValid() ::::::::');
-  // console.log(this.validator.allValid());
+   console.log('this.validator.allValid() ::::::::');
+  console.log(this.validator.allValid());
 
   if (this.validator2.allValid()) {
-    //  console.log("validation test")
+   console.log("validation test")
   const demande = {
       nom: this.state.nom2,
       tel: this.state.tel2,
@@ -259,9 +263,6 @@ envoyerEmail(e){
       message: this.state.message
     };
  
-
-    
-  
   if(selectedAnnoncement.statut=="A louer"){
      axios
     .post("http://localhost:8080/demandeLocations/sendEmail", demande)
@@ -285,7 +286,7 @@ envoyerEmail(e){
   }
   
   
-  else if(selectedAnnoncement.statut=="A vendre")
+  else if(selectedAnnoncement.statut=="A Vendre")
   { 
     axios
     .post("http://localhost:8080/demandeAchats/sendEmail", demande)
@@ -309,10 +310,11 @@ envoyerEmail(e){
   }
   }
  else {
-   //console.log("testtttttt")
-      this.validator.showMessages();
-      // rerender to show messages for the first time
-      this.forceUpdate(); 
+ 
+    e.preventDefault();
+    this.validator2.showMessages();
+    this.forceUpdate();
+ 
   }
 
 
@@ -322,7 +324,14 @@ envoyerEmail(e){
 
 
   render() {
+    console.log("this.props",this.props)
+    console.log("user from session ;;;;;;")
+    console.log(JSON.parse(localStorage.getItem("user")))
+
+    console.log("userId",this.state.userId.user._id)
+    console.log("selectedAnnocement.userId",this.props.selectedAnnoncement.userId)
     let { selectedAnnoncement } = this.props;
+    console.log(this.props.selectedAnnoncement.myoptions)
    console.log("selectedAnnoncement",selectedAnnoncement)
     const {visible,modalEtat1} = this.state
     var videourl
@@ -518,13 +527,7 @@ const opts = {
                 <div className="row bottom40">
                   <div className="col-md-12 col-sm-12 col-xs-12">
                     <ul className="pro-list options-list">
-                      {//this.displayAnnoncementOptions().map((el, i) => {
-                      //   return (
-                      //     <li key={i} style={{ textTransform: "capitalize" }}>
-                      //       {el}
-                      //     </li>
-                      //   );
-                      // })
+                      {this.props.selectedAnnoncement.myoptions
                     }
                     </ul>
                   </div>
@@ -563,9 +566,11 @@ const opts = {
                     </div>
                   </div>
                   <div className="social-networks">
-                    <div className="social-icons-2">
-
-                      {
+                    
+{
+                      this.state.userId.user._id != this.props.selectedAnnoncement.userId
+  ?
+<div className="social-icons-2">                      {
                         selectedAnnoncement.statut != "A louer"
                         ?
                         <span  onClick={()=>{this._handleSubmit()}}
@@ -584,6 +589,8 @@ const opts = {
                         </span>
 
                       }
+
+           
 
 
                       <span  onClick={()=>{this.open('date')}}>
@@ -708,7 +715,9 @@ const opts = {
                         </form>
                     </Modal>
                  </span>
-                    </div>
+                 </div> 
+           :
+           null }
                   </div>
                 </div>
                 <h2 className="text-uppercase bottom20">Contact Agent</h2>

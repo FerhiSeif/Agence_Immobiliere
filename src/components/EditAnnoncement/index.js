@@ -50,8 +50,11 @@ class EditAnnoncement extends Component {
       imageUrls: [],
       message: "",
       nombreGarage: "",
-      nombreSalon: ""
+      nombreSalon: "",
+      files:[],
+      myoptions:[]
     };
+       this._optionExisted = this._optionExisted.bind(this);
   }
 
   componentDidMount() {
@@ -60,7 +63,27 @@ class EditAnnoncement extends Component {
       this.setState({
         ...this.props.editableAnnoncement
       });
+      
+      console.log('this.props.editableAnnoncement ;;;;;;;');
+      console.log(this.props.editableAnnoncement) ;
+      this._optionExisted("piscine");      
     });
+
+  }
+
+  _optionExisted(checkBoxValue)
+  {
+      const {myoptions} = this.state 
+      if ( myoptions[0] != undefined )
+      {      
+        let listOptions = myoptions[0].split(",");
+        for (let index = 0; index < listOptions.length; index++) {
+          const element = listOptions[index];
+          if(checkBoxValue == element)
+            return true
+        }
+      }
+      return false
   }
 
   accessControl = () => {
@@ -97,6 +120,7 @@ class EditAnnoncement extends Component {
 
 
   render() {
+    console.log("files state :",this.state.files)
     return (
       <div className="edit-annoncement-container">
         {/* Page Banner Start*/}
@@ -466,7 +490,8 @@ class EditAnnoncement extends Component {
                         </h3>
                         <div className="file_uploader bottom20">
                         
-                        <Preview remplirGenereic={this.remplir} />
+                        <Preview value={this.state.files}
+                        onChange={this.onChange} />
                           </div>
                           
                       </div>
@@ -479,13 +504,26 @@ class EditAnnoncement extends Component {
                           <div className="row">
                             <div className="col-md-8 col-sm-8">
                               <div className="form-group white checkbox-container ">
-                                {checkboxes.map(item => (
+                               
+                              {checkboxes.map(item => (
                                   <div className="checkbox-unity">
-                                    <Checkbox
-                                      name={item.name}
-                                      checked={this.state.options[item.name]}
-                                      onChange={e => this.handleChange(e)}
-                                    />
+
+                                        { 
+                                          this._optionExisted(item.name)
+                                          ?
+                                          <Checkbox
+                                            name={item.name}
+                                            checked={true}
+                                            onChange={e => this.handleChange(e)}
+                                          />
+                                          :
+                                          <Checkbox
+                                            name={item.name}
+                                            checked={this.state.options[item.name]}
+                                            onChange={e => this.handleChange(e)}
+                                          />
+                                        }
+
                                     <label
                                       key={item.key}
                                       style={{
@@ -497,6 +535,8 @@ class EditAnnoncement extends Component {
                                     </label>
                                   </div>
                                 ))}
+
+
                               </div>
                             </div>
                           </div>

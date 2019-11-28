@@ -4,11 +4,30 @@ import MotDePassItem from "./motDePasseItem";
 import ReseauItem from "./reseauItem";
 import NavBarItem from "../NavBarItem";
 import "./Profile.css"
+import AvatarImageCropper from 'react-avatar-image-cropper';
+
 
 class Profile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+        files: "",
+       
+    };
+    
+ 
+}
+
 apply = (file) => {
     // handle the blob file you want
     // such as get the image src
+ 
+    console.log("remplir", file);
+
+    this.setState({
+        files: file
+    });
+    console.log("file state",this .state.files)
     var src = window.URL.createObjectURL(file);
 }
   render() {
@@ -42,6 +61,7 @@ apply = (file) => {
               <div className="col-md-4 col-sm-6 col-xs-12">
                 <h2 className="text-uppercase bottom30">mon profil</h2>
                 <div className="agent-p-img">
+                 
                  {/* <img
                     src="images/profile.jpg"
                     className="img-responsive"
@@ -53,6 +73,9 @@ apply = (file) => {
                   <p className="text-center">
                     Minimum 215px x 215px<span>*</span>
                   </p>*/}
+            <div style={{ width: '250px', height: '250px', margin: 'auto', border: '1px solid black' }}>
+            <AvatarImageCropper apply={this.apply} />
+        </div>
                 </div>
                 
               </div>

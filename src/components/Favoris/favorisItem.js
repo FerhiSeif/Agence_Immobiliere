@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-
 import { deleteFavoriteAnnoncement } from "../../Redux/userActions";
+import ImageSlider from 'ac-react-simple-image-slider';
+
+
+ var ExampleSlider  = (props) => (
+  <ImageSlider height='260px' width='550px' data={props.imageData} />
+);
 
 class FavorisItem extends Component {
   constructor(props) {
@@ -16,18 +21,25 @@ class FavorisItem extends Component {
 
   render() {
     const { item } = this.props;
+    const {images} = this.state
+
+    var oldimages = []
+    item.files.forEach(element => {
+        oldimages.push({src:`http://localhost:8080/uploads/${element.filename}`,title:''});
+    });
+
+    console.log('oldimages :::::');
+    console.log(oldimages);
     return (
       <div className="col-sm-4">
         <div className="property_item heading_space">
           <div className="image">
+            <ExampleSlider  imageData={oldimages}/>
+            <span className="tag_l">
             <Link to={`/detail-annonce/${item._id}`}>
-              <img
-                src="images/listing1.jpg"
-                alt="latest property"
-                className="img-responsive"
-              />
+                {item.situation ? "Publié" : "En cours de validation"}
             </Link>
-            <div className="price clearfix">
+            </span>            <div className="price clearfix">
               <span className="tag pull-right">Prix : {item.prix}</span>
             </div>
             <span className="tag_l">Featured</span>

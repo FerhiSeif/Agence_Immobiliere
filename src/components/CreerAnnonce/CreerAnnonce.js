@@ -117,12 +117,14 @@ class CreerAnnonce extends Component {
      this.setState({
       myoptions:validOptions
      })
+     console.log("opttttttttt",this.state.myoptions)
     });
   }
  
   
 
   render() {
+    
     return (
       <div className="CreerAnnonce">
         {/* Page Banner Start*/}
@@ -198,7 +200,7 @@ class CreerAnnonce extends Component {
                         className="single-query form-group bottom20"
                         style={{ marginTop: "-8px" }}
                       >
-                        <label>region</label>
+                        <label>Region</label>
                         <select
                           name="region"
                           value={this.state.region}
@@ -216,7 +218,7 @@ class CreerAnnonce extends Component {
 
                     <div className="col-sm-6">
                       <div className="single-query form-group bottom20">
-                        <label className="control-label">surface</label>
+                        <label className="control-label">Adresse</label>
                         <input
                           type="text"
                           className="form-control"
@@ -561,16 +563,24 @@ class CreerAnnonce extends Component {
                           type="text"
                           className="keyword-input"
                           placeholder="Enter La Localisation"
+                          onChange={this.onChange}
+                          value={this.state.lat}
+                          name="lat"
                         />
                         <label> Langitude de la propriété</label>
                         <input
                         type="text"
                         className="keyword-input"
                         placeholder="Enter La Localisation"
+                        onChange={this.onChange}
+                        value={this.state.lng}
+                        name="lng"
                       />
                       </div>
+
                       <div id="single_map">
-                      <MapContainer />
+                      
+                       <MapContainer lat ={this.state.lat}  lng={this.state.lng} />
                       </div>
                     </div>
                   </div>

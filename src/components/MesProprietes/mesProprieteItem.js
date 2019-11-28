@@ -43,7 +43,7 @@ class MesProprietesItem extends Component {
     return (
       <div className="col-sm-4 mes-proprietes-item">
         <div className="property_item heading_space">
-          <div className="image" >
+          <div className="image" > 
               <ExampleSlider  imageData={oldimages}/>
             <span className="tag_l">
             <Link to={`/detail-annonce/${item._id}`}>
