@@ -490,7 +490,7 @@ class EditAnnoncement extends Component {
                         </h3>
                         <div className="file_uploader bottom20">
                         
-                        <Preview value={this.state.files}
+                        <Preview source={this.state.files}
                         onChange={this.onChange} />
                           </div>
                           

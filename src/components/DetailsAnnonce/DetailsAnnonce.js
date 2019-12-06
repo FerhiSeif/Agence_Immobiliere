@@ -35,6 +35,20 @@ class DetailsAnnonce extends Component {
       },
       autoForceUpdate: this
     });
+    this.validator1 = new SimpleReactValidator({
+      messages: {
+        alpha                : '⚠ Le champ :attribute ne peut contenir que des lettres.',
+        email                : '⚠ Le champ :attribute doit êre une adresse email valide.',
+        required             : '⚠ Le champ :attribute est requis.',
+        size                 : '⚠ Le champ :attribute doit être :size:type.',
+        max                  : 'Le champ :attribute ne doit pas dépasser :max:type.',
+        min                  : 'Le champ :attribute doit au moins être :min:type.',
+        numeric              : '⚠ Le champ :attribute doit être un numero.',
+        phone                :'⚠ Le champ :attribute doit être un format de numéro de téléphone valide. Ex. 20-555-123 '
+
+      },
+      autoForceUpdate: this
+    });
 
         this.validator2 = new SimpleReactValidator({
       messages: {
@@ -73,8 +87,8 @@ console.log("localStorage",localStorage.getItem("user"))
         };
     this.onChange = this.onChange.bind(this);
     this.accessControl = this.accessControl.bind(this);
-    this.openModal = this.openModal.bind(this);
     this.open = this.open.bind(this);
+    this.closeModal=this.closeModal.bind(this)
     this.onSubmit = this.onSubmit.bind(this);
     this._handleSubmit = this._handleSubmit.bind(this);
     this.envoyerEmail = this.envoyerEmail.bind(this);
@@ -104,27 +118,27 @@ console.log("localStorage",localStorage.getItem("user"))
     }
   };
 
-  openModal() {
-    this.setState({
-        visible : true
-    });
-}
+
 onChange(e) {
   this.setState({ [e.target.name]: e.target.value });
 }
-closeModal() {
-        this.setState({
-      statut: "",
-      visible:false,
+ closeModal(e) {
+       this.setState({
+          visible:false,
+                              statut: "",
+     
       nom: "",
       tel: "",
       email: "",
       prixPropose:"",
       date:"",
-      modalEtat1:false,
+      modalEtat1:false,                         
      
         });
-}
+    }
+
+
+
   open(data) {
     if(data == 'date')
       this.setState({modalEtat1 :true})
@@ -132,16 +146,26 @@ closeModal() {
           this.setState({modalEtat1 :false})
 
     this.accessControl();
-     this.openModal()
-  }
+      this.setState({
+            visible: true
+        });
+ 
+}
+   
   
 onSubmit(e) {
 
   e.preventDefault();
 
   const {modalEtat1} = this.state
-    
-    if (this.validator.allValid()) {
+  
+        const Visite = {
+      nom: this.state.nom,
+      telephone: this.state.tel,
+      nomAgent: this.state.nomAgent,
+      email: this.state.email,
+      date: this.state.date
+    };
     const negocier = {
       nom: this.state.nom,
       tel: this.state.tel,
@@ -150,44 +174,53 @@ onSubmit(e) {
       prixPropose: this.state.prixPropose
     };
 
-      const Visite = {
-      nom: this.state.nom,
-      tel: this.state.tel,
-      nomAgent: this.state.nomAgent,
-      email: this.state.email,
-      date: this.state.date
-    };
+  
 
-    var getWay = "";
-    var dataPassrelle 
+    
 
-    if(modalEtat1 == false)
-    {
-      getWay = "http://localhost:8080/negocierPrix/add"
-      dataPassrelle = negocier
+    if(modalEtat1 == false){
+         if (this.validator.allValid()) {
+              console.log("prix",this.state.prixPropose)
+              axios
+              .post("http://localhost:8080/negocierPrix/add",negocier)
+              .then(res => console.log(res.data))
+              .catch(err => console.log(err.response.data));
+              this.closeModal()
+                alert("demande envoyee");
+                  let statut = 200;
+                  return statut;
+              console.log("prix",this.state.prixPropose)
+     
     }
-    else
-    {
-      getWay = "http://localhost:8080/demandeVisites/add"
-      dataPassrelle = Visite
+         else {
+        
+        this.validator.showMessages();
+       //rerender to show messages for the first time
+       this.forceUpdate(); 
+            }
     }
-
-
-    axios
-    .post(getWay, dataPassrelle)
-    .then(res => console.log(res.data))
-    .catch(err => console.log(err.response.data));
-    this.closeModal()
-      alert("demande envoyee");
-        let statut = 200;
-        return statut;
-
-  }
     else {
-      this.validator.showMessages();
-      // rerender to show messages for the first time
-      this.forceUpdate(); 
+      
+      if(this.validator1.allValid()) {     
+              axios
+              .post( "http://localhost:8080/demandeVisites/add", Visite)
+              .then(res => console.log(res.data))
+              .catch(err => console.log(err.response.data));
+              this.closeModal()
+                alert("demande envoyee");
+                  let statut = 200;
+                  return statut;
+
+    
+    }
+     else {
+        
+      this.validator1.showMessages();
+       //rerender to show messages for the first time
+     this.forceUpdate(); 
   }
+  }
+    
 }
 
 
@@ -324,15 +357,15 @@ envoyerEmail(e){
 
 
   render() {
-    console.log("this.props",this.props)
-    console.log("user from session ;;;;;;")
-    console.log(JSON.parse(localStorage.getItem("user")))
+    //console.log("this.props",this.props)
+    //console.log("user from session ;;;;;;")
+   // console.log(JSON.parse(localStorage.getItem("user")))
 
-    console.log("userId",this.state.userId.user._id)
-    console.log("selectedAnnocement.userId",this.props.selectedAnnoncement.userId)
+    //console.log("userId",this.state.userId.user._id)
+    //console.log("selectedAnnocement.userId",this.props.selectedAnnoncement.userId)
     let { selectedAnnoncement } = this.props;
-    console.log(this.props.selectedAnnoncement.myoptions)
-   console.log("selectedAnnoncement",selectedAnnoncement)
+    //console.log(this.props.selectedAnnoncement.myoptions)
+   //console.log("selectedAnnoncement",selectedAnnoncement)
     const {visible,modalEtat1} = this.state
     var videourl
 
@@ -574,14 +607,16 @@ const opts = {
                         selectedAnnoncement.statut != "A louer"
                         ?
                         <span  onClick={()=>{this._handleSubmit()}}
-                       >
+                        style={{width:"390px"}}
+                        >
                         <Link to ="#" >
                         <i className="fa fa-key" aria-hidden="true"></i>{" "}
                           Acheter
                           </Link>
                         </span>
                         :
-                        <span onClick={this.accessControl} onClick={()=>{this._handleSubmit()}}>
+                        <span onClick={this.accessControl} onClick={()=>{this._handleSubmit()}}
+                        style={{width:"390px"}}>
                           <Link to ="#">
                           <i className="fa fa-key" aria-hidden="true"></i>{" "}
                             Louer
@@ -589,29 +624,33 @@ const opts = {
                         </span>
 
                       }
+          
 
-           
-
-
-                      <span  onClick={()=>{this.open('date')}}>
+          <span  onClick={()=>{this.open('date')}}
+          style={{width:"390px"}}>
                         <a href="#"  >
                         <i className="fa fa-home" aria-hidden="true"></i>{" "}
                           Demander Une Visite
                         </a>
                       </span>
-                      <span  onClick={()=>{this.open('prix')}}>
+                      <span  onClick={()=>{this.open('prix')}}
+                      style={{width:"390px"}}>
                         <a href="#">
                         <i className="fa fa-home" aria-hidden="true"></i>{" "}
                           Négocier Prix
                     </a>
                                            </span>
-                      <span>
+                      
                         <Modal visible={visible} width="600" height="489" effect="fadeInDown" onClickAway={() => this.closeModal()}>
                        
                        
                         <form className="callus">
                         <div style={{marginTop: "20px"}}>
-            <h4  style={{marginLeft: "17px"}}>Nom & prénom :</h4>         
+{
+          modalEtat1 == false
+          ?
+          <div>
+                      <h4  style={{marginLeft: "17px"}}>Nom & prénom :</h4>         
             <input 
             valid={this.validator.fieldValid('Nom & prénom')} 
             invalid={!this.validator.fieldValid('Nom & prénom ')}   
@@ -659,10 +698,7 @@ const opts = {
       
         /> 
         <FormFeedback  style={{color:"red", marginLeft: "17px"}}  invalid={!this.validator.fieldValid('  tel ')}>{this.validator.message('tel', this.state.tel, 'required|phone')}</FormFeedback>
-        {
-          modalEtat1 == false
-          ?
-          <div>
+        
                 <h4 style={{marginLeft: "17px"}}>Prix Proposé :</h4>          
                 <input
                     valid={this.validator.fieldValid('Prix Proposé')} 
@@ -676,16 +712,64 @@ const opts = {
                     style={{marginLeft: "17px",width: '566px'}}
                 />   
                     <FormFeedback  style={{color:"red", marginLeft: "17px"}}
-                            invalid={!this.validator.fieldValid('prixPropose')}>
-                            {this.validator.message('prixPropose', this.state.prixPropose, 'required|numeric')}
+                    invalid={!this.validator.fieldValid('prixPropose')}>
+                    {this.validator.message('prixPropose', this.state.prixPropose, 'required|numeric')}
                     </FormFeedback>
             </div>
           :
-                  <div>
+          <div>
+            <h4  style={{marginLeft: "17px"}}>Nom & prénom :</h4>         
+            <input 
+            valid={this.validator1.fieldValid('Nom & prénom')} 
+            invalid={!this.validator1.fieldValid('Nom & prénom ')}   
+            type="text" className="form-control" placeholder="Nom & prénom " value={this.state.nom}
+            onChange={this.onChange}
+            name="nom" style={{marginLeft: "17px",
+            marginTop: "20px",  
+            width: '566px'}}/>
+            <FormFeedback  style={{color:"red",marginLeft: "17px"}}  invalid={!this.validator1.fieldValid('  Nom & prénom ')}>
+            {this.validator1.message(' Nom & prénom  ', this.state.nom, 'required|min:6|max:22')}</FormFeedback>
+         
+          <h4   style={{marginLeft: "17px"}}>Adresse Email :</h4>
+          
+          
+          <input
+          valid={this.validator1.fieldValid('Email')} 
+          invalid={!this.validator1.fieldValid('Email ')}     
+          type="text"
+          className="form-control"
+          placeholder="Adresse Email"
+         
+          value={this.state.email}
+          onChange={this.onChange}
+          name="email"
+          style={{marginLeft: "17px",
+              
+          width: '566px'}}
+      
+        />  
+        <FormFeedback  style={{color:"red", marginLeft: "17px"}}  invalid={!this.validator1.fieldValid('  email ')}>{this.validator1.message('email', this.state.email, 'required|email')}</FormFeedback>
+   
+        <h4   style={{marginLeft: "17px"}}>Téléphone :</h4>          
+          <input
+          valid={this.validator1.fieldValid('Téléphone')} 
+          invalid={!this.validator1.fieldValid('Téléphone ')}     
+          type="text"
+          className="form-control"
+          placeholder="Téléphone  "
+          value={this.state.tel}
+          onChange={this.onChange}
+          name="tel"
+          style={{marginLeft: "17px",
+          width: '566px'}}
+      
+        /> 
+        <FormFeedback  style={{color:"red", marginLeft: "17px"}}  invalid={!this.validator1.fieldValid('  tel ')}>{this.validator1.message('tel', this.state.tel, 'required|phone')}</FormFeedback>
+        
             <h4   style={{marginLeft: "17px"}}>Date :</h4>   
              <input
-              valid={this.validator.fieldValid('Date')} 
-                invalid={!this.validator.fieldValid('Date')} 
+              valid={this.validator1.fieldValid('Date')} 
+                invalid={!this.validator1.fieldValid('Date')} 
                         type="date"
                         className="form-control"
                         placeholder="dd/mm/yyyy"
@@ -695,7 +779,7 @@ const opts = {
                         style={{marginLeft: "17px",      
                 width: '566px'}}
                       />    
-                            <FormFeedback  style={{color:"red", marginLeft: "17px"}}  invalid={!this.validator.fieldValid('  date ')}>{this.validator.message('date', this.state.date, 'required')}</FormFeedback>
+                            <FormFeedback  style={{color:"red", marginLeft: "17px"}}  invalid={!this.validator1.fieldValid('  date ')}>{this.validator1.message('date', this.state.date, 'required')}</FormFeedback>
    
              
         </div>
@@ -705,7 +789,8 @@ const opts = {
                             <button type="submit" className="btn btn-primary" 
                             style={{    width: "200px",
                               marginTop: "25px",
-                              height: "44px"}}
+                              height: "44px",
+                              marginLeft:"200px"}}
                               onClick={(e)=> 
                               {
                                 this.onSubmit(e)
@@ -714,8 +799,11 @@ const opts = {
                         </div>
                         </form>
                     </Modal>
-                 </span>
+                 
                  </div> 
+           
+
+
            :
            null }
                   </div>

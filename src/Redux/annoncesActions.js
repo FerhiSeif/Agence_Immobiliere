@@ -30,7 +30,7 @@ export const getAnnouncementsList = queries => async dispatch => {
 export const addAnnoncementAction = newAnnoncement => async dispatch => {
     console.log('newAnnoncement ;;;;;; ');
     console.log(newAnnoncement);
- 
+
     console.log('newAnnoncement options ;;;;;; ');
     console.log(newAnnoncement.options);
 
@@ -65,7 +65,8 @@ export const addAnnoncementAction = newAnnoncement => async dispatch => {
     formData.append("nombreGarage", newAnnoncement.nombreGarage);
     formData.append("lat", newAnnoncement.lat);
     formData.append("lng", newAnnoncement.lng);
-    formData.append("myoptions",newAnnoncement.myoptions)
+    formData.append("myoptions", newAnnoncement.myoptions)
+    formData.append("nomAgent",newAnnoncement.nomAgent)
     try {
         let response = await axios({
             method: "POST",
@@ -131,7 +132,7 @@ export const deleteAnnoncementAction = (
             headers: { Authorization: localStorage.getItem("Authorization") }
         });
 
-        dispatch({
+        dispatch({ 
             type: actions.DELETE_ANNONCEMENT_SUCCESS,
             payload: annoncementId
         });

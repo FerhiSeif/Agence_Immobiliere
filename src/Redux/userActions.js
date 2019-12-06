@@ -46,6 +46,10 @@ export const getProfileAction = () => async dispatch => {
 };
 
 export const editProfileAction = updatedUser => async dispatch => {
+    // var formData = new FormData();
+    // const file = updatedUser.files[0]
+    // formData.append("files", file);
+    
     try {
         let response = await axios({
             method: "POST",

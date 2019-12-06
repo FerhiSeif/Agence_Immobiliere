@@ -54,14 +54,15 @@ class BienRecommande extends Component {
   console.log("item :",item)
     var oldimages = []
     item.files.forEach(element => {
-        oldimages.push({src:`http://localhost:8080/uploads/${element.filename}`,title:''});
+    oldimages.push({src:`http://localhost:8080/uploads/${element.filename}`,title:''});
     });
 
     return (
+    
           <div className="item feature_item">
             <div className="image">
               {" "}
-             
+              
             
             <ExampleSlider  imageData={oldimages}/>
             <Link to={`/detail-annonce/${item._id}`}> 
@@ -108,7 +109,7 @@ class BienRecommande extends Component {
               </div>
             </div>
           </div>
-       
+        
      
     );
   }

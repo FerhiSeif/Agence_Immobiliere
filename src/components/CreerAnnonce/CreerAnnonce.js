@@ -58,6 +58,7 @@ class CreerAnnonce extends Component {
       video:"",
       lat:"",
       lng:"",
+      nomAgent: "",
     };
     this.remplir = this.remplir.bind(this);
   }
@@ -217,7 +218,7 @@ class CreerAnnonce extends Component {
                     </div>
 
                     <div className="col-sm-6">
-                      <div className="single-query form-group bottom20">
+                      <div className="single-query form-group bottom20" style={{marginTop: "-8px"}}>
                         <label className="control-label">Adresse</label>
                         <input
                           type="text"
@@ -451,24 +452,45 @@ class CreerAnnonce extends Component {
                         </select>
                       </div>
                     </div>
-                    <div className="col-sm-4">
+                  <div className="col-sm-4">
                     <div className="form-group has-danger">
                      <label>
                         Valables A Partir De
                       </label>
                       <br />
                       <input
+                      style={{marginTop: "7px"}}
                         type="date"
                         className="form-control"
                         placeholder="dd/mm/yyyy"
                         onChange={this.onChange}
                         value={this.state.ValableAPartirDe}
                         name="ValableAPartirDe"
-                        style={{    marginTop: "7px",
-                          width: "397px"}}
+                       
                       />
                     </div>
+                 </div>
+                   <div className="col-sm-4">
+                     <div className="single-query form-group  bottom20">
+                     <label>
+                       Nom d'Agent
+                      </label>
+                       <select
+                          value={this.state.nomAgent}
+                          onChange={this.onChange}
+                          name="nomAgent"
+                        >
+                          <option className="active">
+                            s'il vous plaît choisissez un agent pour vous aider
+                          </option>
+                          <option value="dog">agent1</option>
+                          <option value="cat">agent2</option>
+                          <option value="hamster">agent3</option>
+                        </select>
+                    </div>
                   </div>
+
+
                     <div className="col-sm-12">
                       <h3 className="bottom15 margin40"> Description</h3>
                       <br />
@@ -482,9 +504,7 @@ class CreerAnnonce extends Component {
                       
                     </div>
 
-                   
-                    
-
+  
                     <div className="row">
                       <div className="col-sm-12">
                         <h3 className="margin40 bottom15">
@@ -580,16 +600,17 @@ class CreerAnnonce extends Component {
 
                       <div id="single_map">
                       
-                       <MapContainer lat ={this.state.lat}  lng={this.state.lng} />
+                       <MapContainer lat ={this.state.lat}  lng={this.state.lng} style={{width:"97%",height:"50%"}}/>
                       </div>
                     </div>
                   </div>
                 </form>
-                <div className="col-md-4">
+                <div className="col-md-4" style={{marginTop:"271px"}}>
                   <button
                     className="btn-blue border_radius margin40"
                     onClick={this.onAddAnnoncementClick}
-                    style={{ height: "60px", margin: "0px" }}
+                    style={{ height: "60px", margin: "0px" ,    marginLeft:"-15px",
+                    width: "195.6px"}}
                   >
                     Ajouter
                   </button>

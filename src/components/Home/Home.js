@@ -440,10 +440,18 @@ class Home extends Component {
             <div className="row">
               <div className="col-sm-10">
                 <h2 className="uppercase">LISTE DES PROPRIÉTÉS </h2>
+                <p className="heading_space">
+          {" "}
+          Nous sommes fiers de vous présenter certaines des meilleures
+          maisons, appartements, bureaux , avec les meilleurs prix.
+          prices.
+        </p>
               </div>
             </div> 
             <div className="row">
-              <ListeBienRecomande myListe={this.props.announcementsList}  />
+            <ItemList liste={this.props.announcementsList.filter(elm=>elm.situation===true)} />
+         
+              {/* <ListeBienRecomande myListe={this.props.announcementsList}/> */}
             </div>
           </div>
         </section>

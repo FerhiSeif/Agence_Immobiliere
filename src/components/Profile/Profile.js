@@ -5,6 +5,8 @@ import ReseauItem from "./reseauItem";
 import NavBarItem from "../NavBarItem";
 import "./Profile.css"
 import AvatarImageCropper from 'react-avatar-image-cropper';
+import axios from "axios"
+
 
 
 class Profile extends Component {
@@ -28,6 +30,19 @@ apply = (file) => {
         files: file
     });
     console.log("file state",this .state.files)
+    
+     const formData = new FormData() 
+     const files = this.state.files[0]
+    formData.append("files", files);
+    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+        
+        axios({  
+            method: "POST",
+            url: `/clients/update-profile`,
+            data: formData,
+            config: { headers: { 'Content-Type': 'multipart/form-data' } },
+            headers: { Authorization: localStorage.getItem("Authorization") }
+        });
     var src = window.URL.createObjectURL(file);
 }
   render() {
