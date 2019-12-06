@@ -13,39 +13,52 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        files: "",
-       
+        imageProfile: undefined
     };
-    
- 
+    this._localImage = this._localImage.bind(this);
+    this.apply = this.apply.bind(this);
 }
 
-apply = (file) => {
+_localImage(item)
+{
+  console.log('item ;;;;;;;');
+  console.log(item);
+      this.setState({imageProfile : item })
+}
+
+apply(file) {
     // handle the blob file you want
     // such as get the image src
- 
-    console.log("remplir", file);
+    const {_localImage} = this ;
+    console.log("remplir inside applay function", file);
 
-    this.setState({
-        files: file
-    });
-    console.log("file state",this .state.files)
-    
-     const formData = new FormData() 
-     const files = this.state.files[0]
-    formData.append("files", files);
+    const formData = new FormData() 
+    const fileBeta = file
+    formData.append("files", fileBeta);
+
     const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-        
-        axios({  
-            method: "POST",
-            url: `/clients/update-profile`,
-            data: formData,
-            config: { headers: { 'Content-Type': 'multipart/form-data' } },
-            headers: { Authorization: localStorage.getItem("Authorization") }
-        });
+    axios({  
+        method: "POST",
+        url: `/clients/update-profile`,
+        data: formData,
+        config: { headers: { 'Content-Type': 'multipart/form-data' } },
+        headers: { Authorization: localStorage.getItem("Authorization") }
+    }).then(function(response) {
+        console.log("response update-profile ;;;;;;;");
+        console.log(response);
+        _localImage(response.data.files)
+    }).catch(function(error) {
+        console.log("error update-profile ;;;;;;;");
+        console.log(error);
+    });
     var src = window.URL.createObjectURL(file);
 }
+
+
   render() {
+
+    const {imageProfile} = this.state
+
     return (
       <div className="Profile">
         <section className="page-banner padding">
@@ -89,8 +102,8 @@ apply = (file) => {
                     Minimum 215px x 215px<span>*</span>
                   </p>*/}
             <div style={{ width: '250px', height: '250px', margin: 'auto', border: '1px solid black' }}>
-            <AvatarImageCropper apply={this.apply} />
-        </div>
+                  { imageProfile == undefined ? <AvatarImageCropper apply={this.apply} /> : <img src={`http://localhost:8080/uploads/${imageProfile[0].filename}`} />} 
+           </div>
                 </div>
                 
               </div>
