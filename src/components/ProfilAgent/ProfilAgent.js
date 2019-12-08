@@ -74,43 +74,7 @@ class ProfilAgent extends Component {
                   </ul>
                 </div>
               </div>
-              {/* <div className="col-sm-4 bottom40">
-                <form className="callus">
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Name"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <input
-                      type="tel"
-                      className="form-control"
-                      placeholder="Phone Number"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <input
-                      type="email"
-                      className="form-control"
-                      placeholder="Email"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <textarea
-                      className="form-control"
-                      placeholder="Message"
-                      defaultValue={""}
-                    />
-                  </div>
-                  <input
-                    type="submit"
-                    className="btn-blue uppercase border_radius"
-                    defaultValue="submit now"
-                  />
-                </form>
-              </div> */}
+
               <FormulaireContact />
               <div className="col-sm-4 bottom40">
                 <div className="agent_wrap">
@@ -126,154 +90,7 @@ class ProfilAgent extends Component {
                   Properties.
                 </p>
               </div>
-              {/* <div className="col-sm-6">
-                <div className="listing_full">
-                  <div className="image">
-                    <img alt="image" src="images/b-d-property.jpg" />
-                    <span className="tag_l">Featured</span>
-                    <span className="tag_t">For Sale</span>
-                  </div>
-                  <div className="listing_full_bg">
-                    <div className="listing_inner_full">
-                      <span>
-                        <a href="#">
-                          <i className="icon-like" />
-                        </a>
-                      </span>
-                      <a href="#.">
-                        <h3>Park Avenue Apartment</h3>
-                        <p>Towson London, MR 21501</p>
-                      </a>
-                      <div className="favroute clearfix">
-                        <div className="property_meta">
-                          <span>
-                            <i className="icon-select-an-objecto-tool" />
-                            4800 sq ft
-                          </span>
-                          <span>
-                            <i className=" icon-microphone" />3 Bedrooms
-                          </span>
-                          <span>
-                            <i className="icon-safety-shower" />2 Bedrooms
-                          </span>
-                          <span className="border-l">$38,600 / pm</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-sm-6">
-                <div className="listing_full">
-                  <div className="image">
-                    <img alt="image" src="images/b-d-property2.jpg" />
-                    <span className="tag_l">Featured</span>
-                    <span className="tag_t">For Sale</span>
-                  </div>
-                  <div className="listing_full_bg">
-                    <div className="listing_inner_full">
-                      <span>
-                        <a href="#">
-                          <i className="icon-like" />
-                        </a>
-                      </span>
-                      <a href="#.">
-                        <h3>Park Avenue Apartment</h3>
-                        <p>Towson London, MR 21501</p>
-                      </a>
-                      <div className="favroute clearfix">
-                        <div className="property_meta">
-                          <span>
-                            <i className="icon-select-an-objecto-tool" />
-                            4800 sq ft
-                          </span>
-                          <span>
-                            <i className=" icon-microphone" />3 Bedrooms
-                          </span>
-                          <span>
-                            <i className="icon-safety-shower" />2 Bedrooms
-                          </span>
-                          <span className="border-l">$38,600 / pm</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-sm-6">
-                <div className="listing_full">
-                  <div className="image">
-                    <img alt="image" src="images/b-d-property3.jpg" />
-                    <span className="tag_l">Featured</span>
-                    <span className="tag_t">For Sale</span>
-                  </div>
-                  <div className="listing_full_bg">
-                    <div className="listing_inner_full">
-                      <span>
-                        <a href="#">
-                          <i className="icon-like" />
-                        </a>
-                      </span>
-                      <a href="#.">
-                        <h3>Park Avenue Apartment</h3>
-                        <p>Towson London, MR 21501</p>
-                      </a>
-                      <div className="favroute clearfix">
-                        <div className="property_meta">
-                          <span>
-                            <i className="icon-select-an-objecto-tool" />
-                            4800 sq ft
-                          </span>
-                          <span>
-                            <i className=" icon-microphone" />3 Bedrooms
-                          </span>
-                          <span>
-                            <i className="icon-safety-shower" />2 Bedrooms
-                          </span>
-                          <span className="border-l">$38,600 / pm</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-sm-6">
-                <div className="listing_full">
-                  <div className="image">
-                    <img alt="image" src="images/b-d-property4.jpg" />
-                    <span className="tag_l">Featured</span>
-                    <span className="tag_t">For Sale</span>
-                  </div>
-                  <div className="listing_full_bg">
-                    <div className="listing_inner_full">
-                      <span>
-                        <a href="#">
-                          <i className="icon-like" />
-                        </a>
-                      </span>
-                      <a href="#.">
-                        <h3>Park Avenue Apartment</h3>
-                        <p>Towson London, MR 21501</p>
-                      </a>
-                      <div className="favroute clearfix">
-                        <div className="property_meta">
-                          <span>
-                            <i className="icon-select-an-objecto-tool" />
-                            4800 sq ft
-                          </span>
-                          <span>
-                            <i className=" icon-microphone" />3 Bedrooms
-                          </span>
-                          <span>
-                            <i className="icon-safety-shower" />2 Bedrooms
-                          </span>
-                          <span className="border-l">$38,600 / pm</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
+
               <ListProprieteAgent />
               <div className="col-sm-12 text-center">
                 <ul className="pager">
@@ -291,7 +108,7 @@ class ProfilAgent extends Component {
             </div>
           </div>
         </section>
-        {/* Agent Profile End */}
+     
       </div>
     );
   }

@@ -66,7 +66,7 @@ export const addAnnoncementAction = newAnnoncement => async dispatch => {
     formData.append("lat", newAnnoncement.lat);
     formData.append("lng", newAnnoncement.lng);
     formData.append("myoptions", newAnnoncement.myoptions)
-    formData.append("nomAgent",newAnnoncement.nomAgent)
+    formData.append("agentId", newAnnoncement.agentId)
     try {
         let response = await axios({
             method: "POST",
@@ -132,7 +132,7 @@ export const deleteAnnoncementAction = (
             headers: { Authorization: localStorage.getItem("Authorization") }
         });
 
-        dispatch({ 
+        dispatch({
             type: actions.DELETE_ANNONCEMENT_SUCCESS,
             payload: annoncementId
         });

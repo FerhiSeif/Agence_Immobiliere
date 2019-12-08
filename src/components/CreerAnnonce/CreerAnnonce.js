@@ -10,7 +10,8 @@ import { MDBInput } from "mdbreact";
 import checkboxes from "./checkboxes";
 import Checkbox from "./checkbox";
 import { villes, categories, numbers } from "./static";
-import { addAnnoncementAction } from "../../Redux/annoncesActions"; 
+import { addAnnoncementAction } from "../../Redux/annoncesActions";
+import { getagents } from "../../Redux/ajentsAction"; 
 import Preview from './uploadImage'
 
 import "./creerAnnonce.css";
@@ -58,7 +59,7 @@ class CreerAnnonce extends Component {
       video:"",
       lat:"",
       lng:"",
-      nomAgent: "",
+      agentId: "",
     };
     this.remplir = this.remplir.bind(this);
   }
@@ -73,6 +74,7 @@ class CreerAnnonce extends Component {
   }
   componentDidMount() {
     this.accessControl();
+    this.props.getagents();
   }
 
   accessControl = () => {
@@ -125,7 +127,8 @@ class CreerAnnonce extends Component {
   
 
   render() {
-    
+      const  {agents} = this.props
+      console.log('nnagents',agents)
     return (
       <div className="CreerAnnonce">
         {/* Page Banner Start*/}
@@ -476,16 +479,16 @@ class CreerAnnonce extends Component {
                        Nom d'Agent
                       </label>
                        <select
-                          value={this.state.nomAgent}
+                          value={this.state.agentId}
                           onChange={this.onChange}
-                          name="nomAgent"
+                          name="agentId"
                         >
                           <option className="active">
                             s'il vous plaît choisissez un agent pour vous aider
                           </option>
-                          <option value="dog">agent1</option>
-                          <option value="cat">agent2</option>
-                          <option value="hamster">agent3</option>
+                          {agents.data ? agents.data.result.map((el, index) => (
+          <option key={index} value={el._id} > {el.nom} </option>
+        )):false}
                         </select>
                     </div>
                   </div>
@@ -629,14 +632,15 @@ class CreerAnnonce extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.userReducer
+    user: state.userReducer,
+    agents: state.agentsReducer.agents,
   };
 };
 
 export default compose(
   connect(
     mapStateToProps,
-    { addAnnoncementAction }
+    { addAnnoncementAction, getagents }
   ),
   withRouter
 )(CreerAnnonce);

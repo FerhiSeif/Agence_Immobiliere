@@ -7,15 +7,19 @@ import singleAnnouncementReducer from "./singleAnnonce";
 import mesProprietesReducer from "./mesProprietes";
 import editableAnnoncementReducer from "./editableAnnoncement";
 import annoncesFavorisReducer from "./annoncesFavoris";
+import agentsReducer from "./agents"
 
 let reducers = combineReducers({
-  filtersReducer,
-  announcementsReducer,
-  userReducer,
-  singleAnnouncementReducer,
-  mesProprietesReducer,
-  editableAnnoncementReducer,
-  annoncesFavorisReducer
+    filtersReducer,
+    announcementsReducer,
+    userReducer,
+    singleAnnouncementReducer,
+    mesProprietesReducer,
+    editableAnnoncementReducer,
+    annoncesFavorisReducer,
+    agentsReducer
 });
 
 export default reducers;
+
+

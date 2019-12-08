@@ -102,7 +102,8 @@ apply(file) {
                     Minimum 215px x 215px<span>*</span>
                   </p>*/}
             <div style={{ width: '250px', height: '250px', margin: 'auto', border: '1px solid black' }}>
-                  { imageProfile == undefined ? <AvatarImageCropper apply={this.apply} /> : <img src={`http://localhost:8080/uploads/${imageProfile[0].filename}`} />} 
+                  { imageProfile == undefined ? <AvatarImageCropper apply={this.apply} />
+                  : <img src={`http://localhost:8080/uploads/${imageProfile[0].filename}`} />} 
            </div>
                 </div>
                 
