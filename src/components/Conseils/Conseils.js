@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./Conseils.css";
 import FormulaireConseil from "./formulaireConseil";
+import PaginationSimple from "./../pagination/pagination"
 
 class Conseils extends Component {
   render() {
@@ -110,7 +111,12 @@ class Conseils extends Component {
                       himenaeos. Duis et metus in libero sollicitudin venenatis
                       eu sed enim. Nam felis lorem, suscipit ac nisl ac, iaculis
                       dapibus tellus. Cras ante justo, aliquet quis placerat
-                      nec, molestie id turpis. Lorem ipsum dolor sit amet,
+                      nec, molestie id turpis.
+                      
+                    </div>
+                    <div className="parag"> 
+                    <br/><br/>
+                      Lorem ipsum dolor sit amet,
                       consectetuer adipiscing elit, sed diam power nonummy nibh
                       tempor cum soluta nobis eleifend option congue nihil
                       imperdiet doming Lorem ipsum dolor sit amet. consectetuer
@@ -119,22 +125,19 @@ class Conseils extends Component {
                       amet, consectetuer adipiscing elit, sed diam power nonummy
                       nibh tempor cum soluta nobis eleifend option congue nihil
                       imperdiet doming Lorem ipsum dolor sit amet. consectetuer
-                      elit sed diam power nonummy
-                    </div>
+                      elit sed diam power nonummy.
+                      consectetuer
+                      elit sed diam power nonummy Cras ante justo, aliquet quis
+                      placerat nec, molestie id turpis. Lorem ipsum dolor sit
+                      amet, consectetuer adipiscing elit, sed diam power nonummy
+                      nibh tempor cum soluta nobis eleifend option congue nihil
+                      imperdiet doming Lorem ipsum dolor sit amet. consectetuer
+                      elit sed diam power nonummy</div>
                   </div>
-
+                  
                   <div className="col-sm-12 text-center">
-                    <ul className="pager">
-                      <li>
-                        <a href="#">1</a>
-                      </li>
-                      <li className="active">
-                        <a href="#">2</a>
-                      </li>
-                      <li>
-                        <a href="#">3</a>
-                      </li>
-                    </ul>
+                  <PaginationSimple/>
+
                   </div>
                 </div>
               </div>

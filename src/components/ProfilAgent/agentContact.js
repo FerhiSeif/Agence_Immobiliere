@@ -1,14 +1,19 @@
 import React, { Component } from "react";
-
 class AgentContact extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-  }
+}
+
+
+
   render() {
+//    let  {agents} = this.props
+   // console.log('agent',agents)
+    //console.log('myagents :', agents ? this.props.agents.data:false)
     return (
       <div className="Agentcontact">
-        <h3>Bohdan Kononets</h3>
+        <h3></h3>
         <p className="bottom30">
           Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
           nonummy nibh tempor cum soluta nobis consectetuer adipiscing eleifend
@@ -51,4 +56,4 @@ class AgentContact extends Component {
   }
 }
 
-export default AgentContact;
+export default AgentContact

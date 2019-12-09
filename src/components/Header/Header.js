@@ -175,11 +175,15 @@ class Header extends Component {
                   </div>
                   {/* End Header Navigation */}
                   <div className="collapse navbar-collapse" id="navbar-menu">
+                 
                     <ul
                       className="nav navbar-nav"
                       data-in="fadeIn"
                       data-out="fadeOut"
                     >
+                       <li>
+                        <Link to="/">Accueil</Link>
+                      </li>
                       <li className="dropdown">
                         <Link
                           to="#."
@@ -218,16 +222,20 @@ class Header extends Component {
                           </li>
                         </ul>
                       </li>
-                      <li>
-                        <Link to="/reclamation">Réclamation</Link>
-                      </li>
+                     
                        {this.props.user.nom && (
                       <li>
                       <Link to="/estimations">Estimations</Link>
                     </li>
                        )}
+                        <li>
+                        <Link to="/reclamation">Réclamation</Link>
+                      </li>
                       <li>
                         <Link to="/agents">Nos Agents</Link>
+                      </li>
+                      <li>
+                        <Link to="/agents">Vos Avis</Link>
                       </li>
                       <li>
                         <Link to="/contact">Contactez Nous</Link>

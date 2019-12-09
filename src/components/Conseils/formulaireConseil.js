@@ -4,6 +4,9 @@ import axios from "axios";
 import Modal from 'react-awesome-modal';
 import { Input,FormFeedback } from 'reactstrap';
 import SimpleReactValidator from 'simple-react-validator';
+import { getagents } from "../../Redux/ajentsAction"; 
+import { connect } from "react-redux";
+
 class FormulaireConseil extends Component {
   constructor(props) {
     super(props);
@@ -21,7 +24,7 @@ class FormulaireConseil extends Component {
     this.state = {
       nom: "",
       tel: "",
-      nomAgent:"",
+      agentId:"",
       email: "",
       message:"",
       errors: {}
@@ -30,6 +33,9 @@ class FormulaireConseil extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+  }
+  componentDidMount() {
+    this.props.getagents();
   }
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
@@ -53,7 +59,7 @@ closeModal(e) {
     const conseil = {
       nom: this.state.nom,
       tel: this.state.tel,
-      nomAgent: this.state.nomAgent,
+      agentId: this.state.agentId,
       email: this.state.email,
       message: this.state.message
     };
@@ -75,6 +81,8 @@ closeModal(e) {
   }
 
   render() {
+    const  {agents} = this.props
+
     return (
       <div className="col-sm-6 bottom40">
         <h2 className="text-uppercase bottom20">Contact Agent</h2>
@@ -135,17 +143,18 @@ closeModal(e) {
             <select 
             valid={this.validator.fieldValid('nom Agent')} 
             invalid={!this.validator.fieldValid('nom Agent ')}  
-            id="pet-select" style={{ width: " 554px" }}  value={this.state.nomAgent}
-              onChange={this.onChange}
-              name="nomAgent">
+            id="pet-select" style={{ width: " 554px" }}  
+            value={this.state.agentId}
+            onChange={this.onChange}
+            name="agentId">
               <option value="">
                 s'il vous plaît choisissez un agent pour vous aider
               </option>
-              <option value="dog">agent1</option>
-              <option value="cat">agent2</option>
-              <option value="hamster">agent3</option>
+              {agents.data ? agents.data.result.map((el, index) => (
+          <option key={index} value={el._id} > {el.nom} </option>
+        )):false}
             </select>
-            <FormFeedback  style={{color:"red"}}  invalid={!this.validator.fieldValid('  nom Agent ')}>{this.validator.message('nom Agent', this.state.nomAgent, 'required')}</FormFeedback>
+            <FormFeedback  style={{color:"red"}}  invalid={!this.validator.fieldValid('  nom Agent ')}>{this.validator.message('nom Agent', this.state.agentId, 'required')}</FormFeedback>
 
           </div>
           <label>
@@ -168,6 +177,7 @@ closeModal(e) {
           </div>
 
           <button
+          style={{marginLeft:"198px"}}
             type="submit"
             className="btn-blue uppercase border_radius"
             defaultValue="Envoyer"
@@ -188,4 +198,12 @@ closeModal(e) {
   }
 }
 
-export default FormulaireConseil;
+const mapStateToProps = state => {
+  return {
+    agents: state.agentsReducer.agents, 
+  };
+};
+export default connect(
+  mapStateToProps,
+  {getagents }
+) (FormulaireConseil);

@@ -633,7 +633,7 @@ class CreerAnnonce extends Component {
 const mapStateToProps = state => {
   return {
     user: state.userReducer,
-    agents: state.agentsReducer.agents,
+    agents: state.agentsReducer.agents, 
   };
 };
 

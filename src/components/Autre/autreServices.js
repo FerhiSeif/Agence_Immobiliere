@@ -4,6 +4,8 @@ import axios from "axios";
 import Modal from 'react-awesome-modal';
 import { Input,FormFeedback } from 'reactstrap';
 import SimpleReactValidator from 'simple-react-validator';
+import { getagents } from "../../Redux/ajentsAction"; 
+import { connect } from "react-redux";
 
 class AutreServices extends Component {
   constructor(props) {
@@ -22,7 +24,7 @@ class AutreServices extends Component {
     this.state = {
       nom: "",
       email: "",
-      nomAgent: "",
+      agentId: "",
       titre: "",
       description: "",
       visible:false,
@@ -34,7 +36,9 @@ class AutreServices extends Component {
     this.closeModal = this.closeModal.bind(this);
   
   }
-
+  componentDidMount() {
+    this.props.getagents();
+  }
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -58,7 +62,7 @@ closeModal(e) {
     const autre = {
       nom: this.state.nom,
       email: this.state.email,
-      nomAgent: this.state.nomAgent,
+      agentId: this.state.agentId,
       titre: this.state.titre,
       description: this.state.description,
       
@@ -92,7 +96,7 @@ closeModal(e) {
     }
   }
   render() {
-   
+    const  {agents} = this.props
     return (
       <div className="col-sm-6 bottom40">
        
@@ -152,18 +156,18 @@ closeModal(e) {
                 color: "white",
                 width: "588px"
               }}
-              value={this.state.nomAgent}
+              value={this.state.agentId}
               onChange={this.onChange}
-              name="nomAgent"
+              name="agentId"
             >
-              <option value="">
+              <option value="" style={{backgroundColor:"#464a4b"}}>
                 s'il vous plaît choisissez un agent pour vous aider
               </option>
-              <option value="dog">agent1</option>
-              <option value="cat">agent2</option>
-              <option value="hamster">agent3</option>
+              {agents.data ? agents.data.result.map((el, index) => (
+          <option key={index} value={el._id} style={{backgroundColor:"#464a4b"}}> {el.nom} </option>
+        )):false}
             </select>
-            <FormFeedback  style={{color:"red"}}  invalid={!this.validator.fieldValid('  nom Agent ')}>{this.validator.message('nom Agent', this.state.nomAgent, 'required')}</FormFeedback>
+            <FormFeedback  style={{color:"red"}}  invalid={!this.validator.fieldValid('  nom Agent ')}>{this.validator.message('nom Agent', this.state.agentId, 'required')}</FormFeedback>
           </div>
           <div className="form-group">
             <input
@@ -230,5 +234,12 @@ closeModal(e) {
     );
   }
 }
-
-export default AutreServices;
+const mapStateToProps = state => {
+  return {
+    agents: state.agentsReducer.agents, 
+  };
+};
+export default connect(
+  mapStateToProps,
+  {getagents }
+)(AutreServices);

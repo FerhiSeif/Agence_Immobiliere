@@ -2,9 +2,16 @@ import React, { Component } from "react";
 import AgentContact from "./agentContact";
 import FormulaireContact from "./fomulaireContact";
 import ListProprieteAgent from "./listProprieteAgent";
+import PaginationSimple from "./../pagination/pagination"
 
 class ProfilAgent extends Component {
+  componentDidMount(){
+
+     const { agent } = this.props.location
+      console.log("this.props", agent)
+   }
   render() {
+    
     return (
       <div className="ProfilAgent">
         {/* Page Banner Start*/}
@@ -40,7 +47,7 @@ class ProfilAgent extends Component {
             <div className="row">
               <div className="col-sm-4 bottom40">
                 <div className="agent_wrap">
-                  <AgentContact />
+                  {/* <AgentContact /> */}
                   <div
                     style={{ borderBottom: "1px solid #d3d8dd" }}
                     className="bottom15"
@@ -93,17 +100,7 @@ class ProfilAgent extends Component {
 
               <ListProprieteAgent />
               <div className="col-sm-12 text-center">
-                <ul className="pager">
-                  <li>
-                    <a href="#">1</a>
-                  </li>
-                  <li className="active">
-                    <a href="#">2</a>
-                  </li>
-                  <li>
-                    <a href="#">3</a>
-                  </li>
-                </ul>
+                <PaginationSimple/>
               </div>
             </div>
           </div>

@@ -21,7 +21,7 @@ class ListAgent extends Component {
 
   render() {
     const  {agents} = this.props
-       // console.log('myagents :', agents ? this.props.agents.data:false)
+       //console.log('myagents :', agents ? this.props.agents.data:false)
     return (
       <div>
         {agents.data ? agents.data.result.map((el, index) => (

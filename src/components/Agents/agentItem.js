@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom'
+
 
 class AgentItem extends Component {
     constructor(props) {
@@ -7,20 +9,22 @@ class AgentItem extends Component {
     }
     render() {
         const { item } = this.props;
+  
     console.log('myitem',item)
+    console.log("",item.files.filename)
         return ( <div className = "col-sm-4 bottom40" >
             <div className="agent_wrap">
               <div className="image">
-                <img src="images/agent-one.jpg" alt="Agents" />
+                <img src={`http://localhost:8080/uploads/${item.files[0].filename}`}/>
                 <div className="img-info">
                   <h3>{item.nom}</h3>
-                  {/*<span>{item.mission}</span>
-                  <p className="top20 bottom30">{item.parag}</p>
+                  <span>{item.mission}</span>
+                  <p className="top20 bottom30">{item.description}</p>
                   <table className="agent_contact table">
                     <tbody>
                       <tr className="bottom10">
                         <td>
-                          <strong>Phone:</strong>
+                          <strong>Téléphone:</strong>
                         </td>
                         <td className="text-right">{item.tel}</td>
                       </tr>
@@ -35,15 +39,17 @@ class AgentItem extends Component {
                     </tbody>
                   </table>
                   <hr />
-                  <a className="btn-more" href="/profilAgent">
+                  <Link to={{pathname: '/profilAgent',
+                           agent:'seif'
+                            }}>
                     <i>
                       <img alt="arrow" src="images/arrow-yellow.png" />
                     </i>
-                    <span>Full Profile</span>
+                    <span>voir Profil</span>
                     <i>
                       <img alt="arrow" src="images/arrow-yellow.png" />
                     </i>
-                  </a>*/}
+                  </Link>
                 </div>
               </div>
             </div>
