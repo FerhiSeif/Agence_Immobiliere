@@ -16,6 +16,7 @@ import EtudeProjet from "./components/EtudeProjet/EtudeProjet";
 import Conseils from "./components/Conseils/Conseils";
 import Autre from "./components/Autre/Autre";
 import Reclamation from "./components/Reclamation/Reclamation";
+import Avis from "./components/AvisClients/avis";
 import Agents from "./components/Agents/Agents";
 import ProfilAgent from "./components/ProfilAgent/ProfilAgent";
 import ReactBot from "./components/reactBot/reactBot";
@@ -93,14 +94,12 @@ class Routes extends React.Component {
                             /> <
                             Route path = '/messages'
                             component = { DashboardComponent }
-                            /> <
-                            Route path = '/estimations'
-                            component = { Estimation }
                             /> 
+                            <Route path = '/estimations'component = { Estimation }/> 
+                            <Route path = '/avis'component = { Avis }/> 
 
 
-                            <
-                            /div>
+                            </div>
                         );
                     }
                 }

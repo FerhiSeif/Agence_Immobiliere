@@ -235,7 +235,7 @@ class Header extends Component {
                         <Link to="/agents">Nos Agents</Link>
                       </li>
                       <li>
-                        <Link to="/agents">Vos Avis</Link>
+                        <Link to="/avis">Vos Avis</Link>
                       </li>
                       <li>
                         <Link to="/contact">Contactez Nous</Link>

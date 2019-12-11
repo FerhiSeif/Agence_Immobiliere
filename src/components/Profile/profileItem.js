@@ -24,6 +24,9 @@ class ProfilItem extends Component {
     this.setState({
       ...this.props.user
     });
+    console.log("props of profile,,,,,,,,,")
+    console.log(this.props)
+    
   }
 
   static getDerivedStateFromProps(props, state) {

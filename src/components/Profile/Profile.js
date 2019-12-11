@@ -6,30 +6,44 @@ import NavBarItem from "../NavBarItem";
 import "./Profile.css"
 import AvatarImageCropper from 'react-avatar-image-cropper';
 import axios from "axios"
-
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { editProfileAction } from "../../Redux/userActions";
 
 
 class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        imageProfile: undefined
+        imageProfile: undefined,
+        files :[],
+        loading : false
     };
-    this._localImage = this._localImage.bind(this);
     this.apply = this.apply.bind(this);
 }
 
-_localImage(item)
-{
-  console.log('item ;;;;;;;');
-  console.log(item);
-      this.setState({imageProfile : item })
+componentDidMount() {
+  
+  console.log("localStorage:")
+  var data = JSON.parse(localStorage.user)
+  var userId = data.user._id ;
+  console.log("userrrrrrrrr")
+  axios
+  .get(`http://localhost:8080/clients/userId?id=${userId}`)
+  .then(res => {
+    console.log(res.data)
+    this.setState({imageProfile : res.data.files})
+  })
+  .catch(err => console.log(err.response.data));
+
 }
 
 apply(file) {
     // handle the blob file you want
     // such as get the image src
-    const {_localImage} = this ;
+
+    this.setState({loading : true })
+    var thisLocal = this ;
     console.log("remplir inside applay function", file);
 
     const formData = new FormData() 
@@ -46,7 +60,13 @@ apply(file) {
     }).then(function(response) {
         console.log("response update-profile ;;;;;;;");
         console.log(response);
-        _localImage(response.data.files)
+        thisLocal.setState(
+          {
+            imageProfile : response.data.files,
+            loading : false
+          })
+
+
     }).catch(function(error) {
         console.log("error update-profile ;;;;;;;");
         console.log(error);
@@ -57,7 +77,7 @@ apply(file) {
 
   render() {
 
-    const {imageProfile} = this.state
+    const {imageProfile,loading} = this.state
 
     return (
       <div className="Profile">
@@ -101,10 +121,25 @@ apply(file) {
                   <p className="text-center">
                     Minimum 215px x 215px<span>*</span>
                   </p>*/}
-            <div style={{ width: '250px', height: '250px', margin: 'auto', border: '1px solid black' }}>
-                  { imageProfile == undefined ? <AvatarImageCropper apply={this.apply} />
-                  : <img src={`http://localhost:8080/uploads/${imageProfile[0].filename}`} />} 
-           </div>
+                      <div style={{ width: '250px', height: '250px', margin: 'auto', border: '1px solid black' }}>
+                  { 
+                      imageProfile == undefined 
+                      ? 
+                      
+                          <AvatarImageCropper apply={this.apply} />
+                      :
+                          <div>
+                            {
+                              loading == false
+                              ?
+                              <img src={`http://localhost:8080/uploads/${imageProfile[0].filename}`} />
+                              :
+                              <p>loading ....</p>
+                            }
+                          </div>
+                  }
+                
+              </div>
                 </div>
                 
               </div>
@@ -137,4 +172,16 @@ apply(file) {
   }
 }
 
-export default Profile;
+const mapStateToProps = state => {
+  return {
+    user: state.userReducer.user
+  };
+};
+
+export default compose(
+  connect(
+    mapStateToProps,
+    { editProfileAction }
+  )
+
+)(Profile);
