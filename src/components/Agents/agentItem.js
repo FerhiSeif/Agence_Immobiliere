@@ -10,8 +10,8 @@ class AgentItem extends Component {
     render() {
         const { item } = this.props;
   
-    console.log('myitem',item)
-    console.log("",item.files.filename)
+   // console.log('myitem',item)
+   // console.log("",item.files.filename)
         return ( <div className = "col-sm-4 bottom40" >
             <div className="agent_wrap">
               <div className="image">
@@ -40,15 +40,13 @@ class AgentItem extends Component {
                   </table>
                   <hr />
                   <Link to={{pathname: '/profilAgent',
-                           agent:'seif'
+                           agent:item
                             }}>
-                    <i>
-                      <img alt="arrow" src="images/arrow-yellow.png" />
+                    <i> 
+                      <img alt="arrow" src="images/arrow-yellow.png" style={{width:"8%"}}/>
                     </i>
                     <span>voir Profil</span>
-                    <i>
-                      <img alt="arrow" src="images/arrow-yellow.png" />
-                    </i>
+                    
                   </Link>
                 </div>
               </div>

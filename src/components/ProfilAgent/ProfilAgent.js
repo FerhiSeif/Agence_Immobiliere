@@ -3,15 +3,20 @@ import AgentContact from "./agentContact";
 import FormulaireContact from "./fomulaireContact";
 import ListProprieteAgent from "./listProprieteAgent";
 import PaginationSimple from "./../pagination/pagination"
+import agentsReducer from './../../Redux/reducers/agents';
 
 class ProfilAgent extends Component {
+  state={
+    
+  }
   componentDidMount(){
 
      const { agent } = this.props.location
-      console.log("this.props", agent)
+    //  console.log("this.props", agent)
    }
   render() {
-    
+    const { agent } = this.props.location
+   console.log('cagent :',this.state.agent)
     return (
       <div className="ProfilAgent">
         {/* Page Banner Start*/}
@@ -47,7 +52,7 @@ class ProfilAgent extends Component {
             <div className="row">
               <div className="col-sm-4 bottom40">
                 <div className="agent_wrap">
-                  {/* <AgentContact /> */}
+                   <AgentContact agent={agent} /> 
                   <div
                     style={{ borderBottom: "1px solid #d3d8dd" }}
                     className="bottom15"
@@ -98,7 +103,7 @@ class ProfilAgent extends Component {
                 </p>
               </div>
 
-              <ListProprieteAgent />
+              <ListProprieteAgent agent={agent}/>
               <div className="col-sm-12 text-center">
                 <PaginationSimple/>
               </div>

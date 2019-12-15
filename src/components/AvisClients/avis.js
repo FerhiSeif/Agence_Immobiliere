@@ -9,12 +9,11 @@ class Avis extends Component {
         <section style={{background: "url(../images/avis.jpeg) no-repeat",
                         backgroundPosition: "center center" ,
                         backgroundSize: "cover",
-                        position: "relative",
-                        padding: "15% 0"}}>
+                        position: "relative"}}>
             
           <div className="container">
             <div className="row">
-              
+            <div className="col-sm-4"></div>
               <div className="col-sm-4">
                 <FormulaireAvis />
               </div>

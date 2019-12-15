@@ -1,52 +1,46 @@
 import React, { Component } from "react";
 class AgentContact extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-}
-
 
 
   render() {
-//    let  {agents} = this.props
+  const  {agent} = this.props
    // console.log('agent',agents)
-    //console.log('myagents :', agents ? this.props.agents.data:false)
-    return (
+   // console.log('myagents :', this.props.agent)
+    return (  
       <div className="Agentcontact">
-        <h3></h3>
+  <h3>{agent.nom}</h3>
         <p className="bottom30">
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam
-          nonummy nibh tempor cum soluta nobis consectetuer adipiscing eleifend
-          option congue nihil imperdiet doming…
+          {agent.description}
         </p>
         <table className="agent_contact table">
           <tbody>
-            <tr className="bottom10">
+         
+          <tr className="bottom10">
               <td>
-                <strong>Phone:</strong>
+                <strong>Mission:</strong>
               </td>
-              <td className="text-right">(+01) 34 56 7890</td>
+              <td className="text-right">{agent.mission}</td>
             </tr>
             <tr className="bottom10">
               <td>
                 <strong>Mobile:</strong>
               </td>
-              <td className="text-right">(+033) 34 56 7890</td>
+              <td className="text-right">{agent.tel}</td>
             </tr>
             <tr>
               <td>
                 <strong>Email Adress:</strong>
               </td>
               <td className="text-right">
-                <a href="#.">bohdan@castle.com</a>
+              <td className="text-right">{agent.email}</td>
               </td>
             </tr>
             <tr>
               <td>
-                <strong>Skype:</strong>
+                <strong>adresse</strong>
               </td>
               <td className="text-right">
-                <a href="#.">bohdan.kononets</a>
+    <a href="#.">{agent.adresse}</a>
               </td>
             </tr>
           </tbody>

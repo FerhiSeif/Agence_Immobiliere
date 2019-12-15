@@ -20,6 +20,7 @@ class Profile extends Component {
         loading : false
     };
     this.apply = this.apply.bind(this);
+    this.onSubmit = this.onSubmit.bind(this)
 }
 
 componentDidMount() {
@@ -36,6 +37,14 @@ componentDidMount() {
   })
   .catch(err => console.log(err.response.data));
 
+}
+onSubmit(e){
+  e.preventDefault()
+  console.log("clicked")
+  var cancel = this
+  this.setState({imageProfile: undefined,
+    files:[]
+  })
 }
 
 apply(file) {
@@ -109,19 +118,11 @@ apply(file) {
               <div className="col-md-4 col-sm-6 col-xs-12">
                 <h2 className="text-uppercase bottom30">mon profil</h2>
                 <div className="agent-p-img">
-                 
-                 {/* <img
-                    src="images/profile.jpg"
-                    className="img-responsive"
-                    alt="image"
-                  />
-                  <a href="#" className="top10 bottom20">
-                    changer votre photo de profil
-                  </a>
-                  <p className="text-center">
-                    Minimum 215px x 215px<span>*</span>
-                  </p>*/}
-                      <div style={{ width: '250px', height: '250px', margin: 'auto', border: '1px solid black' }}>
+               
+                      <div style={{ width: '260px', height: '300px', margin: 'auto', border: '1px solid black' }}>
+                      <button onClick={this.onSubmit}className="fa fa-times-circle"
+                             style={{fontSize:"30px",color:"red",marginLeft:"217px",marginTop:"10px"
+                          }}></button>
                   { 
                       imageProfile == undefined 
                       ? 
@@ -129,15 +130,19 @@ apply(file) {
                           <AvatarImageCropper apply={this.apply} />
                       :
                           <div>
+                            
+                            
                             {
                               loading == false
                               ?
-                              <img src={`http://localhost:8080/uploads/${imageProfile[0].filename}`} />
+                              <img src={`http://localhost:8080/uploads/${imageProfile[0].filename}`} style={{width:"100%"}} />
                               :
                               <p>loading ....</p>
                             }
                           </div>
                   }
+                  
+                  
                 
               </div>
                 </div>

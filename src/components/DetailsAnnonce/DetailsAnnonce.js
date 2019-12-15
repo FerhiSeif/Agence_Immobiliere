@@ -48,7 +48,7 @@ class DetailsAnnonce extends Component {
 
       },
       autoForceUpdate: this
-    });
+    }); 
 
         this.validator2 = new SimpleReactValidator({
       messages: {
@@ -228,9 +228,6 @@ onSubmit(e) {
    this.accessControl()
 
    let { selectedAnnoncement } = this.props;
-   
-    
-  
   if(selectedAnnoncement.statut=="A louer")
         {  
           axios({
@@ -244,17 +241,18 @@ onSubmit(e) {
       surface:selectedAnnoncement.surface,
       prix:selectedAnnoncement.prix,
       categorie:selectedAnnoncement.categorie,
+      agentId:selectedAnnoncement.agentId
       
     }
     
         });
         
         alert("demande envoyee");
-        let statut = 200;
+        let statut=200;
         return statut;}
   
     else 
-         if( selectedAnnoncement.statut  != "A louer"){
+         if( selectedAnnoncement.statut!="A louer"){
              axios({
             method: "POST",
             url: `/demandeAchats/add`,
@@ -268,13 +266,14 @@ onSubmit(e) {
       surface:selectedAnnoncement.surface,
       prix:selectedAnnoncement.prix,
       categorie:selectedAnnoncement.categorie,
+      agentId:selectedAnnoncement.agentId
       
     }
     
         });
         
         alert("demande envoyee");
-        let statut = 200;
+        let statut=200;
         return statut;}
   
     
@@ -282,7 +281,7 @@ onSubmit(e) {
       
 envoyerEmail(e){
   e.preventDefault()
-     let { selectedAnnoncement } = this.props;
+     let { selectedAnnoncement }=this.props;
    
    console.log('this.validator.allValid() ::::::::');
   console.log(this.validator.allValid());
@@ -302,7 +301,7 @@ envoyerEmail(e){
     .then(res => {
               // console.log(res.data)
               alert("email envoye");
-              let statut = 200;
+              let statut=200;
               this.setState({
     
                       nom2: "",
@@ -326,7 +325,7 @@ envoyerEmail(e){
     .then(res => {
               //console.log(res.data)
               alert("email envoye");
-              let statut = 200;
+              let statut=200;
               this.setState({
     
                       nom2: "",
@@ -363,27 +362,27 @@ envoyerEmail(e){
 
     //console.log("userId",this.state.userId.user._id)
     //console.log("selectedAnnocement.userId",this.props.selectedAnnoncement.userId)
-    let { selectedAnnoncement } = this.props;
-    //console.log(this.props.selectedAnnoncement.myoptions)
-   //console.log("selectedAnnoncement",selectedAnnoncement)
-    const {visible,modalEtat1} = this.state
+    let { selectedAnnoncement }=this.props;
+   console.log(this.props.selectedAnnoncement.myoptions)
+   console.log("selectedAnnoncement",selectedAnnoncement)
+    const {visible,modalEtat1}=this.state
     var videourl
 
-    if(selectedAnnoncement.video && selectedAnnoncement.video!=="")
+    if(selectedAnnoncement.video && selectedAnnoncement.video !=="")
     {
-        var tab1= selectedAnnoncement.video.split("v=");
-        var tab2= tab1[1].split("=");
-        var tab3= tab2[0].split("&");
+        var tab1=selectedAnnoncement.video.split("v=");
+        var tab2=tab1[1].split("=");
+        var tab3=tab2[0].split("&");
 
         videourl=tab3[0];
       
     }
 
-    var oldimages = []
-    if( selectedAnnoncement.files != undefined )
+    var oldimages=[]
+    if( selectedAnnoncement.files!=undefined )
     {
       selectedAnnoncement.files.forEach(element => {
-        if(element != null)
+        if(element !=null)
         {
             oldimages.push({
                 original: `http://localhost:8080/uploads/${element.filename}`,
@@ -887,8 +886,7 @@ const opts = {
                   </div>
                   <div className="col-sm-4 bottom40">
                     <form className="callus">
-                      <div className="form-group" 
-                             >
+                      <div className="form-group">
                         <label> Nom </label>
 
                         <input

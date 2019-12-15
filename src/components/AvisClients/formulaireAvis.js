@@ -4,26 +4,19 @@ import Modal from 'react-awesome-modal';
 import { Input,FormFeedback } from 'reactstrap';
 import SimpleReactValidator from 'simple-react-validator';
 import "./avis.css"
+import BeautyStars from 'beauty-stars';
 class FormulaireAvis extends Component {
   constructor(props) {
     super(props);
     this.validator = new SimpleReactValidator({
       messages: {
-        alpha                : '⚠ Le champ :attribute ne peut contenir que des lettres.',
-        email                : '⚠ Le champ :attribute doit êre une adresse email valide.',
         required             : '⚠ Le champ :attribute est requis.',
-        size                 : '⚠ Le champ :attribute doit être :size:type.',
-        max                  : 'Le champ :attribute ne doit pas dépasser :max:type.',
-        min                  : 'Le champ :attribute doit au moins être :min:type.',
       },
       autoForceUpdate: this
     });
     this.state = {
-      titre: "",
-      nom:"",
-      email: "",
-      description_rec:"",
-      errors: {}
+      avis:"",
+      value : 0
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -49,15 +42,13 @@ closeModal(e) {
   onSubmit(e) {
     e.preventDefault()
     if (this.validator.allValid()) {
-    const reclamation = {
-      titre: this.state.titre,
-      nom: this.state.nom,
-      email: this.state.email,
-      description_rec: this.state.description_rec
+    const avisClient = {
+      avis: this.state.avis,
+      value: this.state.value
     };
-
+console.log("okkk")
     axios
-      .post("http://localhost:8080/reclamations/addReclamation", reclamation)
+      .post("http://localhost:8080/avis/addavis", avisClient)
       .then(res => console.log(res.data))
       .catch(err => console.log(err.response.data));
     
@@ -75,22 +66,33 @@ closeModal(e) {
     return (
       <div className="row">
         <form className="callus clearfix border_radius"  onSubmit={this.onSubmit}>
-          <div className="single-query form-group top10">
-            <label>Message</label>
+      
+          <div className="single-query form-group top10" style={{paddingTop: "508px",
+            marginLeft: "215px"}}>
+            
             <textarea
-             valid={this.validator.fieldValid('Message')} 
-             invalid={!this.validator.fieldValid('Message ')}
+             valid={this.validator.fieldValid('Votre Avis')} 
+             invalid={!this.validator.fieldValid('Votre Avis ')}
               type="text"
               className="keyword-input"
-              placeholder="Message"
-              style={{ width: "350px" }}
-              value={this.state.description_rec}
+              placeholder="Donnez votre avis"
+              style={{ width: "579px",height:"188px",fontSize: "30px",
+              color: "black" , backgroundColor:"#bf9b7c", borderWidth:"5px",borderColor:"black" }}
+              value={this.state.avis}
               onChange={this.onChange}
-              name="description_rec"
+              name="avis"
             />
-            <FormFeedback  style={{color:"red"}}  invalid={!this.validator.fieldValid('  Message')}>
-            {this.validator.message(' Message ', this.state.description_rec, 'required|min:50')}
+            <FormFeedback  style={{color:"white",fontSize:"24px",fontWeight: 700}}  invalid={!this.validator.fieldValid(' Avis')}>
+            {this.validator.message('Avis ', this.state.avis, 'required')}
             </FormFeedback>
+          </div>
+          <div className="single-query form-group top10" style={{marginLeft: "240px",marginTop:"-31px"}}>
+          <h1 style={{color:"white",paddingRight:"85px",marginBottom:"14px"}}>Notez nos services</h1>
+          <BeautyStars
+            value={this.state.value}
+           inactiveColor = "#ffffff"
+            onChange={value => this.setState({ value })}
+          />
           </div>
           {/* <button type="Envoyer" className="btn-blue border_radius top15">
             Envoyer
@@ -98,15 +100,19 @@ closeModal(e) {
             <button 
             type="submit"
             className="btn-blue uppercase btn-blue border_radius top15"
-            value="Envoyer"  
+            style={{    marginLeft: "428px",
+              marginBottom: "50px"}}
+            value="Envoyer"
+            onClick={this.onSubmit}  
             >Soumettre </button>   
               <Modal visible={this.state.visible} width="400" height="300" effect="fadeInUp" onClickAway={() => this.closeModal()}>
                     <div>
-                        <h1 style={{marginTop: "55px",color:"#e60505",marginRight: "-11px"}}><i className="far fa-hand-peace">félicitations 🎉</i></h1>
-                        <h4 style={{textAlign:"center",color:"#000000",marginTop:" 63px"}}>votre demande a été envoyée avec succès</h4>
+                        <h1 style={{marginTop: "55px",color:"#e60505",marginRight: "-11px"}}><i className="far fa-hand-peace">Mercie pour votre avis 👏🏼</i></h1>
+                        
                         <a href="javascript:void(0);" onClick={() => this.closeModal()}><button type="button" className="btn btn-primary" style={{marginTop:" 44px",width: "94px",height: "48px",marginLeft: "149px"}}>Fermer</button></a>
                     </div>
                 </Modal>
+        
         </form>
       </div>
     );
