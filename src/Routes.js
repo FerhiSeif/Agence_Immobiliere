@@ -88,13 +88,9 @@ class Routes extends React.Component {
                             /> <
                             Route path = "/profilAgent"
                             component = { ProfilAgent }
-                            /> <
-                            Route path = "/reactBot"
-                            component = { ReactBot }
-                            /> <
-                            Route path = '/messages'
-                            component = { DashboardComponent }
                             /> 
+                            <Route path = "/reactBot"component = { ReactBot }/>
+                            <Route path = '/messages'component = { DashboardComponent }/> 
                             <Route path = '/estimations'component = { Estimation }/> 
                             <Route path = '/avis'component = { Avis }/> 
 

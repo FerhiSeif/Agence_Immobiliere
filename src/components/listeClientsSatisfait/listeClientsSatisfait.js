@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import BienRecommande from "./../bienRecomande/bienRecomande";
 import ClientsSatisfaits from "./../clientsSatisfaits/clientsSatisfaits";
 
 var myList = [

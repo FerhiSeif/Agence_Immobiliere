@@ -91,7 +91,7 @@ class ProfilAgent extends Component {
               <div className="col-sm-4 bottom40">
                 <div className="agent_wrap">
                   <div className="image">
-                    <img src="images/agent-one.jpg" alt="Agents" />
+                    <img src={`http://localhost:8080/uploads/${agent.files[0].filename}`} />
                   </div>
                 </div>
               </div>

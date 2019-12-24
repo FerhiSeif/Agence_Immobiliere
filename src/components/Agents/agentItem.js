@@ -40,14 +40,16 @@ class AgentItem extends Component {
                   </table>
                   <hr />
                   <Link to={{pathname: '/profilAgent',
-                           agent:item
-                            }}>
+                           agent:item  
+                            }} className="btn-more">
                     <i> 
-                      <img alt="arrow" src="images/arrow-yellow.png" style={{width:"8%"}}/>
+                      <img alt="arrow" src="images/arrow-yellow.png"/>
                     </i>
                     <span>voir Profil</span>
-                    
-                  </Link>
+                    <i> 
+                      <img alt="arrow" src="images/arrow-yellow.png"/>
+                    </i>                  
+                    </Link>
                 </div>
               </div>
             </div>

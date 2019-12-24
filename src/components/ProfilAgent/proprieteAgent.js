@@ -3,18 +3,27 @@ import {Link} from 'react-router-dom'
 class PropreiteAgent extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+           filename : undefined 
+        };
     }
     render() {
         const { item } = this.props;
         console.log(
           'iteem',item
         )
+        const {filename} = this.state
+        console.log("filename",this.state.files)
         return (
             <div className="col-sm-6">
               <div className="listing_full">
                 <div className="image">
-                  <img alt="image" src="images/b-d-property.jpg" />
+                 {
+                    filename == undefined 
+                      ? 
+                      <img alt="image" src="images/b-d-property.jpg" /> :  
+                  <img src={`http://localhost:8080/uploads/${item.files[0].filename}`}/>
+}
                   <span className="tag_l">Featured</span>
                   <span className="tag_t">{item.statut}</span>
                 </div>

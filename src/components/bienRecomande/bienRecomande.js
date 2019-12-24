@@ -58,7 +58,7 @@ class BienRecommande extends Component {
     });
 
     return (
-    
+    <div className="three-item owl-carousel">
           <div className="item feature_item">
             <div className="image">
               {" "}
@@ -109,7 +109,7 @@ class BienRecommande extends Component {
               </div>
             </div>
           </div>
-        
+        </div>
      
     );
   }

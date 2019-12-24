@@ -11,12 +11,13 @@ class ListeBienRecomande extends Component {
     console.log('this.props.myListe from listBien Recomande ;;;;;;;');
     console.log(this.props.myListe);
     return (
+       <div className="row">
       
-      <div className="three-item owl-carousel">
            
          {this.props.myListe.map((el, index) => (
            <BienRecommande key={index} item={el} />
-        ))}
+        ))} 
+      
       </div>
     );
   }

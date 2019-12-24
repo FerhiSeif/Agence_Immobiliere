@@ -49,14 +49,7 @@ class Header extends Component {
                         </Link>
                       </li>
                     )}
-                    {this.props.user.nom && (
-                      <li>
-                        <Link to="/messages">
-                        <i className="icon-icons142"></i>
-                          Messages
-                        </Link>
-                      </li>
-                    )}
+                   
                     {this.props.user.nom && (
                       <li>
                         <Link to="/profile">
@@ -65,10 +58,26 @@ class Header extends Component {
                         </Link>
                       </li>
                     )}
-                    <li>
+                     {this.props.user.nom && (
+                      <li>
+                        <Link to="/messages">
+                        <i className="icon-icons142"></i>
+                          Messages
+                        </Link>
+                      </li>
+                    )}
+                     {this.props.user.nom && (
+                      <li>
+                        <Link to="/messages">
+                        <i className="fa fa-bell-o" aria-hidden="true"></i>
+                          Notifications
+                        </Link>
+                      </li>
+                    )}
+                    <li style={{marginRight:"-42px"}}>
                       {this.props.user.nom ? (
-                        <Link onClick={this.onLogOutClick}>
-                          <i className="icon-icons179" />
+                        <Link onClick={this.onLogOutClick} >
+                          <i className="icon-icons179"/>
                           Déconnexion
                         </Link>
                       ) : (

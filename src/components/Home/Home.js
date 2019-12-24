@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import "../../css/reality-icon.css";
 import "../../css/font-awesome.min.css";
 import ItemList from "../itemList/itemList";
@@ -448,11 +447,11 @@ class Home extends Component {
         </p>
               </div>
             </div> 
-            <div className="row">
-            <ItemList liste={this.props.announcementsList.filter(elm=>elm.situation===true)} />
-         
-              {/* <ListeBienRecomande myListe={this.props.announcementsList}/> */}
-            </div>
+            
+           {/* <ItemList liste={this.props.announcementsList.filter(elm=>elm.situation===true)} />*/}
+          
+              <ListeBienRecomande myListe={this.props.announcementsList.filter(elm=>elm.situation===true)}/> 
+           
           </div>
         </section>
         {/*Featured Property Ends*/}

@@ -53,7 +53,10 @@ class ChatListComponent extends React.Component {
                           }/>
                           {
                             _chat.receiverHasRead === false && !this.userIsSender(_chat) ? 
-                            <ListItemIcon><NotificationImportant className={classes.unreadMessage}></NotificationImportant></ListItemIcon> :
+                            <ListItemIcon>
+                            <NotificationImportant className={classes.unreadMessage}>
+                            </NotificationImportant>
+                            </ListItemIcon> :
                             null
                           }
                       </ListItem>

@@ -8,7 +8,7 @@ import { CometChat } from '@cometchat-pro/chat';
 import config from './config';
 const firebase = require("firebase");
 require("firebase/firestore"); // Required for side-effects?????
-
+import registerServiceWorker from './registerServiceWorker';
 CometChat.init(config.appID)
 firebase.initializeApp({
   apiKey: "AIzaSyCz_Qxs6WXHBsIB4C5dUFloHo1Y5Hi0kU4",

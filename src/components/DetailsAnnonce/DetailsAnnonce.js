@@ -111,11 +111,11 @@ console.log("localStorage",localStorage.getItem("user"))
   
   accessControl (){
     let autorization = localStorage.getItem("Authorization");
-    if ((!autorization)||(autorization == null)) this.props.history.push("/login");
-    else{
-      
-    
+    if ((!autorization)||(autorization == null)) {
+      this.props.history.push("/login")
+       return false
     }
+    return true
   };
 
 
@@ -225,7 +225,9 @@ onSubmit(e) {
 
 
   _handleSubmit(){
-   this.accessControl()
+   if(this.accessControl()){
+
+   
 
    let { selectedAnnoncement } = this.props;
   if(selectedAnnoncement.statut=="A louer")
@@ -276,7 +278,7 @@ onSubmit(e) {
         let statut=200;
         return statut;}
   
-    
+   }
              }
       
 envoyerEmail(e){

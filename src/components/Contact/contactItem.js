@@ -3,6 +3,7 @@ import Modal from 'react-awesome-modal';
 import SimpleReactValidator from 'simple-react-validator';
 import axios from "axios";
 import { Input,FormFeedback } from 'reactstrap';
+import"./Contact.css"
 class ContactItem extends Component {
   constructor(props) {
     super(props);
@@ -102,25 +103,25 @@ onSubmit(e){
       <form action="#" className="callus" onSubmit={this.onSubmit}>
         <div className="col-md-12">
           <div className="single-query form-group">
-            <label> Nom </label>
-
+                        <label> Nom && Prénom </label>
                         <input
                           valid={this.validator.fieldValid('Nom & prénom')} 
                           invalid={!this.validator.fieldValid('Nom & prénom ')}  
                           type="text"
                           className="form-control"
-                          placeholder="Nom"
+                          placeholder="nom"
+                          placeholderTextColor={'red'}
                           value={this.state.nom2}
                           onChange={this.onChange}
                           name="nom2"
                         />
                         <FormFeedback  style={{color:"red", marginLeft: "17px"}} 
-                        invalid={!this.validator.fieldValid('  nom2 ')}>
-                        {this.validator.message('nom2', this.state.nom2, 'required')}</FormFeedback>
+                        invalid={!this.validator.fieldValid('  Nom & prénom ')}>
+                        {this.validator.message('Nom & prénom', this.state.nom2, 'required')}</FormFeedback>
 
           </div>
           <div className="single-query form-group">
-            <label> Teléphone </label>
+            <label> Téléphone </label>
                         <input
                           type="tel"
                           className="form-control"
@@ -143,8 +144,8 @@ onSubmit(e){
                           name="email2"
                         />
                        <FormFeedback  style={{color:"red", marginLeft: "17px"}}
-                         invalid={!this.validator.fieldValid('  email2 ')}>
-                         {this.validator.message('email2', this.state.email2, 'required|email')}
+                         invalid={!this.validator.fieldValid('  Email ')}>
+                         {this.validator.message('Email', this.state.email2, 'required|email')}
                          </FormFeedback>
 
           </div>
@@ -160,7 +161,9 @@ onSubmit(e){
                           name="message"
                         />
           </div>
-              <input type="submit" defaultValue="Envoyer" className="btn-blue" style={{marginTop:"30px"}}/>
+              <input type="submit" defaultValue="Envoyer" className="btn-blue"
+               style={{ height: "inherit",
+              width: "100%"}}/>
         </div>
       </form>
   

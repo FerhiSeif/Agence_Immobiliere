@@ -2,32 +2,35 @@ import React, { Component } from "react";
 import "./Contact.css";
 import ContactItem from "./contactItem";
 import MapContainer from "./../google-map/googleMap";
-
 class Contact extends Component {
   constructor(props) {
     super(props);
  
     this.state = {
       visible:false,
-      lat: "",
-      lng: "",
+      lat: " 36,8859",
+      lng: " 10,2488",
       
         };
       }
   render() {
-   
+ const  lat= " 36,8859"
+  const lng= " 102488"
     return (
-      <div style={{marginBottom:"170px",margintop:"-75px"}}>
+      <div>
         {/*Contact*/}
         <section id="contact-us">
           <div className="contact">
-             <div id="map" />
-             <MapContainer lat ={this.lat}  lng={this.lng} />
+             <div id="map" >
+             <MapContainer lat =" 36,8859" lng=" 102488" />
+             </div>
             <div className="container">
               <div className="row">
                 <div className="col-md-4 hidden-xs" />
                 <div className="col-md-4 hidden-xs" />
-                <div className="col-md-4 col-sm-4 col-xs-12  contact-text" style={{paddingRight:"0px",paddingLeft:"-0px"}}>
+                <div className="col-md-4 col-sm-4 col-xs-12  contact-text"
+                 style={{marginBottom:"-52px;"
+                 }}>
                   <div className="agent-p-contact">
                     <div className="our-agent-box bottom30">
                       <h2>Contactez_nous</h2>
