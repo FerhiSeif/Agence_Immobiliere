@@ -15,7 +15,6 @@ const theme = {
   userBubbleColor: '#fff',
   userFontColor: '#4a4a4a',
   marginRight: "40px",
-
 };
 class Chat extends Component {
   constructor(props) {
