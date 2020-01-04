@@ -2,17 +2,37 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { Link, withRouter } from "react-router-dom";
-
+import axios from "axios";
 import { logOutAction } from "../../Redux/userActions";
 import Modal from 'react-awesome-modal';
 class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      numNotif: 0
     };
     this.openModal = this.openModal.bind(this);
-  
+    this.getAll = this.getAll.bind(this);
   }
+
+  getAll(data)
+  {
+      this.setState({
+          numNotif : data 
+      });
+  }
+  componentDidMount(){
+    const {getAll} = this
+    let response =
+    axios.get("http://localhost:8080/notifications/getnotification")
+      .then(res => { console.log("res");
+                      console.log(res);
+                      getAll(res.data.nombreNotif);
+                    })
+      .catch(err => console.log(err.response.data)); 
+  }
+
+
   onLogOutClick = () => {
     this.props
       .logOutAction()
@@ -25,7 +45,7 @@ class Header extends Component {
 
 
   render() {
-    
+ const { numNotif } = this.state;
     return (
       <div className="Header">
         <header className="layout_default">
@@ -83,7 +103,7 @@ class Header extends Component {
                       <li>
                         <a onClick={()=> this.props.openModalBeta()}>
                         <i className="fa fa-bell-o" aria-hidden="true"></i>
-                          Notifications
+                          Notifications ({numNotif})
                         </a>
                       </li>
                     )}
