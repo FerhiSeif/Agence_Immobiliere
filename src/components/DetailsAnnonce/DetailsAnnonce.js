@@ -230,6 +230,7 @@ onSubmit(e) {
    
 
    let { selectedAnnoncement } = this.props;
+   console.log("selected annoncement",selectedAnnoncement)
   if(selectedAnnoncement.statut=="A louer")
         {  
           axios({

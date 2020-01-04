@@ -7,15 +7,15 @@ class AgentItem extends Component {
         super(props);
         this.state = {};
     }
+    
     render() {
         const { item } = this.props;
-  
-   // console.log('myitem',item)
-   // console.log("",item.files.filename)
+    console.log('myitem',item)
+ //  console.log("itemmmmmmmmmmm",item.files[0].filename)
         return ( <div className = "col-sm-4 bottom40" >
             <div className="agent_wrap">
               <div className="image">
-                <img src={`http://localhost:8080/uploads/${item.files[0].filename}`}/>
+                <img src={`http://localhost:8080/uploads/${item.files ? item.files[0].filename:false}`}/>
                 <div className="img-info">
                   <h3>{item.nom}</h3>
                   <span>{item.mission}</span>

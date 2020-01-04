@@ -66,7 +66,7 @@ class ReseauItem extends Component {
           </div>
           <div className="col-sm-4">
             <div className="single-query">
-              <label>Twitter:</label>
+              <label style={{marginRight:"23px"}}>Twitter:</label>
             </div>
           </div>
           <div className="col-sm-8">
@@ -81,7 +81,7 @@ class ReseauItem extends Component {
           </div>
           <div className="col-sm-4">
             <div className="single-query">
-              <label>Google Plus:</label>
+              <label style={{marginRight:"-13px"}}>Google Plus:</label>
             </div>
           </div>
           <div className="col-sm-8">
@@ -96,7 +96,7 @@ class ReseauItem extends Component {
           </div>
           <div className="col-sm-4">
             <div className="single-query">
-              <label>Linkedin:</label>
+              <label style={{marginRight:"9px"}}>Linkedin:</label>
             </div>
           </div>
           <div className="col-sm-8">
@@ -109,7 +109,7 @@ class ReseauItem extends Component {
               />
             </div>
           </div>
-          <div className="col-md-12 col-sm-12 col-xs-12 text-right">
+          <div className="col-md-12 col-sm-12 col-xs-12 text-right"style={{marginLeft:"-65px"}}>
             <button
               className="btn-blue border_radius"
               onClick={this.onSubmitChangeClicked}

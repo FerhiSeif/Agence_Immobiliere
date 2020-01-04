@@ -29,8 +29,7 @@ class Contact extends Component {
                 <div className="col-md-4 hidden-xs" />
                 <div className="col-md-4 hidden-xs" />
                 <div className="col-md-4 col-sm-4 col-xs-12  contact-text"
-                 style={{marginBottom:"-52px;"
-                 }}>
+                 style={{marginBottom:"-52px;",marginLeft:"-200px"}}>
                   <div className="agent-p-contact">
                     <div className="our-agent-box bottom30">
                       <h2>Contactez_nous</h2>

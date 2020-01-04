@@ -84,11 +84,11 @@ closeModal(e) {
     const  {agents} = this.props
 
     return (
-      <div className="col-sm-6 bottom40">
+      <div className="col-sm-6 bottom40" style={{marginTop: "15px"}}>
         <h2 className="text-uppercase bottom20">Contact Agent</h2>
         <form className="callus"onSubmit={this.onSubmit}>
           <label>
-            <h4>Nom & prénom :</h4>
+            <h4 style={{marginRight:"431px"}}>Nom & prénom :</h4>
           </label>
           <div className="form-group">
             <input
@@ -106,7 +106,7 @@ closeModal(e) {
             {this.validator.message(' Nom & prénom  ', this.state.nom, 'required|min:6|max:22')}</FormFeedback>
           </div>
           <label>
-            <h4>Téléphone :</h4>
+            <h4 style={{marginRight:"469px"}}>Téléphone :</h4>
           </label>
           <div className="form-group">
             <input
@@ -120,7 +120,7 @@ closeModal(e) {
             />
           </div>
           <label>
-            <h4>Email :</h4>
+            <h4 style={{marginRight:"497px"}}>Email :</h4>
           </label>
           <div className="form-group">
             <input
@@ -137,7 +137,7 @@ closeModal(e) {
             <FormFeedback  style={{color:"red"}}  invalid={!this.validator.fieldValid('  email ')}>{this.validator.message('email', this.state.email, 'required|email')}</FormFeedback>
           </div>
           <label>
-            <h4>Non d'agent :</h4>
+            <h4 style={{marginRight:"453px"}}>Non d'agent :</h4>
           </label>
           <div className="form-group">
             <select 
@@ -158,7 +158,7 @@ closeModal(e) {
 
           </div>
           <label>
-            <h4>Message :</h4>
+            <h4 style={{marginRight:"474px"}}>Message :</h4>
           </label>
           <div className="form-group">
             <textarea
@@ -177,7 +177,6 @@ closeModal(e) {
           </div>
 
           <button
-          style={{marginLeft:"198px"}}
             type="submit"
             className="btn-blue uppercase border_radius"
             defaultValue="Envoyer"

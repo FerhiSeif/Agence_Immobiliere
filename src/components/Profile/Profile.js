@@ -60,7 +60,7 @@ apply(file) {
     formData.append("files", fileBeta);
 
     const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-    axios({  
+    axios({
         method: "POST",
         url: `/clients/update-profile`,
         data: formData,
@@ -85,6 +85,7 @@ apply(file) {
 
 
   render() {
+    
 
     const {imageProfile,loading} = this.state
 

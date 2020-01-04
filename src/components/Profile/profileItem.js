@@ -57,7 +57,7 @@ class ProfilItem extends Component {
         <div className="callus">
           <div className="col-sm-4">
             <div className="single-query">
-              <label>Nom:</label>
+              <label style={{marginRight:"77px"}}>Nom:</label>
             </div>
           </div>
           <div className="col-sm-8">
@@ -73,7 +73,7 @@ class ProfilItem extends Component {
 
           <div className="col-sm-4">
             <div className="single-query">
-              <label>Teléphone:</label>
+              <label style={{marginRight:"38px"}}>Teléphone:</label>
             </div>
           </div>
           <div className="col-sm-8">
@@ -105,7 +105,7 @@ class ProfilItem extends Component {
           </div>
           <div className="col-sm-4">
             <div className="single-query">
-              <label>Adresse</label>
+              <label style={{marginRight:"50px"}}>Adresse</label>
             </div>
           </div>
           <div className="col-sm-8">
@@ -121,7 +121,7 @@ class ProfilItem extends Component {
           </div>
           <div className="col-sm-4">
             <div className="single-query">
-              <label>Description:</label>
+              <label style={{marginRight:"24px"}}>Description:</label>
             </div>
           </div>
           <div className="col-sm-8">
@@ -136,7 +136,7 @@ class ProfilItem extends Component {
               />
             </div>
           </div>
-          <div className="col-md-12 col-sm-12 col-xs-12 text-right">
+          <div className="col-md-12 col-sm-12 col-xs-12 text-right"style={{marginLeft:"-92px"}}>
             <button
               className="btn-blue border_radius"
               onClick={this.onSubmitChangeClicked}

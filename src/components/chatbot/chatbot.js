@@ -1,21 +1,15 @@
-import ChatBot from "react-simple-chatbot";
-import styled from "styled-components";
-// import ReactDOM from "react-dom";
-import { ThemeProvider } from 'styled-components';
+
 import React, { Component } from "react";
 import Pusher from 'pusher-js';
-const theme = {
-  background: '#f5f8fb',
-  fontFamily: 'Helvetica Neue',
-  headerBgColor: '#1f3e7f',
-  headerFontColor: '#fff',
-  headerFontSize: '15px',
-  botBubbleColor: '#1f3e7f',
-  botFontColor: '#fff',
-  userBubbleColor: '#fff',
-  userFontColor: '#4a4a4a',
-  marginRight: "40px",
-};
+import "./chatbot.css"
+
+
+
+const style ={
+ 
+    backgroundColor: "#d6ad08"
+}
+
 class Chat extends Component {
   constructor(props) {
     super(props);
@@ -78,7 +72,9 @@ class Chat extends Component {
      const ChatBubble = (text, i, className) => {
       return (
         <div key={`${className}-${i}`} className={`${className} chat-bubble`}>
-          <span className="chat-content">{text}</span>
+          <span className="chat-content" style={{borderRadius: "18px 18px 18px 0",
+            animation: "Lmuha 0.3s ease forwards",
+            webkitAnimation:" Lmuha 0.3s ease forwards"}}>{text}</span>
         </div>
       );
     };
@@ -87,51 +83,57 @@ class Chat extends Component {
       ChatBubble(e.text, index, e.user)
     );
     return (
-      <div className="Chat">
-      <ThemeProvider theme={theme}>
-        <ChatBot 
-         floating="false"
-         headerTitle= "chat"
-         headerTitle="Speech Synthesis"
-          speechSynthesis={{ enable: true, lang: "en" }}
-          
-          steps={[
-            {
-              id: "1",
-              message: "What is your name?",
-              trigger: "2"
-            },
-            {
-              id: "2",
-              user: true,
-              trigger: "3"
-            },
-            {
-              id: "3",
-              message: "Hi {previousValue}, nice to meet you!",
-              trigger: "4"
-            },
+      <div>
+      <div className="page_content wrapper" />
+        {/* Chat Button  */}
+        <div className="chat_button" style={{marginBottom:"-79px"}}>
+          <i className="fa fa-comment-alt" />
+          <i className="fa fa-times" />
+        </div>
+        {/* Chat Form   */}
+        <div className="chat_container" style={{marginBottom:"-101px"}}>
+          <div className="chat_header">
+            <div className="part-1">
+              <i className="fa fa-angle-up" />
+              <i className="fa fa-angle-down" />
+            </div>
+            <div className="part-2"> 
+              <p className="header_info">Trouvez votre réponse rapidement</p>
+            </div>
+          </div>
+          <div className="chat_content" id="chat_c">
+            
+            <div className="clearfix" />
+            <div className="agent_chat chat_box">
+              <p>Nous sommes heureux de vous aider, quel est votre problème?</p>
+            </div>
+            <div className="clearfix" />{chat}
+           
+          </div>
+          <div className="chat_footer">
+            <div className="composer">
+            <form onSubmit={this.handleSubmit} style={{marginTop: "9px"}}>
+              <input
+                value={this.state.userMessage}
+                onInput={this.handleChange}
+                className="text-input"
+                type="text"
+                autoFocus
+                placeholder="Type your message and hit Enter to send"
+              />
+               <div className="chat_buttons">
+              <i className="fas fa-caret-right" onSubmit={this.handleSubmit}/>
+            </div>
+            </form>
+            </div>
+          </div>
+        </div>
+    </div>
 
-            {
-              id: "4",
-              message: "Can I help you?",
-              trigger: "5"
-            },
-            {
-              id: "5",
-              user: true,
-              trigger: "6"
-            },
-            {
-              id: "6",
-              message: "bye",
-              end: true
-            }
-          ]}
-        />
-       
-        </ThemeProvider>
-      </div>
+	
+
+
+
     );
   }
 }

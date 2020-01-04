@@ -27,27 +27,15 @@ import Notifications from "./components/Notifications/notifications"
 
 class Routes extends React.Component {
         render() {
-                return ( <
-                    div className = "routes-main" >
-                    <
-                    Route exact path = "/"
-                    component = { Home }
-                    /> <
-                    Route path = "/achat"
-                    component = { AchatComponent }
-                    /> <
-                    Route path = "/location"
-                    component = { LocationComponent }
-                    /> <
-                    Route path = "/contact"
-                    component = { Contact }
-                    /> <
-                    Route path = "/login"
-                    component = { Login }
-                    /> <
-                    Route path = "/profile"
-                    component = { Profile }
-                    /> <
+                return ( 
+                    <div className = "routes-main" >
+                    <Route exact path = "/" component = { Home }/>
+                    <Route path = "/achat" component = { AchatComponent }/> 
+                    <Route path = "/location" component = { LocationComponent }/>
+                    <Route path = "/contact" component = { Contact }/>
+                    <Route path = "/login" component = { Login }/>
+                    <Route path = "/profile"component = { Profile }/>
+                     <
                     Route path = "/déposer-une-annonce"
                     component = { CreeAnnonce }
                     /> <
@@ -86,19 +74,11 @@ class Routes extends React.Component {
                             /> <
                             Route path = "/agents"
                             component = { Agents }
-                            /> <
-                            Route path = "/profilAgent"
-                            component = { ProfilAgent }
-                            />  <
-                            Route path = "/reactBot"
-                            component = { ReactBot }
-                            /> <
-                            Route path = '/messages'
-                            component = { DashboardComponent }
-                            />  <
-                            Route path = '/estimations'
-                            component = { Estimation }
-                            /> 
+                            />
+                            <Route path = "/profilAgent" component = { ProfilAgent }/> 
+                            <Route path = "/reactBot" component = { ReactBot }/> 
+                            <Route path = '/messages' component = { DashboardComponent }/>  
+                            <Route path = '/estimations' component = { Estimation }/> 
                             <Route path = '/avis' component = { Avis }/> 
                             <Route path = '/notif' component = { Notifications }/> 
 
@@ -107,4 +87,4 @@ class Routes extends React.Component {
                     }
                 }
 
-                export default Routes;
+export default Routes;

@@ -97,6 +97,7 @@ class EditAnnoncement extends Component {
     });
   };
 
+
   onEditButtonClicked = () => {
     this.props
       .editSelectedAnnoncementAction({

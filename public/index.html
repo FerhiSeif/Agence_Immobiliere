@@ -43,6 +43,11 @@
     <link rel="stylesheet" type="text/css" href="css/style.css" />
 
     <link rel="icon" href="images/icon.png" />
+
+
+    <!-- Font Awesome 5 -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
 </head>
 
 <body>
@@ -151,7 +156,52 @@
       $('[data-toggle="tooltip"]').tooltip();
     </script>  -->
 
-    <script src="/dist/avatar-image-cropper.min.js"></script>
+
+
+
+
+    <!--  Jquery -->
+    <!-- <script src="/dist/avatar-image-cropper.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+
+    <!-- <script type="text/javascript" src="js/chat.js"></script> -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            // just for testing, keep the scrollbar to bottom
+            var out = document.getElementById("chat_c");
+            out.scrollTop = out.scrollHeight - out.clientHeight;
+
+            // on edit, resize the composer based on textarea input
+            $('.chat_container').on('change keyup keydown paste cut', '.message_input', function() {
+                $('.composer').innerHeight(0).innerHeight(this.scrollHeight);
+            }).find('textarea').change();
+
+            // calculate chat header and resize the content
+            var heightCalc = $('.chat_header').innerHeight();
+            $(".chat_content").css({
+                top: heightCalc + 3
+            });
+
+            // toggle chat window on/off - toggle chat header expand on/off
+            $(function() {
+                $(".chat_button").click(function() {
+                    $('.chat_container').toggleClass("chat_active");
+                    $(this).toggleClass("chat_open");
+                });
+                $(".part-1 i").click(function() {
+                    $('.chat_header').toggleClass("header_close");
+                    $('.part-1').toggleClass("part-1-active");
+                    var heightCalc = $('.chat_header').innerHeight();
+                    $(".chat_content").css({
+                        top: heightCalc
+                    });
+                });
+            });
+        });
+    </script>
+
 
 </body>
 

@@ -83,7 +83,7 @@ class Conseils extends Component {
                     style={{ marginRight: "37px;" }}
                   >
                     <h2 className="text-uppercase bottom20">Contact Agent</h2>
-                    <div className="parag">
+                    <div className="parag" style={{marginTop: "36px"}}>
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                       Cras et dui vestibulum, bibendum purus sit amet, vulputate
                       mauris. Ut adipiscing gravida tincidunt. Duis euismod

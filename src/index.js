@@ -20,12 +20,10 @@ firebase.initializeApp({
     messagingSenderId: "1060360248814",
     appId: "1:1060360248814:web:c3723f53f5ab4c9d2282ff"
 })
-ReactDOM.render( <
-    Provider store = { store } >
-    <
-    App / >
-    <
-    /Provider>,
+ReactDOM.render( 
+    <Provider store = { store } >
+    <App/>
+    </Provider>,
 
     document.getElementById("root")
 );

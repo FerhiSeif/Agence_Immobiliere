@@ -4,6 +4,7 @@ class ClientsSatisfaits extends Component {
     super(props);
     this.state = {};
   }
+ 
   render() {
     const { item } = this.props;
     return (
@@ -20,5 +21,5 @@ class ClientsSatisfaits extends Component {
     );
   }
 }
-
+ 
 export default ClientsSatisfaits;

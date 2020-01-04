@@ -8,7 +8,7 @@ class EtudeProjet extends Component {
       <div className="EtudeProjet">
         {/*Fullscreen*/}
         <section className="fullscreen">
-          <div className="container">
+          <div className="container" style={{marginTop:"-3px"}}>
             <div className="row">
               <div className="fullscreen_inner centered">
                 <div className="col-sm-12" style={{ marginTop: "390px" }}>

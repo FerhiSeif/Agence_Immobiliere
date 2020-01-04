@@ -4,14 +4,26 @@ import { compose } from "redux";
 import { Link, withRouter } from "react-router-dom";
 
 import { logOutAction } from "../../Redux/userActions";
-
+import Modal from 'react-awesome-modal';
 class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+    this.openModal = this.openModal.bind(this);
+  
+  }
   onLogOutClick = () => {
     this.props
       .logOutAction()
       .then(res => res === 200 && this.props.history.push("/"));
   };
-  
+
+  openModal() {
+  }
+
+
+
   render() {
     return (
       <div className="Header">
@@ -21,7 +33,7 @@ class Header extends Component {
             <div className="container">
               <div className="row">
                 <div className="col-md-5">
-                  <p>Nous sommes les meilleurs.</p>
+                  <p style={{marginLeft:"-284px"}}>Nous sommes les meilleurs.</p>
                 </div>
                 <div className="col-md-7 text-right">
                   <ul className="breadcrumb_top text-right">
@@ -68,10 +80,10 @@ class Header extends Component {
                     )}
                      {this.props.user.nom && (
                       <li>
-                        <Link to="/messages">
+                        <div onClick={()=> this.props.openModalBeta()}>
                         <i className="fa fa-bell-o" aria-hidden="true"></i>
                           Notifications
-                        </Link>
+                        </div>
                       </li>
                     )}
                     <li style={{marginRight:"-42px"}}>
@@ -96,7 +108,7 @@ class Header extends Component {
             <div className="container">
               <div className="row">
                 <div className="col-md-3 col-sm-12">
-                  <div className="logo">
+                  <div className="logo" style={{marginLeft: "-122px"}}>
                     <Link to="/">
                       <img src="images/logo.png" />
                     </Link>

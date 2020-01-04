@@ -79,7 +79,7 @@ class FavorisItem extends Component {
             <div className="favroute clearfix">
               <p className="pull-md-left" title="Valable à Partir De">
                 <i className="icon-calendar2" />
-                &nbsp;{item.ValableAPartirDe.slice(0, 10)}
+                &nbsp;{item.ValableAPartirDe ? item.ValableAPartirDe.slice(0, 10):false}
               </p>
               <ul className="pull-right">
                 <li title="Effacer de la liste de favoris">

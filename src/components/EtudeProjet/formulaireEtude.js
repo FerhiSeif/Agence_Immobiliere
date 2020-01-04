@@ -25,13 +25,7 @@ class FormulaireEtude extends Component {
             autoForceUpdate: this
         });
         
-        this.validator2 = new SimpleReactValidator({
-            messages: {
-                required: '⚠ Le champ :attribute est requis.',
-
-            },
-            autoForceUpdate: this
-          });
+       
        
           this.state = {
             nom: "",
@@ -61,6 +55,7 @@ class FormulaireEtude extends Component {
     }
 
     openModal() {
+        console.log("open")
         this.setState({
             visible: true
         });
@@ -71,35 +66,16 @@ class FormulaireEtude extends Component {
         this.setState({
             visible: false,
         });
-        //window.location.reload();
+        window.location.reload();
     }
 
     onSubmit(e) {
         e.preventDefault();
         if (this.validator.allValid()) {
 
-            this.openModal();
-           
-            
-        } else {
-            e.preventDefault();
-            this.validator.showMessages();
-            // rerender to show messages for the first time
-            this.forceUpdate();
-
-        }
-    }
-    
-    envoyer(e){
-        e.preventDefault();
-        alert("envoyer")
-        //console.log('this.validator.allValid() ::::::::');
-     //   console.log(this.validator.allValid());
-      
-       /// if (this.validator2.allValid()) {
-            console.log("okkkkkkkkkk")
             const etudeProjet = {
                 nom: this.state.nom,
+               prenom: this.state.prenom,
                 email: this.state.email,
                 tel: this.state.tel,
                 description: this.state.description,
@@ -113,19 +89,33 @@ class FormulaireEtude extends Component {
             console.log("etudeProjet",this.state.etudeProjet)
             axios
                 .post("http://localhost:8080/etudeProjets/add", etudeProjet)
-                .then(res => console.log(res.data))
-                .catch(err => console.log(err.response.data));
-            // }
+                .then(function(response) {
+                    console.log(response);
+                    if (response.data.code === 200) {
+                      this.openModal()
+                        console.log("registration successfull");
+                    }
+                    else {
+                        console.log("some error ocurred", response.data.code);
+                    }
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        this.openModal();
+             
+                 
+           
             
-            // else {
-            //     console.log("not okkk")
-            //     e.preventDefault();
-            //     this.validator2.showMessages();
-            //     // rerender to show messages for the first time
-            //     this.forceUpdate();
-    
-            // }
+        } else {
+            e.preventDefault();
+            this.validator.showMessages();
+            // rerender to show messages for the first time
+            this.forceUpdate();
+
+        }
     }
+
     render() {
         const  {agents} = this.props
         
@@ -141,7 +131,7 @@ class FormulaireEtude extends Component {
                 invalid = {!this.validator.fieldValid('Nom & prénom ') }
                 type = "text"
                 className = "form-control"
-                placeholder = "Nom & prénom "
+                placeholder = "Nom"
                 style = {{backgroundColor: "#ffffff0a",
                         fontSize: "18px",
                         color: "white"}}
@@ -149,10 +139,21 @@ class FormulaireEtude extends Component {
                 onChange = { this.onChange }
                 name = "nom" />
              <FormFeedback style = {{ color: "red" }}
-              invalid = {!this.validator.fieldValid('  Nom & prénom ') } >
-               { this.validator.message(' Nom & prénom  ', this.state.nom, 'required|max:22') } 
+              invalid = {!this.validator.fieldValid('  Nom') } >
+               { this.validator.message(' Nom ', this.state.nom, 'required|max:22') } 
              </FormFeedback> 
            </div> 
+           <div className = "form-group" >
+             <input type = "text"
+                className = "form-control"
+                placeholder = " Prénom "
+                style = {{backgroundColor: "#ffffff0a",
+                        fontSize: "18px",
+                        color: "white"}}
+                value = { this.state.prenom }
+                onChange = { this.onChange }
+                name = "prénom" />
+                </div>
            <div className = "form-group" >
             <input valid = { this.validator.fieldValid('Email') }
                 invalid = {!this.validator.fieldValid('Email ') }
@@ -299,6 +300,27 @@ class FormulaireEtude extends Component {
             } 
             </select> 
             </div> 
+            <div className = "form-group" >
+            <select
+                       id = "pet-select"
+            value = { this.state.agentId }
+            onChange = { this.onChange }
+            name = "agentId"
+            style = {
+                {
+                    width: "601px", marginTop: "-9px",
+                     backgroundColor: "transparent",backgroundColor: "transparent", fontSize: "18px", color: "white" 
+                }
+            } >
+            <option value = "">
+            s 'il vous plaît choisissez un agent pour vous aider 
+            </option> 
+            {agents.data ? agents.data.result.map((el, index) => (
+          <option style={{color:"black"}}key={index} value={el._id}> {el.nom} </option>
+        )):false}
+        </select>
+        
+            </div>
         <div className = "form-group" >     
         <textarea className = "form-control"
         placeholder = "Description du projet"
@@ -316,66 +338,18 @@ class FormulaireEtude extends Component {
         <button type = "submit"
         className = "btn-blue uppercase border_radius"
         defaultValue = "Envoyer"
-        style = {{width: "158px",marginTop: "23px",marginLeft: "-627px"}}>
+        style = {{width: "158px",marginTop: "8px",marginLeft: "-627px"}}>
         Soumettre
-       </button> 
+       </button>
+       <Modal visible={this.state.visible} width="400" height="300" effect="fadeInDown" onClickAway={() => this.closeModal()}>
+                    <div>
+                        <h1 style={{color:"#e60505"}}><i className="far fa-hand-peace">félicitations 🎉</i></h1>
+                        <h4 style={{textAlign:"center",color:"#000000",marginTop:" 63px"}}>votre demande a été envoyée avec succès</h4>
+                        <a href="javascript:void(0);" onClick={() => this.closeModal()}><button type="button" className="btn btn-primary" style={{marginTop:" 44px",width: "94px",height: "48px",marginLeft: "278px"}}>Fermer</button></a>
+                    </div>
+                </Modal>
      </form> 
-        <Modal visible = { this.state.visible }
-            width = "400"
-            height = "300"
-            effect = "fadeInLeft"
-            onClickAway = {
-                () => this.closeModal()
-            } >
-        <div>
-        <h3 style = {
-                { color: "black", marginTop: "36px", marginLeft: '4px' }
-            } > il faut que vous choisissiez un agent pour qu 'il traite votre demande</h3>
-             <h4 style = {
-                {
-                    color: "black",
-                    marginRight: "277px",
-
-                    marginTop: "20px",
-                    marginBottom: "-77px",
-                    marginLeft: "11px"
-                }
-            } > Non d 'agent :</h4> 
-             <div className = "form-group" >
-            <select
-                       id = "pet-select"
-            value = { this.state.agentId }
-            onChange = { this.onChange }
-            name = "agentId"
-            style = {
-                {
-                    height: "34px",
-                    color: "black",
-                    marginTop: "100px",
-                    borderRadius: "5px",
-                    width: "376px"
-                }
-            } >
-            <option value = "" >
-            s 'il vous plaît choisissez un agent pour vous aider 
-            </option> 
-            {agents.data ? agents.data.result.map((el, index) => (
-          <option key={index} value={el._id}> {el.nom} </option>
-        )):false}
-        </select>
         
-            </div>
-            <button 
-            onClick={this.envoyer}
-            type = "button"
-            className = "btn btn-primary"
-            style = {
-                { marginTop: " 18px", width: "162px", height: "50px", backgroundColor: "#1f3f81" }
-            }> Fermer 
-            </button>
-            
-            </div> 
-             </Modal>
             </div> 
             </div>
         );
