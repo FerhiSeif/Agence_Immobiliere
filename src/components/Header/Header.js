@@ -25,6 +25,7 @@ class Header extends Component {
 
 
   render() {
+    
     return (
       <div className="Header">
         <header className="layout_default">
@@ -80,10 +81,10 @@ class Header extends Component {
                     )}
                      {this.props.user.nom && (
                       <li>
-                        <div onClick={()=> this.props.openModalBeta()}>
+                        <a onClick={()=> this.props.openModalBeta()}>
                         <i className="fa fa-bell-o" aria-hidden="true"></i>
                           Notifications
-                        </div>
+                        </a>
                       </li>
                     )}
                     <li style={{marginRight:"-42px"}}>

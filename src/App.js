@@ -8,16 +8,19 @@ import Footer from "./components/Footer/Footer";
 import Routes from "./Routes";
 import { getProfileAction } from "./Redux/userActions";
 import Modal from 'react-awesome-modal';
+import axios from "axios";
 
 class App extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      visible:false
+      visible:false,
+      listNotfications:[]
     };
     this.closeModal = this.closeModal.bind(this);
     this.openModal = this.openModal.bind(this);
+    this.updateList = this.updateList.bind(this);
   }
 
   closeModal(e) {
@@ -26,28 +29,59 @@ class App extends Component {
       });
   }
 
+  updateList(data)
+  {
+     this.setState({listNotfications : data})
+  }
+
   openModal() {
     this.setState({
         visible : true
     });
+    const {updateList} = this ;
+    let response =
+    axios.get("http://localhost:8080/notifications/getnotification")
+      .then(res => {
+                      console.log(res.data);
+                      updateList(res.data);
+                    })
+      .catch(err => console.log(err.response.data)); 
 }
 
   componentDidMount() {
     if (localStorage.getItem("Authorization")) {
       !this.props.user.nom && this.props.getProfileAction();
+
     }
   }
   render() {
+        const { listNotfications } = this.state;
+        console.log("itemmm");
+        console.log(listNotfications)
+
     return (
       <BrowserRouter>
         <div className="App">
           <Header openModalBeta={this.openModal} />
-            <Modal visible={this.state.visible} width="400" height="300" effect="fadeInDown" onClickAway={() => this.closeModal()}>
+            <Modal visible={this.state.visible} width="269" height="300" effect="fadeInDown" onClickAway={() => this.closeModal()}>
                 <div>
-                    <h1 style={{color:"#e60505"}}><i className="far fa-hand-peace">félicitations 🎉</i></h1>
-                    <h4 style={{textAlign:"center",color:"#000000",marginTop:" 63px"}}>votre demande a été envoyée avec succès</h4>
+                        {
+                          listNotfications.notification
+                          ?
+                          <div>
+                            	{
+                                listNotfications.notification.map((el, index) => (
+                                <div key={index}>
+                                    obj:{el.object}
+                                </div>
+                                ))
+                              }
+                          </div>
+                          :
+                          null
+                        }
                     <a href="javascript:void(0);" onClick={() => this.closeModal()}>
-                            <button type="button" className="btn btn-primary" style={{marginTop:" 44px",width: "94px",height: "48px",marginLeft: "278px"}}>Fermer</button>
+                           
                     </a>
                 </div>
             </Modal>
