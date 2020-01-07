@@ -225,6 +225,7 @@ onSubmit(e) {
 
 
   _handleSubmit(){
+    var testusernotif = JSON.parse(localStorage.user)
    if(this.accessControl()){
 
    
@@ -248,7 +249,21 @@ onSubmit(e) {
       
     }
     
-        });
+        }).then(res => {
+          axios({
+            method: "POST",
+            url: `/notifications/addnotification`,
+            headers: { Authorization: localStorage.getItem("Authorization") },
+            data: {
+              user: testusernotif.user,
+              body: `Vous avez reçu une nouvelle demande de location `,
+              object: "Nouvelle demande de location",
+              sender: testusernotif.user._id,
+              target: selectedAnnoncement.agentId,
+              read: "false"
+            }
+          });
+        })
         
         alert("demande envoyee");
         let statut=200;
@@ -273,7 +288,21 @@ onSubmit(e) {
       
     }
     
-        });
+        }).then(res => {
+          axios({
+            method: "POST",
+            url: `/notifications/addnotification`,
+            headers: { Authorization: localStorage.getItem("Authorization") },
+            data: {
+              user: testusernotif.user,
+              body: `Vous avez reçu une nouvelle demande d'achat' `,
+              object: "Nouvelle demande d'achat'",
+              sender: testusernotif.user._id,
+              target: selectedAnnoncement.agentId,
+              read: "false"
+            }
+          });
+        })
         
         alert("demande envoyee");
         let statut=200;

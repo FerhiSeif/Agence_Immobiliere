@@ -63,7 +63,7 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Header openModalBeta={this.openModal} />
-            <Modal visible={this.state.visible} width="269" height="300" effect="fadeInDown" onClickAway={() => this.closeModal()}>
+            {/* <Modal visible={this.state.visible} width="269" height="300" effect="fadeInDown" onClickAway={() => this.closeModal()}>
                 <div>
                         {
                           listNotfications.notification
@@ -84,7 +84,7 @@ class App extends Component {
                            
                     </a>
                 </div>
-            </Modal>
+            </Modal> */}
           <Routes />
           <Footer />
         </div>

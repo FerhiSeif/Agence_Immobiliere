@@ -4,34 +4,60 @@ import { compose } from "redux";
 import { Link, withRouter } from "react-router-dom";
 import axios from "axios";
 import { logOutAction } from "../../Redux/userActions";
-import Modal from 'react-awesome-modal';
+import Modal from "react-awesome-modal";
+
+import "./Header.css";
 class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      numNotif: 0
+      notifications: [],
+      numNotif:0,
+      isOpen: false
     };
     this.openModal = this.openModal.bind(this);
     this.getAll = this.getAll.bind(this);
   }
+getnotification =  () =>{
+  const { getAll } = this;
+  let response = axios
+    .get("http://localhost:8080/notifications/getnotification")
+    .then(res => {
+      //console.log("res");
+      // console.log(res.data);
+      getAll(res.data.notification);
+    })
+    .catch(err => console.log(err.response.data));
+}
 
-  getAll(data)
-  {
+  getAll(data) {
+    let user = JSON.parse(localStorage.getItem("user"));
+    this.setState({
+      notifications: data.filter(elm => elm.target == user.user._id)
+    },()=>{
       this.setState({
-          numNotif : data 
-      });
+        numNotif:this.state.notifications.filter(elm=>elm.read===false).length
+      })
+       
+    });
   }
-  componentDidMount(){
-    const {getAll} = this
-    let response =
-    axios.get("http://localhost:8080/notifications/getnotification")
-      .then(res => { console.log("res");
-                      console.log(res);
-                      getAll(res.data.nombreNotif);
-                    })
-      .catch(err => console.log(err.response.data)); 
+  componentDidMount() {
+    this.getnotification()
   }
 
+  updateNOtif = (Notif)=>{
+    //console.log('Notif',Notif)
+    axios({
+      method: "PUT",
+      url:`http://localhost:8080/notifications/readnotification/${Notif._id}`,
+      headers: { Authorization: localStorage.getItem("Authorization") },
+      Notif
+    })
+    .then(res => {
+      this.getnotification()
+      console.log(res)
+    })
+  }
 
   onLogOutClick = () => {
     this.props
@@ -39,22 +65,24 @@ class Header extends Component {
       .then(res => res === 200 && this.props.history.push("/"));
   };
 
-  openModal() {
-  }
-
-
+  openModal() {}
 
   render() {
- const { numNotif } = this.state;
+    const { notifications,numNotif } = this.state;
+    //const numNotif = notifications.length;
+
+    //const numNotif = myNotif.length;
+    console.log("numNotif,notifications2", notifications);
     return (
       <div className="Header">
         <header className="layout_default">
           <div className="topbar grey">
-
             <div className="container">
               <div className="row">
                 <div className="col-md-5">
-                  <p style={{marginLeft:"-284px"}}>Nous sommes les meilleurs.</p>
+                  <p style={{ marginLeft: "-284px" }}>
+                    Nous sommes les meilleurs.
+                  </p>
                 </div>
                 <div className="col-md-7 text-right">
                   <ul className="breadcrumb_top text-right">
@@ -65,24 +93,22 @@ class Header extends Component {
                           Favoris
                         </Link>
                       )}
-                    </li> 
+                    </li>
                     <li>
                       <Link to="/déposer-une-annonce">
-                      {  /*<i className="icon-icons215" />*/}
-                        
-                        🖊️  Créer une annonce
+                        {/*<i className="icon-icons215" />*/}
+                        🖊️ Créer une annonce
                       </Link>
                     </li>
                     {this.props.user.nom && (
                       <li>
                         <Link to="/mesProprietes">
-                        <i className="icon-icons215" />
-                        
-                          Mes Proprietés 
+                          <i className="icon-icons215" />
+                          Mes Proprietés
                         </Link>
                       </li>
                     )}
-                   
+
                     {this.props.user.nom && (
                       <li>
                         <Link to="/profile">
@@ -91,26 +117,80 @@ class Header extends Component {
                         </Link>
                       </li>
                     )}
-                     {this.props.user.nom && (
+                    {this.props.user.nom && (
                       <li>
                         <Link to="/messages">
-                        <i className="icon-icons142"></i>
+                          <i className="icon-icons142"></i>
                           Messages
                         </Link>
                       </li>
                     )}
-                     {this.props.user.nom && (
-                      <li>
-                        <a onClick={()=> this.props.openModalBeta()}>
-                        <i className="fa fa-bell-o" aria-hidden="true"></i>
-                          Notifications ({numNotif})
-                        </a>
+                    {this.props.user.nom && (
+                      <li
+                        
+                        style={{
+                          position: "relative",
+                          color: "black"
+                        }}
+                      >
+                        <i className="fa fa-bell-o" aria-hidden="true" style={{
+                            cursor: "pointer",
+                            color: "black"
+                          }}></i>
+                       <span onClick={() =>
+                          this.setState({ isOpen: !this.state.isOpen })
+                        }
+                        style={{
+                          cursor: "pointer",
+                          color: "black"
+                        }}
+                        >
+                           Notifications ({numNotif})</span>
+                        <div
+                          className="modalNotif"
+                          style={{
+                            display: `${this.state.isOpen ? "flex" : "none"}`
+                          }}
+                        >
+                          <div className="modalNotif-header">
+                            <span>Toutes les Notifications</span>
+                            <span>Notifications non lues</span>
+                          </div>
+                          <div className="modalNotif-contain">
+                            {notifications.map((elm, i) => {
+    
+                              return (
+                                <div className="notifi-contain" 
+                                style={{background:`${elm.read?'none':'#c8d3d67d'}`,cursor:"pointer"}}
+                                onClick={()=>this.updateNOtif(elm)}
+                                >
+                                  <img alt="profile" style={{marginRight: '19px'}}/>
+                                  <div className="notifi-body">
+                                    <span className="notif-title">
+                                      {elm.object}
+                                    </span>
+                                    <p className="notif-text">{elm.body}</p>
+                                  </div>
+                                </div>
+                              )
+                            })}
+                          </div>
+                          <div className="modalNotif-footer"
+                          onClick={() =>
+                            this.setState({ isOpen: false })
+                          }
+                          style={{
+                            cursor: "pointer",
+                            color: "black"
+                          }}
+                          >Close</div>
+                        </div>
                       </li>
                     )}
-                    <li style={{marginRight:"-42px"}}>
+                    <li style={{ marginRight: "-42px" }}>
                       {this.props.user.nom ? (
-                        <Link onClick={this.onLogOutClick} >
-                          <i className="icon-icons179"/>
+                        <Link onClick={this.onLogOutClick}>
+                          <i className="icon-icons179" />
                           Déconnexion
                         </Link>
                       ) : (
@@ -129,7 +209,7 @@ class Header extends Component {
             <div className="container">
               <div className="row">
                 <div className="col-md-3 col-sm-12">
-                  <div className="logo" style={{marginLeft: "-122px"}}>
+                  <div className="logo" style={{ marginLeft: "-122px" }}>
                     <Link to="/">
                       <img src="images/logo.png" />
                     </Link>
@@ -217,13 +297,12 @@ class Header extends Component {
                   </div>
                   {/* End Header Navigation */}
                   <div className="collapse navbar-collapse" id="navbar-menu">
-                 
                     <ul
                       className="nav navbar-nav"
                       data-in="fadeIn"
                       data-out="fadeOut"
                     >
-                       <li>
+                      <li>
                         <Link to="/">Accueil</Link>
                       </li>
                       <li className="dropdown">
@@ -248,7 +327,7 @@ class Header extends Component {
                           to="#."
                           className="dropdown-toggle"
                           data-toggle="dropdown"
-                        > 
+                        >
                           Services{" "}
                         </Link>
                         <ul className="dropdown-menu">
@@ -264,13 +343,13 @@ class Header extends Component {
                           </li>
                         </ul>
                       </li>
-                     
-                       {this.props.user.nom && (
-                      <li>
-                      <Link to="/estimations">Estimations</Link>
-                    </li>
-                       )}
+
+                      {this.props.user.nom && (
                         <li>
+                          <Link to="/estimations">Estimations</Link>
+                        </li>
+                      )}
+                      <li>
                         <Link to="/reclamation">Réclamation</Link>
                       </li>
                       <li>
@@ -301,9 +380,6 @@ const mapStateToProps = state => {
 };
 
 export default compose(
-  connect(
-    mapStateToProps,
-    { logOutAction }
-  ),
+  connect(mapStateToProps, { logOutAction }),
   withRouter
 )(Header);
