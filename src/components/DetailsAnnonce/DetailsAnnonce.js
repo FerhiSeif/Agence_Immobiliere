@@ -69,6 +69,7 @@ class DetailsAnnonce extends Component {
 
 console.log("localStorage",localStorage.getItem("user"))
     this.state = {
+      agentProfile:{},
       statut: "",
       visible:false,
       nom: "",
@@ -95,17 +96,33 @@ console.log("localStorage",localStorage.getItem("user"))
   }
 
 
-  componentDidMount() {
+   componentDidMount() {
  
-    this.props.getSelectedAnnoncementAction(this.props.id);
+   this.props.getSelectedAnnoncementAction(this.props.id)
+  //   let { selectedAnnoncement }=this.props;
+  //   console.log('selectedAnnoncement',selectedAnnoncement)
+   }
 
+  componentWillReceiveProps = nextProps =>{
+    if(nextProps==undefined) return false
+   //nextProps.getSelectedAnnoncementAction(nextProps.id)
+   console.log('selectedAnnoncement',nextProps.selectedAnnoncement)
+   axios
+   .get(`http://localhost:8080/clients/myprofile/${nextProps.selectedAnnoncement.agentId}`)
+   .then(res => {
+     this.setState({
+      agentProfile:res.data
+     })
+   })
+   .catch(err => console.log(err.response.data));
   }
+
 
   displayAnnoncementOptions = () => {
     
      let { myoptions } = this.props.selectedAnnoncement.myoptions;
      let validOptions = myoptions.filter(el => myoptions[el] === true);
-     console.log("optionsKeys :",validOptions)
+    // console.log("optionsKeys :",validOptions)
     return validOptions;
   };
   
@@ -395,9 +412,10 @@ envoyerEmail(e){
     //console.log("userId",this.state.userId.user._id)
     //console.log("selectedAnnocement.userId",this.props.selectedAnnoncement.userId)
     let { selectedAnnoncement }=this.props;
-   console.log(this.props.selectedAnnoncement.myoptions)
-   console.log("selectedAnnoncement",selectedAnnoncement)
-    const {visible,modalEtat1}=this.state
+   //console.log(this.props.selectedAnnoncement.myoptions)
+   
+    const {visible,modalEtat1,agentProfile}=this.state
+    console.log("agentProfile",agentProfile)
     var videourl
 
     if(selectedAnnoncement.video && selectedAnnoncement.video !=="")
@@ -850,12 +868,9 @@ const opts = {
                   </div>
                   <div className="col-sm-4 bottom40">
                     <div className="agent_wrap">
-                      <h3>Bohdan Kononets</h3>
+                    <h3>{agentProfile.nom + ' '+ agentProfile.prenom }</h3>
                       <p className="bottom30">
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing
-                        elit, sed diam nonummy nibh tempor cum soluta nobis
-                        consectetuer adipiscing eleifend option congue nihil
-                        imperdiet doming…
+                        {agentProfile.description}
                       </p>
                       <table className="agent_contact table">
                         <tbody>
@@ -863,22 +878,22 @@ const opts = {
                             <td>
                               <strong>Téléphone:</strong>
                             </td>
-                            <td className="text-right">(+01) 34 56 7890</td>
+  <td className="text-right">{agentProfile.tel}</td>
                           </tr>
                           <tr>
                             <td>
                               <strong>Email Adress:</strong>
                             </td>
                             <td className="text-right">
-                              <a href="#.">bohdan@castle.com</a>
+                              {agentProfile.email}
                             </td>
                           </tr>
                           <tr>
                             <td>
-                              <strong>Skype:</strong>
+                              <strong>Adresse:</strong>
                             </td>
                             <td className="text-right">
-                              <a href="#.">bohdan.kononets</a>
+                              {agentProfile.adress}
                             </td>
                           </tr>
                         </tbody>
