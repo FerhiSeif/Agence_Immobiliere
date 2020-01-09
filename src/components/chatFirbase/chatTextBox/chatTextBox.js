@@ -17,7 +17,12 @@ class ChatTextBoxComponent extends React.Component {
 
         const { classes } = this.props;
 
-        return ( <div className = { classes.chatTextBoxContainer } >
+        return ( <div className = { classes.chatTextBoxContainer }
+            style={{
+                width: "calc(100% - 600px - 97px)",
+                
+                  }}
+                  >
             < TextField placeholder = 'Type your message..'
             onKeyUp = {
                 (e) => this.userTyping(e) }

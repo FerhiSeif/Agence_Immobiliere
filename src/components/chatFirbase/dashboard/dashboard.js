@@ -4,6 +4,7 @@ import ChatListComponent from '../chatList/chatList';
 import ChatViewComponent from '../chatView/chatView';
 import ChatTextBoxComponent from '../chatTextBox/chatTextBox';
 import styles from './styles';
+import './dashboard.css'
 import { Button, withStyles } from '@material-ui/core';
 import Icon from '@material-ui/core/Icon'
 const firebase = require("firebase");
@@ -55,8 +56,8 @@ class DashboardComponent extends React.Component {
           {
             this.state.newChatFormVisible ? <NewChatComponent goToChatFn={this.goToChat} newChatSubmitFn={this.newChatSubmit}></NewChatComponent> : null
           }
-          <Button style={{backgroundColor:'#1f3f81'}}onClick={this.signOut} className={classes.signOutBtn}>
-          Déconnexion <Icon className="fa fa-power-off" style={{ color: "red",width:"46px" }} ></Icon></Button>
+          {/* <Button style={{backgroundColor:'#1f3f81'}}onClick={this.signOut} className={classes.signOutBtn}>
+          Déconnexion <Icon className="fa fa-power-off" style={{ color: "red",width:"46px" }} ></Icon></Button> */}
         </div>
       );
     } else {
@@ -141,7 +142,7 @@ class DashboardComponent extends React.Component {
 
   clickedMessageWhereNotSender = (chatIndex) => this.state.chats[chatIndex].messages[this.state.chats[chatIndex].messages.length - 1].sender !== this.state.email;
 
-  componentWillMount = () => {
+  componentDidMount = () => {
       firebase.auth().onAuthStateChanged(async _usr => {
         if(!_usr)
           this.props.history.push('/login');
@@ -158,7 +159,7 @@ class DashboardComponent extends React.Component {
                 friends: []
               });
             })
-        }
+          }
     });
   }
 }

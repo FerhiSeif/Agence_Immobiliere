@@ -30,7 +30,7 @@ class LoginItem extends Component {
         motDePasse: this.state.motDePasse
       })
       .then(() => {
-        this.props.history.push("/profile");
+       // this.props.history.push("/profile");
       });
       await  firebase
       .auth()
