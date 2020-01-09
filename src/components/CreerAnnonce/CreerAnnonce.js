@@ -533,7 +533,7 @@ class CreerAnnonce extends Component {
                         <div className="container-2">
                           <div className="row">
                             <div className="col-md-8 col-sm-8">
-                              <div className="form-group white checkbox-container ">
+                              <div className="form-group white checkbox-container">
                                 {checkboxes.map(item => (
                                   <div className="checkbox-unity">
                                     <Checkbox

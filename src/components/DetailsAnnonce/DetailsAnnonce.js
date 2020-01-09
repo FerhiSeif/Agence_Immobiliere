@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link,withRouter } from "react-router-dom";
 import "./detailsAnnonce.css";
 import "react-image-gallery/styles/css/image-gallery.css";
-
+import anonymos from '../../images/anonymos.png'
 import { getSelectedAnnoncementAction } from "../../Redux/annoncesActions";
 import { compose } from "redux";
 import Modal from 'react-awesome-modal';
@@ -839,7 +839,7 @@ const opts = {
                             style={{    width: "200px",
                               marginTop: "25px",
                               height: "44px",
-                              marginLeft:"200px"}}
+                              }}
                               onClick={(e)=> 
                               {
                                 this.onSubmit(e)
@@ -862,7 +862,7 @@ const opts = {
                   <div className="col-sm-4 bottom40">
                     <div className="agent_wrap">
                       <div className="image">
-                        <img src="images/agent-round1.png" alt="Agents" />
+                      <img src={agentProfile.files && agentProfile.files.length!==0 ? "http://localhost:8080/uploads/${agentProfile.files[0].filename}" : anonymos } style={{height:"120px",width:"120px"}} />
                       </div>
                     </div>
                   </div>
