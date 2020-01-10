@@ -28,6 +28,7 @@ export const getAnnouncementsList = queries => async dispatch => {
 };
 
 export const addAnnoncementAction = newAnnoncement => async dispatch => {
+    var testusernotif = JSON.parse(localStorage.user)
     console.log('newAnnoncement ;;;;;; ');
     console.log(newAnnoncement);
 
@@ -74,7 +75,21 @@ export const addAnnoncementAction = newAnnoncement => async dispatch => {
             data: formData,
             config: { headers: { 'Content-Type': 'multipart/form-data' } },
             headers: { Authorization: localStorage.getItem("Authorization") }
-        });
+        }).then(res => {
+            axios({
+              method: "POST",
+              url: `/notifications/addnotification`,
+              headers: { Authorization: localStorage.getItem("Authorization") },
+              data: {
+                user: testusernotif.user,
+                body: `Vous avez reçu une nouvelle Annonce : ${newAnnoncement.categorie} à ${newAnnoncement.region}' `,
+                object: "Nouvelle Annonce'",
+                sender: testusernotif.user._id,
+                target: newAnnoncement.agentId,
+                read: "false"
+              }
+            });
+          })
         alert("your annoncement was added successfuly");
         let statut = 200;
         return statut;

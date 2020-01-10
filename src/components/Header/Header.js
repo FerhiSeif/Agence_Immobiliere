@@ -4,6 +4,7 @@ import { compose } from "redux";
 import { Link, withRouter } from "react-router-dom";
 import axios from "axios";
 import { logOutAction } from "../../Redux/userActions";
+import anonymous from '../../images/anonymous.png'
 import Modal from "react-awesome-modal";
 
 import "./Header.css";
@@ -145,7 +146,7 @@ getnotification =  () =>{
                           color: "black"
                         }}
                         >
-                           Notifications ({numNotif})</span>
+                           Notifications {numNotif !==0 ? <span style={{background:'red',color:'white', borderRadius:'30px', padding:"3px"}}>{numNotif}</span> :false} </span>
                         <div
                           className="modalNotif"
                           style={{
@@ -154,7 +155,7 @@ getnotification =  () =>{
                         >
                           <div className="modalNotif-header">
                             <span>Toutes les Notifications</span>
-                            <span>Notifications non lues</span>
+              
                           </div>
                           <div className="modalNotif-contain">
                             {notifications.map((elm, i) => {
@@ -164,7 +165,7 @@ getnotification =  () =>{
                                 style={{background:`${elm.read?'none':'#c8d3d67d'}`,cursor:"pointer"}}
                                 onClick={()=>this.updateNOtif(elm)}
                                 >
-                                  <img alt="profile" style={{marginRight: '19px'}}/>
+                                  <img src={anonymous} alt="profile" style={{marginRight: '19px', width:'30px',height:'30px'}}/>
                                   <div className="notifi-body">
                                     <span className="notif-title">
                                       {elm.object}

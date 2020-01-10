@@ -36,7 +36,7 @@ class LoginItem extends Component {
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.motDePasse)
       .then(() => {
-        this.props.history.push('/profile');
+        this.props.history.push('/');
       }, err => {
         this.setState({ serverError: true });
         console.log('Error logging in: ', err);
@@ -61,7 +61,7 @@ class LoginItem extends Component {
           </div>
           <div className="single-query form-group  col-sm-12">
             <input
-              type="text"
+              type="password"
               className="keyword-input"
               placeholder="Email Address"
               name="motDePasse"

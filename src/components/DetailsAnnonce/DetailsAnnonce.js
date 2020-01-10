@@ -12,6 +12,7 @@ import SimpleReactValidator from 'simple-react-validator';
 import axios from "axios";
 import Alert from 'react-bootstrap/Alert'
 import ImageGallery from 'react-image-gallery';
+import anonymous from '../../images/anonymous.png'
 import YouTube from 'react-youtube';
 import MapContainer from "./../google-map/googleMap";
 
@@ -862,7 +863,7 @@ const opts = {
                   <div className="col-sm-4 bottom40">
                     <div className="agent_wrap">
                       <div className="image">
-                        <img src="images/agent-round1.png" alt="Agents" />
+                        <img src={anonymous} alt="Agents" style={{width:'120px', height:'120px'}} />
                       </div>
                     </div>
                   </div>
