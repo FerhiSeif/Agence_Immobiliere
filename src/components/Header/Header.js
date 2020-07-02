@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { Link, withRouter } from "react-router-dom";
 import axios from "axios";
+import anonymos from '../../images/anonymos.png'
 import { logOutAction } from "../../Redux/userActions";
 import anonymous from '../../images/anonymous.png'
 import Modal from "react-awesome-modal";
@@ -86,7 +87,7 @@ getnotification =  () =>{
                   </p>
                 </div>
                 <div className="col-md-7 text-right">
-                  <ul className="breadcrumb_top text-right">
+                  <ul className="breadcrumb_top text-right" style={{marginLeft: "-44px"}}>
                     <li>
                       {this.props.user.nom && (
                         <Link to="/favoris">
@@ -146,7 +147,8 @@ getnotification =  () =>{
                           color: "black"
                         }}
                         >
-                           Notifications {numNotif !==0 ? <span style={{background:'red',color:'white', borderRadius:'30px', padding:"3px"}}>{numNotif}</span> :false} </span>
+                           Notifications {numNotif!==0? <span style={{background:"red",color:"white",borderRadius:"300px",padding: "3px"}}> {numNotif}</span> : false }</span>
+
                         <div
                           className="modalNotif"
                           style={{
@@ -165,7 +167,9 @@ getnotification =  () =>{
                                 style={{background:`${elm.read?'none':'#c8d3d67d'}`,cursor:"pointer"}}
                                 onClick={()=>this.updateNOtif(elm)}
                                 >
-                                  <img src={anonymous} alt="profile" style={{marginRight: '19px', width:'30px',height:'30px'}}/>
+
+                                  <img src={anonymos} alt="profile" style={{marginRight: '19px',width:"40px",height:"40px"}}/>
+
                                   <div className="notifi-body">
                                     <span className="notif-title">
                                       {elm.object}
