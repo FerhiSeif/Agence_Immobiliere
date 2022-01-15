@@ -26,7 +26,7 @@
     "firebase": "^7.2.1",
     "google-map-react": "^1.1.4",
     "google-maps-react": "^2.0.2",
-    "marked": "^0.7.0",
+    "marked": "^4.0.10",
     "mdbreact": "^4.21.1",
     "moment": "^2.24.0",
     "pusher": "^2.2.2",
